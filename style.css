@@ -272,12 +272,12 @@ section .title::after{
 .teams .title::before{
     background: #fff;
 }
-.services .title::after,
+.projects .title::after,
 .teams .title::after{
     background: #111;
     content: "what i do";
 }
-.services .serv-content .card{
+.projects .serv-content .card{
     width: calc(33% - 20px);
     background: #222;
     text-align: center;
@@ -286,27 +286,231 @@ section .title::after{
     cursor: pointer;
     transition: all 0.3s ease;
 }
-.services .serv-content .card:hover{
+.projects .serv-content .card:hover{
     background: crimson;
 }
-.services .serv-content .card .box{
+.projects .serv-content .card .box{
     transition: all 0.3s ease;
 }
-.services .serv-content .card:hover .box{
+.projects .serv-content .card:hover .box{
     transform: scale(1.05);
 }
-.services .serv-content .card i{
+.projects .serv-content .card i{
     font-size: 50px;
     color: crimson;
     transition: color 0.3s ease;
 }
-.services .serv-content .card:hover i{
+.projects .serv-content .card:hover i{
     color: #fff;
 }
-.services .serv-content .card .text{
+.projects .serv-content .card .text{
     font-size: 25px;
     font-weight: 500;
     margin: 10px 0 7px 0;
+}
+
+/* projects section styling */
+#projects .card {
+    background: #222;
+    border-radius: 10px;
+    padding: 25px 35px;
+    text-align: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#projects .card:hover {
+    background: crimson;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(220, 20, 60, 0.4);
+}
+
+#projects .card .box {
+    transition: all 0.3s ease;
+}
+
+#projects .card:hover .box {
+    transform: scale(1.05);
+}
+
+#projects .card i {
+    font-size: 50px;
+    color: crimson;
+    transition: color 0.3s ease;
+}
+
+#projects .card:hover i {
+    color: #fff;
+}
+
+#projects .card .text {
+    font-size: 25px;
+    font-weight: 500;
+    margin: 10px 0 7px 0;
+}
+
+#projects .card .tags {
+    margin: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+#projects .card .tags .tag {
+    color: #fff;
+    background: #333;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Tag-specific colors */
+#projects .card .tags .python { background-color: #306998; }
+#projects .card .tags .flutterflow { background-color: #00569E; }
+#projects .card .tags .html { background-color: #E44D26; }
+#projects .card .tags .css { background-color: #264DE4; }
+#projects .card .tags .js { background-color: #F0DB4F; color: #000; }
+#projects .card .tags .react { background-color: #61DAFB; color: #000; }
+#projects .card .tags .fastapi { background-color: #009688; }
+#projects .card .tags .whatsapp { background-color: #25D366; }
+#projects .card .tags .mongodb { background-color: #4DB33D; }
+#projects .card .tags .oracle-apex { background-color: #F80000; }
+#projects .card .tags .oci { background-color: #D92B24; }
+#projects .card .tags .streamlit { background-color: #FF4B4B; }
+
+
+/* In-progress card styling */
+#projects .card.in-progress {
+    border-left: 5px solid #ffc107;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+.projects .serv-content .card .text{
+    font-size: 25px;
+    font-weight: 500;
+    margin: 10px 0 7px 0;
+}
+
+/* projects section styling */
+.teams .carousel .card, #projects .card {
+    display: flex; /* Use flexbox for equal height */
+    flex-direction: column;
+}
+
+#projects .card .box {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow box to grow and fill space */
+}
+
+#projects .card .box p {
+    flex-grow: 1; /* Allow paragraph to take up extra space, pushing footer down */
+}
+
+#projects .card {
+    background: #222;
+    border-radius: 10px;
+    padding: 25px 35px;
+    text-align: center;
+    /* overflow: hidden; */ /* This was causing the hover effect to be cut off */
+    transition: all 0.3s ease;
+    border: 1px solid #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin: 15px; /* Add margin to give space for the shadow */
+}
+
+.projects .carousel .card.in-progress {
+    background: #333;
+    border-left: 5px solid #ffc107;
+}
+.projects .carousel .card .tags {
+    margin-top: 15px;
+}
+.projects .carousel .card .tags .tag {
+    display: inline-block;
+    background: crimson;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 2px;
+}
+.projects .carousel .card .tags .tag.python { background: #306998; }
+.projects .carousel .card .tags .tag.flutterflow { background: #0055a6; }
+.projects .carousel .card .tags .tag.html { background: #e34c26; }
+.projects .carousel .card .tags .tag.css { background: #264de4; }
+.projects .carousel .card .tags .tag.js { background: #f0db4f; color: #323330; }
+.projects .carousel .card .tags .tag.react { background: #61dafb; }
+.projects .carousel .card .tags .tag.fastapi { background: #009688; }
+.projects .carousel .card .tags .tag.whatsapp { background: #25d366; }
+.projects .carousel .card .tags .tag.mongodb { background: #47a248; }
+.projects .carousel .card .tags .tag.oracle-apex { background: #ff0000; }
+.projects .carousel .card .tags .tag.oci { background: #f80000; }
+.projects .carousel .card .tags .tag.streamlit { background: #ff4b4b; }
+
+/* experience section styling */
+.experience {
+    color:#fff;
+    background: #111;
+}
+.experience .title::before {
+    background: #fff;
+}
+.experience .title::after {
+    background: #111;
+    content: "where I've worked";
+}
+.experience .carousel .card {
+    background: #222;
+    border-radius: 6px;
+    padding: 25px 35px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.experience .carousel .card:hover {
+    background: crimson;
+}
+.experience .carousel .card .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.experience .carousel .card:hover .box {
+    transform: scale(1.05);
+}
+.experience .carousel .card .text {
+    font-size: 25px;
+    font-weight: 500;
+    margin: 10px 0 7px 0;
+}
+.experience .carousel .card i {
+    font-size: 50px;
+    color: crimson;
+    transition: color 0.3s ease;
+}
+.experience .carousel .card:hover i {
+    color: #fff;
+}
+.experience .carousel .card.in-progress {
+    border-left: 5px solid #ffc107;
+    animation: pulse 2s infinite;
 }
 
 /* skills section styling */
@@ -371,6 +575,9 @@ section .title::after{
 .skills-content .right .saas::before{
     width: 90%;
 }
+.skills-content .right .integration::before{
+    width: 90%;
+}
 .skills-content .right .pycharm::before{
     width: 90%;
 }
@@ -381,10 +588,13 @@ section .title::after{
     width: 80%;
 }
 .skills-content .right .python::before{
-    width: 70%;
+    width: 80%;
 }
 .skills-content .right .sql::before{
     width: 80%;
+}
+.skills-content .right .plsql::before{
+    width: 50%;
 }
 
 /* teams section styling */
