@@ -248,7 +248,7 @@
                 </div>
                 <div class="column right">
                     <div class="text">Message me</div>
-                    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdeXPiPCOtm8rK_ttca516JYTKDqFM0103Cc80VVKFWZZ3dPQ/formResponse" method="POST" target="_self">
+                    <form id="contactForm">
                         <div class="fields">
                             <div class="field name">
                                 <input type="text" name="entry.1418886227" placeholder="Name" required>
@@ -267,6 +267,7 @@
                             <button type="submit">Send message</button>
                         </div>
                     </form>
+                    <div id="toast" class="toast"></div>
                 </div>
             </div>
         </div>
@@ -277,6 +278,57 @@
         <span>Powered By <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers">AI GAME DEVELOPERS</a> | <span class="far fa-copyright"></span> 2021 All rights reserved.</span>
     </footer>
     <style>
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            -webkit-transition: visibility 0.5s, opacity 0.5s linear;
+            transition: visibility 0.5s, opacity 0.5s linear;
+        }
+
+        .toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        .toast.success {
+            background-color: #4CAF50;
+        }
+
+        .toast.error {
+            background-color: #f44336;
+        }
+
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;} 
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;} 
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 30px; opacity: 0;}
+        }
         .rw-conversation-container .rw-header
         {
             background-color: rgb(151, 10, 10);
@@ -332,6 +384,31 @@
           }),
           t.insertBefore(e, t.firstChild);
       })();
+
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // stop normal form submission
+      
+        let formData = new FormData(this);
+        let url = "https://docs.google.com/forms/d/e/1FAIpQLSdeXPiPCOtm8rK_ttca516JYTKDqFM0103Cc80VVKFWZZ3dPQ/formResponse"; // Change this
+      
+        fetch(url, {
+          method: "POST",
+          body: formData,
+          mode: "no-cors" // prevents CORS error
+        }).then(() => {
+            showToast("✅ Your message has been sent!", "success");
+            document.getElementById("contactForm").reset();
+        }).catch(() => {
+            showToast("❌ There was a problem sending your message.", "error");
+        });
+      });
+
+      function showToast(message, type) {
+        var toast = document.getElementById("toast");
+        toast.className = "toast show " + type;
+        toast.innerText = message;
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+      }
       </script>
 
     <script src="script.js"></script>
