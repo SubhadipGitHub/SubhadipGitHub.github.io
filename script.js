@@ -1,39 +1,39 @@
 $(document).ready(function(){
     $(window).scroll(function(){
-        // sticky navbar on scroll script
         if(this.scrollY > 20){
             $('.navbar').addClass("sticky");
-        }else{
+        } else {
             $('.navbar').removeClass("sticky");
         }
-        
-        // scroll-up button show/hide script
+
         if(this.scrollY > 500){
             $('.scroll-up-btn').addClass("show");
-        }else{
+        } else {
             $('.scroll-up-btn').removeClass("show");
         }
     });
 
-    // slide-up script
     $('.scroll-up-btn').click(function(){
         $('html').animate({scrollTop: 0});
-        // removing smooth scroll on slide-up button click
         $('html').css("scrollBehavior", "auto");
     });
 
     $('.navbar .menu li a').click(function(){
-        // applying again smooth scroll on menu items click
         $('html').css("scrollBehavior", "smooth");
+        if($('.navbar .menu').hasClass('active')){
+            $('.navbar .menu').removeClass('active');
+            $('.menu-toggle i').removeClass('active');
+            $('.menu-toggle').attr('aria-expanded', 'false');
+        }
     });
 
-    // toggle menu/navbar script
-    $('.menu-btn').click(function(){
+    $('.menu-toggle').click(function(){
         $('.navbar .menu').toggleClass("active");
-        $('.menu-btn i').toggleClass("active");
+        $('.menu-toggle i').toggleClass("active");
+        let expanded = $('.navbar .menu').hasClass('active');
+        $('.menu-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
     });
 
-    // typing text animation script
     var typed = new Typed(".typing", {
         strings: ["Technical Lead", "Integration Specialist", "Fusion ERP/CX Consultant", "Data Scientist", "Android Developer", "Game Developer"],
         typeSpeed: 100,
@@ -41,19 +41,18 @@ $(document).ready(function(){
         loop: true
     });
 
-    var typed = new Typed(".typing-2", {
+    var typed2 = new Typed(".typing-2", {
         strings: ["Technical Lead", "Integration Specialist", "Fusion ERP/CX Consultant", "Data Scientist", "Android Developer", "Game Developer"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
     });
 
-    // owl carousel script
     $('.carousel').owlCarousel({
         margin: 20,
         loop: true,
         autoplay: true,
-        autoplayTimeOut: 2000,
+        autoplayTimeout: 2000,
         autoplayHoverPause: true,
         responsive: {
             0:{
@@ -70,4 +69,32 @@ $(document).ready(function(){
             }
         }
     });
+
+    $('#contactForm').submit(function(e){
+        e.preventDefault();
+
+        let name = $('#contact-name').val().trim();
+        let email = $('#contact-email').val().trim();
+        let subject = $('#contact-subject').val().trim();
+        let message = $('#contact-message').val().trim();
+
+        if (!name || !email || !subject || !message) {
+            showToast('Please complete every field before sending.', 'error');
+            return;
+        }
+
+        let body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+        let mailto = 'mailto:subhadip.dutta.18@gmail.com'
+            + '?subject=' + encodeURIComponent('Portfolio contact: ' + subject)
+            + '&body=' + encodeURIComponent(body);
+
+        showToast('Opening your email client to send the message.', 'success');
+        window.location.href = mailto;
+    });
+
+    function showToast(message, type){
+        var toast = $('#toast');
+        toast.removeClass('success error').addClass(type).text(message).addClass('show');
+        setTimeout(function(){ toast.removeClass('show'); }, 3000);
+    }
 });

@@ -7,6 +7,16 @@
     box-sizing: border-box;
     text-decoration: none;
 }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
 html{
     scroll-behavior: smooth;
 }
@@ -35,11 +45,11 @@ section{
     padding: 0 80px;
     margin: auto;
 }
-.about, .services, .skills, .teams, .contact, footer{
+.about, .projects, .skills, .teams, .contact, footer{
     font-family: 'Poppins', sans-serif;
 }
 .about .about-content,
-.services .serv-content,
+.projects .serv-content,
 .skills .skills-content,
 .contact .contact-content{
     display: flex;
@@ -127,11 +137,14 @@ section .title::after{
 }
 
 /* menu btn styling */
-.menu-btn{
+.menu-toggle{
     color: #fff;
     font-size: 23px;
     cursor: pointer;
     display: none;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 .scroll-up-btn{
     position: fixed;
@@ -160,7 +173,45 @@ section .title::after{
 .scroll-up-btn:hover{
     filter: brightness(90%);
 }
-
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    transition: visibility 0.5s, opacity 0.5s linear;
+}
+.toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+.toast.success {
+    background-color: #4CAF50;
+}
+.toast.error {
+    background-color: #f44336;
+}
+.rw-conversation-container .rw-header,
+.rw-launcher {
+    display: none;
+}
+.contact-note {
+    margin-bottom: 16px;
+    color: #fff;
+    font-size: 16px;
+}
+.contact-note a {
+    color: #ffb3b3;
+    text-decoration: underline;
+}
 
 /* home section styling */
 .home{
@@ -264,11 +315,11 @@ section .title::after{
 
 
 /* services section styling */
-.services, .teams{
+.projects, .teams{
     color:#fff;
     background: rgb(17, 17, 17);
 }
-.services .title::before,
+.projects .title::before,
 .teams .title::before{
     background: #fff;
 }
@@ -785,11 +836,11 @@ footer span a:hover{
     }
 }
 @media (max-width: 947px){
-    .menu-btn{
+    .menu-toggle{
         display: block;
         z-index: 999;
     }
-    .menu-btn i.active:before{
+    .menu-toggle i.active:before{
         content: "\f00d";
     }
     .navbar .menu{
@@ -838,7 +889,7 @@ footer span a:hover{
     .about .about-content .right{
         flex: 100%;
     }
-    .services .serv-content .card{
+    .projects .serv-content .card{
         width: calc(50% - 10px);
         margin-bottom: 20px;
     }
@@ -862,7 +913,7 @@ footer span a:hover{
     .home .home-content a{
         font-size: 20px;
     }
-    .services .serv-content .card{
+    .projects .serv-content .card{
         width: 100%;
     }
 }
