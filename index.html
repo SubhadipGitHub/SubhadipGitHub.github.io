@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Subhadip Dutta is a Technical Lead and Integration Specialist delivering enterprise cloud integrations, intelligent automation, and modern developer solutions.">
-    <meta property="og:title" content="Subhadip Dutta | Technical Lead & Integration Specialist">
+    <meta name="theme-color" content="#ff2a2a">
+    <meta property="og:title" content="Subhadip Dutta | Technical Lead &amp; Integration Specialist">
     <meta property="og:description" content="Explore Subhadip's work in cloud integration, AI, product development, and enterprise automation.">
     <meta property="og:image" content="images/profile-1.jpg">
     <meta property="og:type" content="website">
@@ -14,395 +14,521 @@
     <link rel="canonical" href="https://subhadipgithub.github.io/">
     <title>Subhadip Dutta</title>
     <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
-
 </head>
 <body>
-    <div class="scroll-up-btn">
-        <i class="fas fa-angle-up"></i>
+
+    <!-- preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-word">
+            <span class="preloader-ghost">Subhadip<span class="dot">.</span></span>
+            <span class="preloader-fill" aria-hidden="true">Subhadip<span class="dot dark">.</span></span>
+        </div>
     </div>
-    <nav class="navbar">
-        <div class="max-width">
-            <div class="logo"><a href="#">Personal <span>Portfolio.</span></a></div>
-            <ul id="nav-menu" class="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Work Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-controls="nav-menu" aria-expanded="false">
-                <i class="fas fa-bars"></i>
+
+    <!-- navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="logo">Subhadip <span>.</span></a>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#expertise">Expertise</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <a href="#contact" class="nav-cta">Hire Me</a>
+
+            <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" class="icon-open" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg viewBox="0 0 24 24" class="icon-close" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+            <a href="#contact" class="mobile-cta">Hire Me</a>
         </div>
     </nav>
 
-    <!-- home section start -->
-    <section class="home" id="home">
-        <div class="max-width">
-            <div class="home-content">
-                <div class="text-1">Hello, my name is</div>
-                <div class="text-2">Subhadip Dutta</div>
-                <div class="text-3">And I'm a <span class="typing"></span></div>
-                <!-- <a href="#contact">Hire me</a> -->
-            </div>
+    <!-- hero -->
+    <section class="hero" id="home">
+        <div class="hero-backdrop" aria-hidden="true">
+            <span class="orb orb-1"></span>
+            <span class="orb orb-2"></span>
+            <span class="orb orb-3"></span>
+            <span class="hero-grid"></span>
         </div>
+        <video id="hero-video" class="hero-video" autoplay loop muted playsinline>
+            <source src="images/herovideo.mp4" type="video/mp4">
+        </video>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <span class="eyebrow reveal" data-delay="0">Hello, my name is Subhadip Dutta</span>
+                <h1 class="reveal" data-delay="80">
+                    I&rsquo;m a <br>
+                    <span class="typing" id="typing"></span><span class="caret" aria-hidden="true"></span>
+                </h1>
+                <p class="reveal" data-delay="200">
+                    I design, integrate and optimize enterprise systems across cloud ecosystems &mdash;
+                    turning complex landscapes into scalable, automated, and genuinely simple solutions.
+                </p>
+                <div class="hero-actions reveal" data-delay="320">
+                    <a href="#projects" class="btn btn-solid">View My Work</a>
+                    <a href="#contact" class="btn btn-ghost">Contact Me</a>
+                </div>
+                <div class="hero-stats reveal" data-delay="440">
+                    <div><strong>10+</strong><span>Years in tech</span></div>
+                    <div><strong>4</strong><span>Global firms</span></div>
+                    <div><strong>10+</strong><span>Shipped projects</span></div>
+                </div>
+            </div>
+
+            <button class="reel-toggle" id="reel-toggle" type="button" aria-label="Unmute showreel" hidden>
+                <span class="reel-circle">
+                    <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V5.25z"/></svg>
+                    <svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28-.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
+                </span>
+                <span class="reel-label" id="reel-label">Unmute Reel</span>
+            </button>
+        </div>
+
+        <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
     </section>
 
-    <!-- about section start -->
+    <!-- about -->
     <section class="about" id="about">
-        <div class="max-width">
-            <h2 class="title">About me</h2>
-            <div class="about-content">
-                <div class="column left">
-                    <img src="images/profile-1.jpg" alt="Profile photo of Subhadip Dutta" loading="lazy">
+        <span class="star star-a" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0l2.5 8.5L23 12l-8.5 2.5L12 23l-2.5-8.5L1 12l8.5-2.5z"/></svg></span>
+        <span class="star star-b" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0l2.5 8.5L23 12l-8.5 2.5L12 23l-2.5-8.5L1 12l8.5-2.5z"/></svg></span>
+
+        <div class="about-inner">
+            <div class="badge-column">
+                <div class="lanyard reveal reveal-drop">
+                    <span class="lanyard-strap" aria-hidden="true"></span>
+                    <span class="lanyard-clip" aria-hidden="true"></span>
+                    <div class="badge-card">
+                        <span class="badge-hole" aria-hidden="true"></span>
+                        <div class="badge-photo">
+                            <img src="images/profile-1.jpg" alt="Portrait of Subhadip Dutta" loading="lazy">
+                        </div>
+                        <div class="badge-meta">
+                            <strong>Subhadip Dutta</strong>
+                            <span>Technical Lead &middot; Deloitte</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="column right">
-                    <div class="text">I'm Subhadip and I'm a <span class="typing-2"></span></div>
-                    <p>I’m currently working at Deloitte as a <strong>Technical Lead and Integration Specialist</strong>, where I focus on designing, integrating, and optimizing enterprise solutions across diverse cloud ecosystems. 🤖</p><br>
+            </div>
 
-<p>Previously, I was a Staff Consultant at Oracle, where I helped global clients build and transform their business processes using Oracle’s extensive suite of cloud applications. ☁️</p><br>
+            <div class="about-copy reveal" data-delay="150">
+                <h2>Hello!</h2>
+                <p class="lead">
+                    Hi, my name is <span class="name-chip">Subhadip Dutta</span>, a Technical Lead and Integration
+                    Specialist based in Bangalore, India &mdash; building enterprise cloud integrations,
+                    intelligent automation, and products people actually enjoy using.
+                </p>
 
-<p>My core expertise lies in system integration, cloud architecture, and intelligent automation. I’m passionate about simplifying complexity through smart, scalable solutions. 💡</p><br>
-
-<p>I hold a Post Graduate Diploma in Data Science from the International Institute of Information Technology, Bangalore. 🎓</p>
-
-<p>You can find recordings of my tech sessions, demos, and explorations on my personal <a href="https://www.youtube.com/@musicloverSD">YouTube Channel</a>. 📹</p><br>
-
-<p>The best way to keep up with me is on <a href="https://x.com/SUBHADIP_21">Twitter</a>. 🐦</p><br>
-
-<p>Here is my current weekly schedule:</p>
-<ul>
-  <li><strong>Monday–Friday @ 2:00 PM – 11:00 PM IST:</strong> Working at Deloitte</li>
-  <li><strong>Saturday:</strong> Focused on AI research, integrations, and applied innovations</li>
-  <li><strong>Sunday:</strong> Offline & recharging ⛱️</li>
-</ul>
-<a href="https://drive.google.com/file/d/1J1ZnqiBOvC52TBYXuCb7pNEITtx2somJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download CV</a>
+                <div class="about-grid">
+                    <p>I&rsquo;m currently at <strong>Deloitte</strong>, designing, integrating and optimizing enterprise solutions across diverse cloud ecosystems. 🤖</p>
+                    <p>Previously a <strong>Staff Consultant at Oracle</strong>, helping global clients transform business processes on Oracle&rsquo;s cloud application suite. ☁️</p>
+                    <p>My core expertise is system integration, cloud architecture and intelligent automation &mdash; simplifying complexity through scalable design. 💡</p>
+                    <p>I hold a <strong>Post Graduate Diploma in Data Science</strong> from the International Institute of Information Technology, Bangalore. 🎓</p>
                 </div>
+
+                <ul class="schedule">
+                    <li><span>Mon &ndash; Fri &middot; 2:00 PM &ndash; 11:00 PM IST</span> Working at Deloitte</li>
+                    <li><span>Saturday</span> AI research, integrations &amp; applied innovation</li>
+                    <li><span>Sunday</span> Offline &amp; recharging ⛱️</li>
+                </ul>
+
+                <div class="about-actions">
+                    <a class="btn btn-dark" href="https://drive.google.com/file/d/1J1ZnqiBOvC52TBYXuCb7pNEITtx2somJ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download CV</a>
+                    <a class="btn btn-outline-light" href="https://www.youtube.com/@musicloverSD" target="_blank" rel="noopener noreferrer">YouTube 📹</a>
+                    <a class="btn btn-outline-light" href="https://x.com/SUBHADIP_21" target="_blank" rel="noopener noreferrer">Twitter 🐦</a>
+                    <a class="btn btn-outline-light" href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="torn-divider" aria-hidden="true">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.62,189.5,99.8,242.79,81.82,282.88,63.6,321.39,56.44Z"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- expertise -->
+    <section class="expertise" id="expertise">
+        <div class="expertise-inner" id="expertise-track">
+            <div class="expertise-head reveal">
+                <span class="pill">My Expertise</span>
+                <h2>Building enterprise solutions with integration, cloud &amp; AI</h2>
+                <p>Combining system integration, cloud architecture and intelligent automation to deliver scalable, measurable outcomes for global businesses.</p>
+            </div>
+
+            <div class="tag-cards">
+                <svg class="path-desktop" viewBox="0 0 1000 1360" preserveAspectRatio="none" aria-hidden="true">
+                    <mask id="path-mask">
+                        <path class="path-mask-line" d="M 720,120 C 450,220 230,330 300,540 C 380,780 760,700 700,930 C 650,1120 420,1140 330,1230"/>
+                    </mask>
+                    <path class="path-guide" d="M 720,120 C 450,220 230,330 300,540 C 380,780 760,700 700,930 C 650,1120 420,1140 330,1230"/>
+                    <path class="path-dashed" d="M 720,120 C 450,220 230,330 300,540 C 380,780 760,700 700,930 C 650,1120 420,1140 330,1230" mask="url(#path-mask)"/>
+                </svg>
+
+                <svg class="path-mobile" viewBox="0 0 4 100" preserveAspectRatio="none" aria-hidden="true">
+                    <mask id="path-mask-mobile">
+                        <path class="path-mask-line" d="M 2,0 L 2,100" vector-effect="non-scaling-stroke"/>
+                    </mask>
+                    <path class="path-guide" d="M 2,0 L 2,100" vector-effect="non-scaling-stroke"/>
+                    <path class="path-dashed" d="M 2,0 L 2,100" mask="url(#path-mask-mobile)" vector-effect="non-scaling-stroke"/>
+                </svg>
+
+                <article class="tag-card pos-1 reveal" data-delay="80">
+                    <span class="punch" aria-hidden="true"></span>
+                    <div class="tag-body">
+                        <span class="num">01</span>
+                        <h3>Enterprise Integration</h3>
+                        <p>Designing resilient integrations across Oracle Fusion, SaaS platforms and on-prem systems with OIC, REST/SOAP services and event-driven patterns.</p>
+                    </div>
+                </article>
+
+                <article class="tag-card pos-2 reveal" data-delay="160">
+                    <span class="punch" aria-hidden="true"></span>
+                    <div class="tag-body">
+                        <span class="num">02</span>
+                        <h3>Cloud &amp; SaaS Architecture</h3>
+                        <p>Architecting on OCI and cloud ERP/CX landscapes &mdash; data models, security, extensions and performance tuning for enterprise-scale workloads.</p>
+                    </div>
+                </article>
+
+                <article class="tag-card pos-3 reveal" data-delay="240">
+                    <span class="punch" aria-hidden="true"></span>
+                    <div class="tag-body">
+                        <span class="num">03</span>
+                        <h3>Automation &amp; AI</h3>
+                        <p>Building intelligent automation, chatbots and data science solutions with Python, LLMs and applied machine learning to remove manual effort.</p>
+                    </div>
+                </article>
+
+                <article class="tag-card pos-4 reveal" data-delay="320">
+                    <span class="punch" aria-hidden="true"></span>
+                    <div class="tag-body">
+                        <span class="num">04</span>
+                        <h3>Product Engineering</h3>
+                        <p>Shipping full products end to end &mdash; React and FastAPI apps, Android builds, APEX tools and bots, from first prototype to live users.</p>
+                    </div>
+                </article>
+
+                <span class="scribble">Turning ideas into reality!</span>
             </div>
         </div>
     </section>
 
-    <!-- experience section start -->
+    <!-- experience -->
     <section class="experience" id="experience">
-        <div class="max-width">
-            <h2 class="title">Work Experience</h2>
-            <div class="carousel owl-carousel">
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-briefcase"></i>
-                        <div class="text">Wipro</div>
-                        <p>Aug 2015 - Apr 2017</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-briefcase"></i>
-                        <div class="text">Oracle</div>
-                        <p>Apr 2017 - Mar 2022</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-briefcase"></i>
-                        <div class="text">L&T Infotech</div>
-                        <p>Mar 2022 - Nov 2022</p>
-                    </div>
-                </div>
-                <div class="card in-progress">
-                    <div class="box">
-                        <i class="fas fa-briefcase"></i>
-                        <div class="text">Deloitte</div>
-                        <p>Nov 2022 - Current</p>
-                    </div>
-                </div>
+        <div class="section-inner">
+            <div class="section-head reveal">
+                <span class="pill">Career</span>
+                <h2>Work Experience</h2>
+                <p>A decade of building and integrating enterprise systems across global consulting firms.</p>
             </div>
+
+            <ol class="timeline">
+                <li class="reveal" data-delay="60">
+                    <span class="node" aria-hidden="true"></span>
+                    <div class="tl-card">
+                        <span class="tl-period">Aug 2015 &ndash; Apr 2017</span>
+                        <h3>Wipro</h3>
+                        <p>Started out in enterprise application support and development, learning the fundamentals of large-scale business systems.</p>
+                    </div>
+                </li>
+                <li class="reveal" data-delay="120">
+                    <span class="node" aria-hidden="true"></span>
+                    <div class="tl-card">
+                        <span class="tl-period">Apr 2017 &ndash; Mar 2022</span>
+                        <h3>Oracle <em>&middot; Staff Consultant</em></h3>
+                        <p>Helped global clients build and transform business processes across Oracle&rsquo;s cloud application suite, specialising in Fusion ERP/CX and integrations.</p>
+                    </div>
+                </li>
+                <li class="reveal" data-delay="180">
+                    <span class="node" aria-hidden="true"></span>
+                    <div class="tl-card">
+                        <span class="tl-period">Mar 2022 &ndash; Nov 2022</span>
+                        <h3>L&amp;T Infotech</h3>
+                        <p>Delivered cloud integration and extension work for enterprise customers across multiple SaaS ecosystems.</p>
+                    </div>
+                </li>
+                <li class="reveal current" data-delay="240">
+                    <span class="node" aria-hidden="true"></span>
+                    <div class="tl-card">
+                        <span class="tl-period">Nov 2022 &ndash; Present <b>Current</b></span>
+                        <h3>Deloitte <em>&middot; Technical Lead &amp; Integration Specialist</em></h3>
+                        <p>Leading design, integration and optimisation of enterprise solutions across diverse cloud ecosystems, with a focus on automation and scale.</p>
+                    </div>
+                </li>
+            </ol>
         </div>
     </section>
 
-    <!-- skills section start -->
-    <section class="skills" id="skills">
-        <div class="max-width">
-            <h2 class="title">My skills</h2>
-            <div class="skills-content">
-                <div class="column left">
-                    <div class="text">Personal</div>
-                    <p>When I’m not working, I have a number of hobbies. I enjoy gaming: both video games and strategic boardgames. I also play guitar and like to go on long drives. My EPIC id is IND_STUBBORN and I’ve been known to release the ocassional song covers. In addition, I really enjoy 3d art and animation and sometimes also like to develop 3d games. Unreal Engine.
-
-                        I have a special interest in playing chess and I’ve put together a video here.</p>
-                    <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">Read more</a>
-                </div>
-                <div class="column right">
-                    <div class="bars">
-                        <div class="info">
-                            <span>SAAS Products</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line saas"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Integration</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line integration"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>PyCharm</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="line pycharm"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Android Studio</span>
-                            <span>70%</span>
-                        </div>
-                        <div class="line android"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Groovy</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="line groovy"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>Python</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="line python"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>SQL</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="line sql"></div>
-                    </div>
-                    <div class="bars">
-                        <div class="info">
-                            <span>PL/SQL</span>
-                            <span>50%</span>
-                        </div>
-                        <div class="line plsql"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- projects section start -->
+    <!-- projects -->
     <section class="projects" id="projects">
-        <div class="max-width">
-            <h2 class="title">My Projects</h2>
-            <div class="carousel owl-carousel">
-                <div class="card">
-                    <div class="box">
-                        <i class="fab fa-telegram-plane"></i>
-                        <div class="text">Queen Beth Bot</div>
-                        <p>A bot deployed on OCI console for Telegram.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                        </div>
-                        <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/queen-beth-is-now-on-telegram" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">Learn More</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fab fa-discord"></i>
-                        <div class="text">Queen Beth Bot</div>
-                        <p>A bot deployed on OCI console for Discord.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                        </div>
-                        <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/my-first-discord-bot-queen-beth" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">Learn More</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fab fa-android"></i>
-                        <div class="text">Notesafe Buddy</div>
-                        <p>An all-in-one solution for securely managing notes, passwords, and tasks.</p>
-                        <div class="tags">
-                            <span class="tag flutterflow">FlutterFlow</span>
-                        </div>
-                        <a href="https://play.google.com/store/apps/details?id=com.mycompany.NoteSafeBuddy&hl=en_IN" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">View on Play Store</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-globe"></i>
-                        <div class="text">Around the World</div>
-                        <p>A static website where a person can log their travels.</p>
-                        <div class="tags">
-                            <span class="tag html">HTML</span>
-                            <span class="tag css">CSS</span>
-                            <span class="tag js">JS</span>
-                        </div>
-                        <a href="https://subhadipgithub.github.io/Around-The-World/" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">Visit Website</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-comments"></i>
-                        <div class="text">Chattify</div>
-                        <p>A real-time chat application using React, FastAPI, and WebSockets.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                            <span class="tag react">React</span>
-                            <span class="tag fastapi">FastAPI</span>
-                        </div>
-                        <a href="https://www.youtube.com/watch?v=AvA4Zkgl1X8" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">Watch Demo</a>
-                    </div>
-                </div>
-                <div class="card in-progress">
-                    <div class="box">
-                        <i class="fas fa-calendar-alt"></i>
-                        <div class="text">Event Assistant</div>
-                        <p>An app for event management, sending invites, and managing budgets.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                            <span class="tag whatsapp">WhatsApp</span>
-                            <span class="tag mongodb">MongoDB</span>
-                        </div>
-                        <a href="https://github.com/SubhadipGitHub/EventAssistant_Web" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">View on GitHub</a>
-                    </div>
-                </div>
-                <div class="card in-progress">
-                    <div class="box">
-                        <i class="fas fa-cogs"></i>
-                        <div class="text">Smart Operation App</div>
-                        <p>Manages team availability, leave requests, and skills.</p>
-                        <div class="tags">
-                            <span class="tag oracle-apex">Oracle APEX</span>
-                            <span class="tag oci">OCI</span>
-                        </div>
-                        <a href="https://g917c620f25a59c-apexdev1.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/track_management/project-management-assistant/home" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">Visit App</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-birthday-cake"></i>
-                        <div class="text">Birthday Website</div>
-                        <p>Create a page for an event with a future availability date.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                            <span class="tag html">HTML</span>
-                            <span class="tag css">CSS</span>
-                            <span class="tag js">JS</span>
-                        </div>
-                        <a href="https://github.com/SubhadipGitHub/BirthdayFlaskApp" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">View on GitHub</a>
-                    </div>
-                </div>
-                <div class="card in-progress">
-                    <div class="box">
-                        <i class="fas fa-utensils"></i>
-                        <div class="text">Restaurant Table Booking App</div>
-                        <p>Automated table booking and ordering system.</p>
-                        <div class="tags">
-                            <span class="tag python">Python</span>
-                            <span class="tag react">React</span>
-                            <span class="tag mongodb">MongoDB</span>
-                        </div>
-                        <a href="https://github.com/SubhadipGitHub/RestaurantApp" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">View on GitHub</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="box">
-                        <i class="fas fa-chart-bar"></i>
-                        <div class="text">Whatsapp Chat Analyzer</div>
-                        <p>Analyzes WhatsApp chat exports to provide user stats.</p>
-                        <div class="tags">
-                            <span class="tag streamlit">Streamlit</span>
-                            <span class="tag html">HTML</span>
-                            <span class="tag css">CSS</span>
-                            <span class="tag js">JS</span>
-                        </div>
-                        <a href="https://github.com/SubhadipGitHub/Whatsapp-Chat-Analyzer" target="_blank" style="color: crimson; text-decoration: none; font-weight: 500;">View on GitHub</a>
-                    </div>
-                </div>
+        <div class="section-inner">
+            <div class="section-head reveal">
+                <span class="pill">Selected Work</span>
+                <h2>Projects I&rsquo;ve built</h2>
+                <p>Bots, apps and tools &mdash; shipped on weekends, in production with real users.</p>
+            </div>
+
+            <div class="project-grid">
+                <article class="project reveal" data-delay="40">
+                    <div class="project-top"><span class="p-icon">✈️</span><span class="p-state live">Live</span></div>
+                    <h3>Queen Beth Bot &middot; Telegram</h3>
+                    <p>A chess-playing bot deployed on OCI, serving moves and games straight inside Telegram.</p>
+                    <div class="tags"><span>Python</span><span>OCI</span></div>
+                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/queen-beth-is-now-on-telegram" target="_blank" rel="noopener noreferrer">Learn more <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="80">
+                    <div class="project-top"><span class="p-icon">🎮</span><span class="p-state live">Live</span></div>
+                    <h3>Queen Beth Bot &middot; Discord</h3>
+                    <p>The same engine reworked for Discord servers, running as a always-on OCI service.</p>
+                    <div class="tags"><span>Python</span><span>OCI</span></div>
+                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/my-first-discord-bot-queen-beth" target="_blank" rel="noopener noreferrer">Learn more <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="120">
+                    <div class="project-top"><span class="p-icon">🔐</span><span class="p-state live">Play Store</span></div>
+                    <h3>Notesafe Buddy</h3>
+                    <p>An all-in-one Android app for securely managing notes, passwords and tasks.</p>
+                    <div class="tags"><span>FlutterFlow</span><span>Android</span></div>
+                    <a href="https://play.google.com/store/apps/details?id=com.mycompany.NoteSafeBuddy&hl=en_IN" target="_blank" rel="noopener noreferrer">View on Play Store <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="160">
+                    <div class="project-top"><span class="p-icon">🌍</span><span class="p-state live">Live</span></div>
+                    <h3>Around the World</h3>
+                    <p>A static site where travellers can log and visualise everywhere they&rsquo;ve been.</p>
+                    <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+                    <a href="https://subhadipgithub.github.io/Around-The-World/" target="_blank" rel="noopener noreferrer">Visit website <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="200">
+                    <div class="project-top"><span class="p-icon">💬</span><span class="p-state live">Demo</span></div>
+                    <h3>Chattify</h3>
+                    <p>A real-time chat application built with React, FastAPI and WebSockets.</p>
+                    <div class="tags"><span>React</span><span>FastAPI</span><span>Python</span></div>
+                    <a href="https://www.youtube.com/watch?v=AvA4Zkgl1X8" target="_blank" rel="noopener noreferrer">Watch demo <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="240">
+                    <div class="project-top"><span class="p-icon">📅</span><span class="p-state wip">In progress</span></div>
+                    <h3>Event Assistant</h3>
+                    <p>Event management with invites, RSVPs and budget tracking, wired to WhatsApp.</p>
+                    <div class="tags"><span>Python</span><span>WhatsApp</span><span>MongoDB</span></div>
+                    <a href="https://github.com/SubhadipGitHub/EventAssistant_Web" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="280">
+                    <div class="project-top"><span class="p-icon">⚙️</span><span class="p-state wip">In progress</span></div>
+                    <h3>Smart Operation App</h3>
+                    <p>Team availability, leave requests and skill tracking for delivery teams.</p>
+                    <div class="tags"><span>Oracle APEX</span><span>OCI</span></div>
+                    <a href="https://g917c620f25a59c-apexdev1.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/track_management/project-management-assistant/home" target="_blank" rel="noopener noreferrer">Visit app <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="320">
+                    <div class="project-top"><span class="p-icon">🎂</span><span class="p-state live">Live</span></div>
+                    <h3>Birthday Website</h3>
+                    <p>Generate a private event page that unlocks on a future date.</p>
+                    <div class="tags"><span>Python</span><span>Flask</span><span>JS</span></div>
+                    <a href="https://github.com/SubhadipGitHub/BirthdayFlaskApp" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="360">
+                    <div class="project-top"><span class="p-icon">🍽️</span><span class="p-state wip">In progress</span></div>
+                    <h3>Restaurant Table Booking</h3>
+                    <p>Automated table booking and ordering, from reservation through to the kitchen.</p>
+                    <div class="tags"><span>React</span><span>Python</span><span>MongoDB</span></div>
+                    <a href="https://github.com/SubhadipGitHub/RestaurantApp" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
+                </article>
+
+                <article class="project reveal" data-delay="400">
+                    <div class="project-top"><span class="p-icon">📊</span><span class="p-state live">Live</span></div>
+                    <h3>WhatsApp Chat Analyzer</h3>
+                    <p>Turns a WhatsApp export into user stats, activity heatmaps and word clouds.</p>
+                    <div class="tags"><span>Streamlit</span><span>Python</span></div>
+                    <a href="https://github.com/SubhadipGitHub/Whatsapp-Chat-Analyzer" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- contact section start -->
-    <section class="contact" id="contact">
-        <div class="max-width">
-            <h2 class="title">Contact me</h2>
-            <div class="contact-content">
-                <div class="column left">
-                    <div class="text">Get in Touch</div>
-                    <p>You can contact for me for any professional advice,any job opportunities or to discuss on any of my research topic or if you want to collaborate with me on any of my ongoing going personal research projects.<br>Please send your message in a well formated manner so it can be easy for me to reply back.</p>
-                    <div class="icons">
-                        <div class="row">
-                            <i class="fas fa-user"></i>
-                            <div class="info">
-                                <div class="head">Name</div>
-                                <div class="sub-title">Subhadip Dutta</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="info">
-                                <div class="head">Address</div>
-                                <div class="sub-title">Bangalore, India</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <i class="fas fa-envelope"></i>
-                            <div class="info">
-                                <div class="head">Email</div>
-                                <div class="sub-title">subhadip.dutta.18@gmail.com</div>
-                            </div>
-                        </div>
+    <!-- skills -->
+    <section class="skills" id="skills">
+        <span class="blur-accent blur-a" aria-hidden="true"></span>
+        <span class="blur-accent blur-b" aria-hidden="true"></span>
+
+        <div class="section-inner">
+            <div class="section-head reveal">
+                <span class="pill">Technical Stack</span>
+                <h2>Technologies I work with</h2>
+                <p>Integration and cloud expertise, backed by hands-on product and data engineering.</p>
+            </div>
+
+            <div class="skill-grid">
+                <div class="skill-card reveal" data-delay="60">
+                    <h3>Integration &amp; SaaS</h3>
+                    <div class="pills">
+                        <span>Oracle Integration Cloud</span><span>Fusion ERP</span><span>Fusion CX</span>
+                        <span>REST APIs</span><span>SOAP</span><span>BI Publisher</span><span>Groovy</span>
                     </div>
                 </div>
-                <div class="column right">
-                    <div class="text">Message me</div>
-                    <p class="contact-note">Prefer a direct email? <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a></p>
-                    <form id="contactForm">
-                        <div class="fields">
-                            <div class="field name">
-                                <label class="sr-only" for="contact-name">Name</label>
-                                <input id="contact-name" type="text" name="entry.1418886227" placeholder="Name" required>
-                            </div>
-                            <div class="field email">
-                                <label class="sr-only" for="contact-email">Email</label>
-                                <input id="contact-email" type="email" name="entry.2009790868" placeholder="Email" required>
-                            </div>
+                <div class="skill-card reveal" data-delay="120">
+                    <h3>Cloud &amp; Data</h3>
+                    <div class="pills">
+                        <span>OCI</span><span>Oracle APEX</span><span>ATP</span>
+                        <span>SQL</span><span>PL/SQL</span><span>MongoDB</span><span>CI/CD</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal" data-delay="180">
+                    <h3>Engineering</h3>
+                    <div class="pills">
+                        <span>Python</span><span>FastAPI</span><span>React</span>
+                        <span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>Flask</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal" data-delay="240">
+                    <h3>AI, Mobile &amp; Tools</h3>
+                    <div class="pills">
+                        <span>Data Science</span><span>Machine Learning</span><span>LLMs</span>
+                        <span>Android Studio</span><span>FlutterFlow</span><span>Streamlit</span>
+                        <span>PyCharm</span><span>Git</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="personal reveal" data-delay="300">
+                <h3>Away from the keyboard</h3>
+                <p>
+                    I game &mdash; both video games and strategic board games &mdash; play guitar, and take long drives.
+                    My EPIC id is <strong>IND_STUBBORN</strong>, I release the occasional song cover, and I have a soft
+                    spot for 3D art, animation and building games in Unreal Engine. Chess is the constant.
+                </p>
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">Read more <b>&rarr;</b></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- contact -->
+    <section class="contact" id="contact">
+        <div class="contact-bigtext" id="contact-bigtext" aria-hidden="true"><span>CONTACT</span></div>
+
+        <div class="contact-panel reveal">
+            <div class="panel-eyebrow">Reach Out</div>
+
+            <div class="contact-meta">
+                <div><span>Name</span>Subhadip Dutta</div>
+                <div><span>Location</span>Bangalore, India</div>
+                <div><span>Email</span><a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a></div>
+            </div>
+
+            <form id="contactForm" novalidate>
+                <div class="form-cols">
+                    <div class="form-left">
+                        <div class="field">
+                            <label class="sr-only" for="contact-name">Name</label>
+                            <input id="contact-name" name="entry.1418886227" type="text" placeholder="Name" required>
+                        </div>
+                        <div class="field">
+                            <label class="sr-only" for="contact-email">Email</label>
+                            <input id="contact-email" name="entry.2009790868" type="email" placeholder="Email" required>
                         </div>
                         <div class="field">
                             <label class="sr-only" for="contact-subject">Subject</label>
-                            <input id="contact-subject" type="text" name="entry.313347372" placeholder="Subject" required>
+                            <input id="contact-subject" name="entry.313347372" type="text" placeholder="Subject" required>
                         </div>
-                        <div class="field textarea">
+                    </div>
+                    <div class="form-right">
+                        <div class="field field-text">
                             <label class="sr-only" for="contact-message">Message</label>
-                            <textarea id="contact-message" cols="30" rows="10" name="entry.1532404840" placeholder="Message.." required></textarea>
+                            <textarea id="contact-message" name="entry.1532404840" placeholder="Type your message here" required></textarea>
                         </div>
-                        <div class="button-area">
-                            <button type="submit">Send message</button>
-                        </div>
-                    </form>
-                    <div id="toast" class="toast"></div>
+                    </div>
                 </div>
+
+                <div class="form-foot">
+                    <label class="permission">
+                        <input type="checkbox" id="permission">
+                        <span>I give permission to be contacted back at this email address.</span>
+                    </label>
+
+                    <div class="foot-right">
+                        <p>Please send your message in a well-formatted manner so it&rsquo;s easy to reply. Happy to talk about roles, collaborations or ongoing research.</p>
+                        <button type="submit" class="send-btn">Send <b>&rarr;</b></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-row">
+            <div>
+                <p>Enterprise Integration &amp; Cloud</p>
+                <p>Automation, AI, Data Science</p>
+                <p>Product Engineering</p>
+            </div>
+            <div class="mid">
+                <p>10+ years of experience</p>
+                <a href="#projects">View Work</a>
+            </div>
+            <div class="end">
+                <p>Bangalore, India</p>
+                <p id="footer-year">2026</p>
             </div>
         </div>
-    </section>
-    
-    <!-- footer section start -->
-    <footer>
-        <span>Powered By <a href="https://subhadipgithub.github.io/">Subhadip Dutta</a> | <span class="far fa-copyright"></span> 2021 All rights reserved.</span>
+
+        <div class="footer-word"><h2>SUBHADIP</h2></div>
+
+        <div class="footer-row bottom">
+            <div>
+                <a href="#contact" class="strong">Contact</a>
+                <p class="copy">&copy; <span class="year">2026</span> Subhadip Dutta &middot; All rights reserved.</p>
+            </div>
+            <div class="mid">
+                <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a>
+            </div>
+            <div class="end">
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
     </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+
     <script src="script.js" defer></script>
 </body>
 </html>
