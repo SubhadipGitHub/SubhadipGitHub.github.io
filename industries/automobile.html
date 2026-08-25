@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Five years of Oracle Fusion and integration work in the automobile sector - order-to-cash, dealer and supply-side flows across a manufacturing operation.">
+    <meta name="theme-color" content="#ff2a2a">
+    <meta property="og:title" content="Automobile &middot; Subhadip Dutta">
+    <meta property="og:description" content="Five years of Oracle Fusion and integration work in the automobile sector - order-to-cash, dealer and supply-side flows across a manufacturing operation.">
+    <meta property="og:image" content="../images/profile-1.jpg">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://subhadipgithub.github.io/industries/automobile.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://subhadipgithub.github.io/industries/automobile.html">
+    <title>Automobile &middot; Subhadip Dutta</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- navbar: uses .subnav-links, NOT .nav-links -- script.js feeds every
+         .nav-links href to querySelector, where a cross-page href would throw. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="../index.html#home" class="logo">Subhadip <span>.</span></a>
+
+            <div class="subnav-links">
+                <a href="../index.html#industries">All industries</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#projects">Projects</a>
+            </div>
+
+            <a href="../index.html#contact" class="nav-cta">Hire Me</a>
+        </div>
+    </nav>
+
+    <!-- page head -->
+    <header class="page-head">
+        <div class="section-inner">
+            <span class="pill">Industry Experience</span>
+            <h1>Five years inside the <em>automobile</em> business</h1>
+            <p>The longest single run of my career, and the one that shaped how I think about integration. Automotive is a business of long supply chains and short tempers about delay &mdash; a plant that stops costs money by the minute, so the systems feeding it are held to a different standard.</p>
+
+            <div class="page-meta">
+                <div><strong>5 yrs</strong><span>Time in sector</span></div>
+                <div><strong>Order to cash</strong><span>Primary focus</span></div>
+                <div><strong>Consultant &amp; Lead</strong><span>Working as</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- body -->
+    <main class="page-body">
+        <div class="section-inner">
+            <section class="page-block reveal" data-delay="60">
+                <h2>What I worked on</h2>
+                <p>Most of my time here went into the order-to-cash spine: quotes and orders coming in from dealer-facing channels, pricing and availability resolved against the ERP, then fulfilment, invoicing and revenue posting flowing back out. Each of those hops is an integration, and each one has a different tolerance for being slow, being wrong, or being retried.</p>
+                <p>The supply side was the other half. Purchasing, supplier onboarding, goods receipt and settlement flows that had to reconcile cleanly against physical movement of parts. When a receipt and an invoice disagree, someone in finance has to close the gap by hand &mdash; so a lot of the work was less about moving data and more about making mismatches visible early, with enough context attached to resolve them.</p>
+                <p>Over five years I moved from building individual flows to owning how a set of them fit together: shared error handling, consistent retry and idempotency behaviour, and reporting that let the business see the state of an order without opening four systems.</p>
+            </section>
+
+            <section class="page-block reveal" data-delay="120">
+                <h2>Systems &amp; platforms</h2>
+                <div class="pills">
+                    <span>Oracle Fusion ERP</span>
+                    <span>Order Management</span>
+                    <span>Oracle Integration Cloud</span>
+                    <span>REST APIs</span>
+                    <span>SOAP</span>
+                    <span>BI Publisher</span>
+                    <span>Groovy</span>
+                    <span>FBDI &amp; Bulk Import</span>
+                    <span>Oracle Cloud Infrastructure</span>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="180">
+                <h2>Representative work</h2>
+                <div class="work-list">
+                    <div class="work-item">
+                        <h3>Order-to-cash integration flows</h3>
+                        <p>End-to-end flows carrying orders from the sales channel into Fusion and pushing fulfilment and invoicing status back, with retry and idempotency behaviour that survived partner outages rather than duplicating orders through them.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Supplier and procurement interfaces</h3>
+                        <p>Inbound supplier, purchase order and goods-receipt interfaces, including bulk loads for volumes too large to run transactionally, plus the reconciliation reporting that made settlement mismatches findable.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Operational reporting and extracts</h3>
+                        <p>BI Publisher reports and scheduled extracts serving finance and operations, replacing manual pulls that had been stitched together in spreadsheets.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Fault handling and support tooling</h3>
+                        <p>A consistent error-handling pattern across flows &mdash; structured fault payloads, notifications routed to the team that could actually act, and a resubmission path that did not require a developer.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="240">
+                <h2>What the sector taught me</h2>
+                <p>Automotive taught me that the integration is rarely the hard part &mdash; the hard part is what happens when it fails at 2am and the person looking at the alert is not the person who built it. Almost everything I do around observability, error payloads and resubmission paths came out of these five years.</p>
+            </section>
+
+            <div class="page-back reveal" data-delay="300">
+                <a href="../index.html#industries"><b>&larr;</b> Back to all industries</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-row">
+            <div>
+                <p>Enterprise Integration &amp; Cloud</p>
+                <p>Automation, AI, Data Science</p>
+                <p>Product Engineering</p>
+            </div>
+            <div class="mid">
+                <p>10+ years of experience</p>
+                <a href="../index.html#projects">View Work</a>
+            </div>
+            <div class="end">
+                <p>Bangalore, India</p>
+                <p id="footer-year">2026</p>
+            </div>
+        </div>
+
+        <div class="footer-word"><h2>SUBHADIP</h2></div>
+
+        <div class="footer-row bottom">
+            <div>
+                <a href="../index.html#contact" class="strong">Contact</a>
+                <p class="copy">&copy; <span class="year">2026</span> Subhadip Dutta &middot; All rights reserved.</p>
+            </div>
+            <div class="mid">
+                <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a>
+            </div>
+            <div class="end">
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+
+    <script src="../script.js" defer></script>
+</body>
+</html>
