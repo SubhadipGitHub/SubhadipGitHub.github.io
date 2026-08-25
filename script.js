@@ -195,9 +195,12 @@
     var reelToggle = $('#reel-toggle');
     var reelLabel = $('#reel-label');
 
+    var heroSection = $('#home');
+
     function hideVideo() {
         if (video) { video.classList.add('hidden'); }
         if (reelToggle) { reelToggle.hidden = true; }
+        if (heroSection) { heroSection.classList.remove('has-video'); }
     }
 
     if (video) {
@@ -207,6 +210,8 @@
 
         video.addEventListener('loadeddata', function () {
             video.classList.remove('hidden');
+            // a real showreel supersedes the animated cover plate
+            if (heroSection) { heroSection.classList.add('has-video'); }
             if (reelToggle) { reelToggle.hidden = false; }
             var playing = video.play();
             if (playing && playing.catch) { playing.catch(function () { /* autoplay blocked */ }); }
