@@ -210,7 +210,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .logo span { color: var(--red); }
 
-.nav-links { display: flex; gap: 30px; }
+.nav-links { display: flex; gap: 22px; }
 
 .nav-links a {
     position: relative;
@@ -290,7 +290,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     overflow: hidden;
     transition: max-height 0.45s var(--ease), opacity 0.35s ease, padding 0.35s ease;
 }
-.navbar.open .mobile-menu { max-height: 520px; opacity: 1; padding: 14px 24px 28px; }
+.navbar.open .mobile-menu { max-height: 680px; opacity: 1; padding: 14px 24px 28px; }
 
 .mobile-menu a {
     color: var(--white);
@@ -838,9 +838,70 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .tl-card p { font-size: 0.9375rem; line-height: 1.7; font-weight: 500; color: var(--grey-600); }
 
 /* ============================================================
+   Industries
+   ============================================================ */
+.industries { background: var(--grey-100); padding: 100px 0 110px; }
+
+.industry-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+
+.industry {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 24px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s var(--ease);
+}
+.industry:hover { transform: translateY(-6px); border-color: rgba(255, 42, 42, 0.4); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.09); }
+
+.ind-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.ind-icon { font-size: 1.5rem; }
+
+.ind-years {
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(255, 42, 42, 0.1);
+    color: var(--red-deep);
+}
+
+.industry h3 { font-size: 1.125rem; font-weight: 900; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 10px; }
+.industry > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
+
+/* depth meter - width is set inline, scaled against the 5-year maximum */
+.ind-bar { height: 4px; border-radius: 999px; background: rgba(0, 0, 0, 0.07); overflow: hidden; margin-bottom: 18px; }
+.ind-bar span { display: block; height: 100%; border-radius: 999px; background: var(--red); }
+
+.industry a {
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+.industry a b { transition: transform 0.3s var(--ease); }
+.industry a:hover b { transform: translateX(5px); }
+
+.industry-next {
+    margin-top: 22px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 24px;
+    padding: 30px;
+}
+.next-head { margin-bottom: 18px; }
+.next-head h3 { font-size: 1rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 6px; }
+.next-head p { font-size: 0.875rem; font-weight: 500; color: var(--grey-600); }
+
+/* ============================================================
    Projects
    ============================================================ */
-.projects { background: var(--grey-100); padding: 100px 0 110px; }
+.projects { background: var(--white); padding: 100px 0 110px; }
 
 .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 
@@ -897,7 +958,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 /* ============================================================
    Skills
    ============================================================ */
-.skills { position: relative; background: var(--white); padding: 100px 0 110px; overflow: hidden; }
+.skills { position: relative; background: var(--grey-100); padding: 100px 0 110px; overflow: hidden; }
 
 .blur-accent { position: absolute; border-radius: 50%; background: var(--red); filter: blur(80px); opacity: 0.05; pointer-events: none; }
 .blur-a { width: 240px; height: 240px; top: 40px; right: 40px; }
@@ -944,6 +1005,67 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .personal a { font-size: 0.8125rem; font-weight: 800; color: var(--red); display: inline-flex; gap: 7px; align-items: center; }
 .personal a b { transition: transform 0.3s var(--ease); }
 .personal a:hover b { transform: translateX(5px); }
+
+/* ============================================================
+   Certifications
+   ============================================================ */
+.certs { background: var(--white); padding: 100px 0 110px; }
+
+.cert-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+
+.cert {
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 24px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s var(--ease);
+}
+.cert:hover { transform: translateY(-6px); border-color: rgba(255, 42, 42, 0.4); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.09); }
+
+.cert-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.cert-mark { font-size: 1.5rem; }
+.cert-date { font-size: 0.75rem; font-weight: 700; color: var(--grey-400); font-family: var(--mono); }
+
+.cert-issuer {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--red-deep);
+    margin-bottom: 8px;
+}
+
+.cert h3 { font-size: 1.0625rem; font-weight: 900; letter-spacing: -0.025em; line-height: 1.3; color: var(--ink); margin-bottom: 10px; }
+.cert > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
+
+/* Certifications that carry an expiry say so plainly rather than implying
+   they are all still current. */
+.cert-flag {
+    align-self: flex-start;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+}
+.cert-flag.lapsed { background: rgba(0, 0, 0, 0.06); color: var(--grey-600); }
+.cert-flag.valid { background: rgba(255, 42, 42, 0.1); color: var(--red-deep); }
+
+.cert a {
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+.cert a b { transition: transform 0.3s var(--ease); }
+.cert a:hover b { transform: translateX(5px); }
 
 /* ============================================================
    Contact
@@ -1133,6 +1255,82 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .to-top svg { width: 19px; height: 19px; fill: none; stroke: var(--white); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ============================================================
+   Industry detail pages (industries/*.html)
+   ============================================================ */
+/* The navbar is fixed with white text, so these pages open on a dark band
+   to keep it legible before it flips to its .sticky state. */
+.page-head {
+    background: var(--ink);
+    background-image: radial-gradient(120% 90% at 15% 10%, #2a0505 0%, #0a0a0a 55%, #000 100%);
+    padding: 170px 0 90px;
+}
+.page-head .section-inner { max-width: var(--shell); }
+.page-head .pill { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.7); }
+.page-head h1 {
+    font-size: clamp(2.2rem, 6vw, 3.75rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    color: var(--white);
+    margin-bottom: 18px;
+}
+.page-head h1 em { font-style: normal; color: var(--red); }
+.page-head > .section-inner > p { max-width: 640px; color: rgba(255, 255, 255, 0.66); font-size: 1.0625rem; line-height: 1.7; font-weight: 500; }
+
+.page-meta { display: flex; flex-wrap: wrap; gap: 34px; margin-top: 34px; }
+.page-meta div { display: flex; flex-direction: column; gap: 5px; }
+.page-meta strong { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.03em; color: var(--white); }
+.page-meta span { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--grey-400); }
+
+/* sub-page nav: deliberately NOT .nav-links, whose hrefs script.js feeds to
+   querySelector - a cross-page href there throws and kills every interaction. */
+.subnav-links { display: flex; align-items: center; gap: 22px; }
+.subnav-links a { font-size: 0.875rem; font-weight: 700; color: rgba(255, 255, 255, 0.82); transition: color 0.3s var(--ease); }
+.subnav-links a:hover { color: var(--white); }
+.navbar.sticky .subnav-links a { color: var(--grey-600); }
+.navbar.sticky .subnav-links a:hover { color: var(--ink); }
+
+.page-body { background: var(--white); padding: 90px 0 100px; }
+
+/* Content keeps a readable measure, but the section-inner stays at --shell so
+   the body lines up with the page-head above it instead of centring narrower. */
+.page-block { max-width: 760px; margin-bottom: 54px; }
+.page-block:last-child { margin-bottom: 0; }
+.page-block h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 18px;
+}
+.page-block > p { font-size: 1rem; line-height: 1.8; font-weight: 500; color: var(--grey-600); margin-bottom: 16px; }
+.page-block > p:last-child { margin-bottom: 0; }
+
+.work-list { display: grid; gap: 16px; }
+.work-item {
+    background: var(--grey-100);
+    border: 1px solid var(--grey-200);
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.4s var(--ease);
+}
+.work-item:hover { border-color: rgba(255, 42, 42, 0.35); box-shadow: 0 16px 34px rgba(0, 0, 0, 0.06); }
+.work-item h3 { font-size: 1rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 9px; }
+.work-item p { font-size: 0.9375rem; line-height: 1.7; font-weight: 500; color: var(--grey-600); }
+
+.page-back { max-width: 760px; margin-top: 60px; padding-top: 34px; border-top: 1px solid var(--grey-200); }
+.page-back a {
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.page-back a b { transition: transform 0.3s var(--ease); }
+.page-back a:hover b { transform: translateX(-5px); }
+
+/* ============================================================
    Responsive
    ============================================================ */
 @media (max-width: 1100px) {
@@ -1176,7 +1374,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .pos-2.reveal.in, .pos-4.reveal.in { transform: rotate(-1.5deg); }
     .scribble { display: none; }
 
-    .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .project-grid, .industry-grid, .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .page-head { padding: 130px 0 70px; }
+    .page-body { padding: 70px 0 80px; }
+    .subnav-links { gap: 16px; }
 
     .contact { padding-top: 100px; min-height: auto; }
     .contact-panel { width: 100%; }
@@ -1199,12 +1401,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .star-b svg { width: 52px; height: 52px; }
 
     .section-inner { padding: 0 20px; }
-    .experience, .projects, .skills { padding: 70px 0 80px; }
+    .experience, .projects, .skills, .industries, .certs { padding: 70px 0 80px; }
     .timeline { padding-left: 26px; }
     .node { left: -26px; }
     .tl-card { padding: 20px; }
 
-    .project-grid, .skill-grid { grid-template-columns: 1fr; }
+    .project-grid, .skill-grid, .industry-grid, .cert-grid { grid-template-columns: 1fr; }
+    .industry-next { padding: 24px; }
+
+    .page-head { padding: 120px 0 60px; }
+    .page-meta { gap: 24px; }
+    .work-item { padding: 20px; }
 
     .contact-bigtext span { font-size: 28vw; }
     .contact-panel { padding: 40px 20px 46px; }

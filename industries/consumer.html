@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Three years of integration and Oracle Fusion work in the consumer sector - high-volume order, fulfilment and customer data flows.">
+    <meta name="theme-color" content="#ff2a2a">
+    <meta property="og:title" content="Consumer &middot; Subhadip Dutta">
+    <meta property="og:description" content="Three years of integration and Oracle Fusion work in the consumer sector - high-volume order, fulfilment and customer data flows.">
+    <meta property="og:image" content="../images/profile-1.jpg">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://subhadipgithub.github.io/industries/consumer.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://subhadipgithub.github.io/industries/consumer.html">
+    <title>Consumer &middot; Subhadip Dutta</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- navbar: uses .subnav-links, NOT .nav-links -- script.js feeds every
+         .nav-links href to querySelector, where a cross-page href would throw. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="../index.html#home" class="logo">Subhadip <span>.</span></a>
+
+            <div class="subnav-links">
+                <a href="../index.html#industries">All industries</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#projects">Projects</a>
+            </div>
+
+            <a href="../index.html#contact" class="nav-cta">Hire Me</a>
+        </div>
+    </nav>
+
+    <!-- page head -->
+    <header class="page-head">
+        <div class="section-inner">
+            <span class="pill">Industry Experience</span>
+            <h1>Three years on <em>consumer</em>-facing volume</h1>
+            <p>Consumer businesses run on thin margins and thick volume. The individual transaction is small enough that nobody agonises over it, and there are enough of them that anything inefficient becomes expensive fast.</p>
+
+            <div class="page-meta">
+                <div><strong>3 yrs</strong><span>Time in sector</span></div>
+                <div><strong>Fulfilment &amp; volume</strong><span>Primary focus</span></div>
+                <div><strong>Consultant &amp; Lead</strong><span>Working as</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- body -->
+    <main class="page-body">
+        <div class="section-inner">
+            <section class="page-block reveal" data-delay="60">
+                <h2>What I worked on</h2>
+                <p>The work centred on order and fulfilment flows at a volume where design choices you can get away with elsewhere stop working. Row-by-row processing that is fine for a few hundred records a day falls over at a few hundred thousand, so a lot of this was choosing between transactional integration and bulk loading, and knowing which one a given flow actually needed.</p>
+                <p>The other recurring theme was customer data. Consumer operations tend to accumulate the same person several times over across channels, and downstream reporting quietly inherits the mess. Getting service and customer records to line up between the CX and ERP sides &mdash; and keeping them lined up as both changed &mdash; was steady, unglamorous, high-value work.</p>
+            </section>
+
+            <section class="page-block reveal" data-delay="120">
+                <h2>Systems &amp; platforms</h2>
+                <div class="pills">
+                    <span>Oracle Fusion ERP</span>
+                    <span>Oracle Fusion CX</span>
+                    <span>Oracle Integration Cloud</span>
+                    <span>REST APIs</span>
+                    <span>Bulk data loads</span>
+                    <span>BI Publisher</span>
+                    <span>Python</span>
+                    <span>Data reconciliation</span>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="180">
+                <h2>Representative work</h2>
+                <div class="work-list">
+                    <div class="work-item">
+                        <h3>High-volume order and fulfilment flows</h3>
+                        <p>Integrations sized for daily volume rather than a demo, using bulk import where per-record calls would not hold up, with batch-level monitoring so a partial failure was visible without reading logs.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Customer and service data alignment</h3>
+                        <p>Flows keeping customer and service records consistent between the CX and ERP sides, including the deduplication and matching rules that decided when two records were one person.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Reconciliation reporting</h3>
+                        <p>Scheduled comparisons between source and target counts and values, surfacing drift as a report the business could read instead of an incident someone eventually noticed.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="240">
+                <h2>What the sector taught me</h2>
+                <p>Consumer work is where I learned to design for the volume that will exist rather than the volume in the test environment. It also made me suspicious of any integration that cannot tell you, cheaply, whether it actually moved everything it was supposed to.</p>
+            </section>
+
+            <div class="page-back reveal" data-delay="300">
+                <a href="../index.html#industries"><b>&larr;</b> Back to all industries</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-row">
+            <div>
+                <p>Enterprise Integration &amp; Cloud</p>
+                <p>Automation, AI, Data Science</p>
+                <p>Product Engineering</p>
+            </div>
+            <div class="mid">
+                <p>10+ years of experience</p>
+                <a href="../index.html#projects">View Work</a>
+            </div>
+            <div class="end">
+                <p>Bangalore, India</p>
+                <p id="footer-year">2026</p>
+            </div>
+        </div>
+
+        <div class="footer-word"><h2>SUBHADIP</h2></div>
+
+        <div class="footer-row bottom">
+            <div>
+                <a href="../index.html#contact" class="strong">Contact</a>
+                <p class="copy">&copy; <span class="year">2026</span> Subhadip Dutta &middot; All rights reserved.</p>
+            </div>
+            <div class="mid">
+                <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a>
+            </div>
+            <div class="end">
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+
+    <script src="../script.js" defer></script>
+</body>
+</html>

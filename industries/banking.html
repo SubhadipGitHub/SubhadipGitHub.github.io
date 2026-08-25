@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Six months of integration work in banking - controlled interfaces, reconciliation and audit-ready data movement.">
+    <meta name="theme-color" content="#ff2a2a">
+    <meta property="og:title" content="Banking &middot; Subhadip Dutta">
+    <meta property="og:description" content="Six months of integration work in banking - controlled interfaces, reconciliation and audit-ready data movement.">
+    <meta property="og:image" content="../images/profile-1.jpg">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://subhadipgithub.github.io/industries/banking.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://subhadipgithub.github.io/industries/banking.html">
+    <title>Banking &middot; Subhadip Dutta</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- navbar: uses .subnav-links, NOT .nav-links -- script.js feeds every
+         .nav-links href to querySelector, where a cross-page href would throw. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="../index.html#home" class="logo">Subhadip <span>.</span></a>
+
+            <div class="subnav-links">
+                <a href="../index.html#industries">All industries</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#projects">Projects</a>
+            </div>
+
+            <a href="../index.html#contact" class="nav-cta">Hire Me</a>
+        </div>
+    </nav>
+
+    <!-- page head -->
+    <header class="page-head">
+        <div class="section-inner">
+            <span class="pill">Industry Experience</span>
+            <h1>Six months of <em>banking</em> controls</h1>
+            <p>The shortest entry here, and the one I would most like to extend. Banking changed my default assumptions about what an integration owes the people running it.</p>
+
+            <div class="page-meta">
+                <div><strong>6 mos</strong><span>Time in sector</span></div>
+                <div><strong>Controls &amp; reconciliation</strong><span>Primary focus</span></div>
+                <div><strong>Consultant</strong><span>Working as</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- body -->
+    <main class="page-body">
+        <div class="section-inner">
+            <section class="page-block reveal" data-delay="60">
+                <h2>What I worked on</h2>
+                <p>The work was interface and reconciliation focused: moving data between core and downstream systems under controls that assume, correctly, that everyone will eventually need to prove what happened. Every flow had to be able to account for itself &mdash; what it read, what it wrote, what it rejected and why &mdash; with a trail that would survive an audit rather than a code review.</p>
+                <p>That also meant a slower, more deliberate change process than I was used to. Segregated duties, controlled promotion, and evidence attached to every release. Frustrating at first, then genuinely instructive: most of the ceremony exists because someone once skipped it.</p>
+            </section>
+
+            <section class="page-block reveal" data-delay="120">
+                <h2>Systems &amp; platforms</h2>
+                <div class="pills">
+                    <span>Oracle Integration Cloud</span>
+                    <span>Oracle Fusion ERP</span>
+                    <span>Secure file transfer</span>
+                    <span>Reconciliation controls</span>
+                    <span>Audit logging</span>
+                    <span>REST APIs</span>
+                    <span>Scheduled batch interfaces</span>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="180">
+                <h2>Representative work</h2>
+                <div class="work-list">
+                    <div class="work-item">
+                        <h3>Controlled batch interfaces</h3>
+                        <p>Scheduled interfaces between core and downstream systems, with checksums, control totals and rejection handling designed so a partial run could be proven partial rather than assumed complete.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Reconciliation and exception reporting</h3>
+                        <p>Reporting comparing what was sent against what was accepted, with exceptions itemised for the operations team rather than aggregated into a single pass or fail.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Audit-ready logging</h3>
+                        <p>Structured logging at the flow level capturing enough detail to reconstruct any given run after the fact, without carrying sensitive payload data into the log store.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="240">
+                <h2>What the sector taught me</h2>
+                <p>Six months was enough to permanently raise my baseline. Banking treats &ldquo;can you prove it?&rdquo; as a design requirement rather than an afterthought, and I have carried that into every sector I have worked in since. It is the sector I would most like to go deeper in.</p>
+            </section>
+
+            <div class="page-back reveal" data-delay="300">
+                <a href="../index.html#industries"><b>&larr;</b> Back to all industries</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-row">
+            <div>
+                <p>Enterprise Integration &amp; Cloud</p>
+                <p>Automation, AI, Data Science</p>
+                <p>Product Engineering</p>
+            </div>
+            <div class="mid">
+                <p>10+ years of experience</p>
+                <a href="../index.html#projects">View Work</a>
+            </div>
+            <div class="end">
+                <p>Bangalore, India</p>
+                <p id="footer-year">2026</p>
+            </div>
+        </div>
+
+        <div class="footer-word"><h2>SUBHADIP</h2></div>
+
+        <div class="footer-row bottom">
+            <div>
+                <a href="../index.html#contact" class="strong">Contact</a>
+                <p class="copy">&copy; <span class="year">2026</span> Subhadip Dutta &middot; All rights reserved.</p>
+            </div>
+            <div class="mid">
+                <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a>
+            </div>
+            <div class="end">
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+
+    <script src="../script.js" defer></script>
+</body>
+</html>
