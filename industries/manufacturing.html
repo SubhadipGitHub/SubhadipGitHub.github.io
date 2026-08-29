@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Two years of Oracle Fusion SCM Manufacturing and Oracle Integration Cloud work on the plant floor - work orders, production reporting and material movement wired back into Fusion.">
+    <meta name="theme-color" content="#ff2a2a">
+    <meta property="og:title" content="Manufacturing &middot; Subhadip Dutta">
+    <meta property="og:description" content="Two years of Oracle Fusion SCM Manufacturing and Oracle Integration Cloud work on the plant floor - work orders, production reporting and material movement wired back into Fusion.">
+    <meta property="og:image" content="../images/profile-1.jpg">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://subhadipgithub.github.io/industries/manufacturing.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://subhadipgithub.github.io/industries/manufacturing.html">
+    <title>Manufacturing &middot; Subhadip Dutta</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- navbar: uses .subnav-links, NOT .nav-links -- script.js feeds every
+         .nav-links href to querySelector, where a cross-page href would throw. -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="../index.html#home" class="logo">Subhadip <span>.</span></a>
+
+            <div class="subnav-links">
+                <a href="../index.html#industries">All industries</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#projects">Projects</a>
+            </div>
+
+            <a href="../index.html#contact" class="nav-cta">Contact Me</a>
+        </div>
+    </nav>
+
+    <!-- page head -->
+    <header class="page-head">
+        <div class="section-inner">
+            <span class="pill">Industry Experience</span>
+            <h1>Two years on the <em>manufacturing</em> floor</h1>
+            <p>Manufacturing is where an integration stops being an abstraction. A work order that does not arrive is a machine standing idle, and a completion that posts twice is inventory the plant does not actually have. Two years of Oracle Fusion SCM Manufacturing and Oracle Integration Cloud work taught me to design for the recovery path first.</p>
+
+            <div class="page-meta">
+                <div><strong>2 yrs</strong><span>Time in sector</span></div>
+                <div><strong>Fusion SCM Manufacturing</strong><span>Primary focus</span></div>
+                <div><strong>Consultant</strong><span>Working as</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- body -->
+    <main class="page-body">
+        <div class="section-inner">
+            <section class="page-block reveal" data-delay="60">
+                <h2>What I worked on</h2>
+                <p>The core of the work was Oracle Fusion SCM Manufacturing: work definitions describing how a product is actually built, work orders released against them, and the operations, resources and components that hang off each one. Getting a work definition right is half modelling and half interviewing the people who run the line &mdash; the routing on paper and the routing in practice are rarely the same document.</p>
+                <p>Around that sat the integration layer, built on Oracle Integration Cloud. Work orders flowed out to plant execution systems, and production reporting &mdash; operation completions, material issues, scrap and resource usage &mdash; flowed back into Fusion so inventory, costing and planning saw the same picture the shop floor did. Some of it was transactional and near real time; the heavier item, BOM and material loads went through FBDI and bulk import instead, because a few hundred thousand rows do not belong in a request-response call.</p>
+                <p>The rest was operational: making the flows survive a plant network that dropped, a middleware restart, or an operator scanning the same completion twice. That is where most of the design effort actually went.</p>
+            </section>
+
+            <section class="page-block reveal" data-delay="120">
+                <h2>Systems &amp; platforms</h2>
+                <div class="pills">
+                    <span>Oracle Fusion SCM Manufacturing</span>
+                    <span>Work Definitions</span>
+                    <span>Work Orders</span>
+                    <span>Production Reporting</span>
+                    <span>Inventory Transactions</span>
+                    <span>Oracle Integration Cloud</span>
+                    <span>REST APIs</span>
+                    <span>SOAP</span>
+                    <span>FBDI &amp; Bulk Import</span>
+                    <span>Oracle Cloud Infrastructure</span>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="180">
+                <h2>Representative work</h2>
+                <div class="work-list">
+                    <div class="work-item">
+                        <h3>Work order and work definition integrations</h3>
+                        <p>OIC flows carrying released work orders from Fusion out to plant execution, and keeping work definitions in step when engineering changed a routing or a component. Status came back the same way, so a planner could see where an order actually was without calling the floor.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Production reporting with idempotent completions</h3>
+                        <p>Operation completions, material issues and scrap reported back into Fusion, keyed on the source transaction so a retry after a timeout reconciles instead of double-counting output. The failure mode this prevents &mdash; phantom finished goods that planning then commits to &mdash; is expensive and slow to unwind.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>FBDI and bulk loads for high-volume master data</h3>
+                        <p>Item, bill-of-material and material transaction loads run through FBDI and bulk import for volumes too large to move transactionally, with staging and validation ahead of the load so a bad file was caught before it reached Fusion rather than after.</p>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Fault handling and plant-side resubmission</h3>
+                        <p>A consistent OIC error-handling pattern across the flows: structured fault payloads carrying the work order and operation in context, alerts routed to plant support rather than a shared inbox, and a resubmission path they could run themselves without waiting for a developer.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="page-block reveal" data-delay="240">
+                <h2>What the sector taught me</h2>
+                <p>A plant that stops costs money by the minute, so manufacturing integrations are judged on recoverability rather than throughput. Nobody on the floor cares that a flow handles two thousand transactions an hour; they care what happens to the one that failed, whether they can see it, and whether they can push it through again without opening a ticket. That reordering of priorities &mdash; observability and replay ahead of raw speed &mdash; is the habit I carried out of this sector.</p>
+            </section>
+
+            <div class="page-back reveal" data-delay="300">
+                <a href="../index.html#industries"><b>&larr;</b> Back to all industries</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-row">
+            <div>
+                <p>Enterprise Integration &amp; Cloud</p>
+                <p>Automation, AI, Data Science</p>
+                <p>Product Engineering</p>
+            </div>
+            <div class="mid">
+                <p>10+ years of experience</p>
+                <a href="../index.html#projects">View Work</a>
+            </div>
+            <div class="end">
+                <p>Bangalore, India</p>
+                <p id="footer-year">2026</p>
+            </div>
+        </div>
+
+        <div class="footer-word"><h2>SUBHADIP</h2></div>
+
+        <div class="footer-row bottom">
+            <div>
+                <a href="../index.html#contact" class="strong">Contact</a>
+                <p class="copy">&copy; <span class="year">2026</span> Subhadip Dutta &middot; All rights reserved.</p>
+            </div>
+            <div class="mid">
+                <a href="mailto:subhadip.dutta.18@gmail.com">subhadip.dutta.18@gmail.com</a>
+            </div>
+            <div class="end">
+                <a href="https://www.linkedin.com/in/sub-dutta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    </button>
+
+    <script src="../script.js" defer></script>
+</body>
+</html>
