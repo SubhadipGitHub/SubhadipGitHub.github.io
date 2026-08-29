@@ -842,7 +842,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    ============================================================ */
 .industries { background: var(--grey-100); padding: 100px 0 110px; }
 
-.industry-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+/* five sectors: one row from 1200px up, then 3 / 2 / 1 as it narrows */
+.industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(206px, 1fr)); gap: 22px; }
 
 .industry {
     background: var(--white);
@@ -903,18 +904,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    ============================================================ */
 .projects { background: var(--white); padding: 100px 0 110px; }
 
-.project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-
-.project {
-    background: var(--white);
-    border: 1px solid var(--grey-200);
-    border-radius: 24px;
-    padding: 26px;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.4s var(--ease);
-}
-.project:hover { transform: translateY(-6px); border-color: rgba(255, 42, 42, 0.4); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.09); }
+/* the grid is now a horizontal rail - see "Card rails" below for the shell */
+.project { height: 360px; }
 
 .project-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .p-icon { font-size: 1.5rem; }
@@ -931,7 +922,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .p-state.wip { background: rgba(0, 0, 0, 0.06); color: var(--grey-600); }
 
 .project h3 { font-size: 1.125rem; font-weight: 900; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 10px; }
-.project > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
+.project .flip-body > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
 .tags span {
@@ -1011,18 +1002,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    ============================================================ */
 .certs { background: var(--white); padding: 100px 0 110px; }
 
-.cert-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-
-.cert {
-    background: var(--white);
-    border: 1px solid var(--grey-200);
-    border-radius: 24px;
-    padding: 26px;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.4s var(--ease);
-}
-.cert:hover { transform: translateY(-6px); border-color: rgba(255, 42, 42, 0.4); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.09); }
+/* the grid is now a horizontal rail - see "Card rails" below for the shell */
+.cert { height: 420px; }
 
 .cert-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .cert-mark { font-size: 1.5rem; }
@@ -1039,7 +1020,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 .cert h3 { font-size: 1.0625rem; font-weight: 900; letter-spacing: -0.025em; line-height: 1.3; color: var(--ink); margin-bottom: 10px; }
-.cert > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
+.cert .flip-body > p { font-size: 0.875rem; line-height: 1.65; font-weight: 500; color: var(--grey-600); margin-bottom: 18px; flex-grow: 1; }
 
 /* Certifications that carry an expiry say so plainly rather than implying
    they are all still current. */
@@ -1066,6 +1047,190 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .cert a b { transition: transform 0.3s var(--ease); }
 .cert a:hover b { transform: translateX(5px); }
+
+/* ============================================================
+   Card rails - horizontally scrolling flip cards
+   Shared by the Projects and Certifications sections. Both sets ran
+   long enough as grids to bury everything under them, so they scroll
+   sideways instead and each card flips to a back face for the detail
+   that will not fit on the front.
+   ============================================================ */
+.rail { position: relative; }
+
+.rail-track {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 2px;
+    padding: 8px 2px 12px;
+    cursor: grab;
+    /* the rail-nav buttons and the drag handler are the affordance;
+       a scrollbar under the cards fights the card shadows */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.rail-track::-webkit-scrollbar { display: none; }
+.rail-track.dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.rail-track:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 26px; }
+
+/* edge fades, shown only on a side that still has cards behind it */
+.rail::before,
+.rail::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 56px;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease);
+}
+.rail::before { left: -2px; background: linear-gradient(90deg, var(--white) 15%, rgba(255, 255, 255, 0)); }
+.rail::after { right: -2px; background: linear-gradient(270deg, var(--white) 15%, rgba(255, 255, 255, 0)); }
+.rail.at-start::before,
+.rail.at-end::after { opacity: 0; }
+
+.rail-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    transform: translateY(-50%);
+    transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), box-shadow 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.rail-nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.rail-nav:hover { background: var(--red); border-color: var(--red); color: var(--white); box-shadow: 0 14px 30px rgba(255, 42, 42, 0.32); }
+.rail-nav.prev { left: -8px; }
+.rail-nav.next { right: -8px; }
+.rail-nav[disabled] { opacity: 0; pointer-events: none; }
+
+/* ---------- flip cards ---------- */
+.flip-card {
+    flex: 0 0 clamp(266px, 30%, 336px);
+    scroll-snap-align: start;
+    perspective: 1400px;
+    background: none;
+    border: 0;
+    padding: 0;
+}
+
+.flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease);
+}
+.flip-card:hover .flip-inner { transform: translateY(-6px); }
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-card.flipped:hover .flip-inner { transform: rotateY(180deg) translateY(-6px); }
+
+.flip-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 24px;
+    padding: 24px 26px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* visibility flips at the halfway point of the rotation, so the face
+       turning away drops out of the tab order without blinking out early */
+    transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease), visibility 0s linear 0.3s;
+}
+.flip-card:hover .flip-face { border-color: rgba(255, 42, 42, 0.4); box-shadow: 0 22px 45px rgba(0, 0, 0, 0.09); }
+.flip-back { transform: rotateY(180deg); visibility: hidden; }
+.flip-card.flipped .flip-front { visibility: hidden; }
+.flip-card.flipped .flip-back { visibility: visible; }
+
+.flip-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.flip-body::-webkit-scrollbar { display: none; }
+
+.flip-back h4 {
+    font-size: 1.0625rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 10px;
+}
+.flip-back p { font-size: 0.875rem; line-height: 1.7; font-weight: 500; color: var(--grey-600); }
+
+.cert-id {
+    display: block;
+    margin-top: 16px;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+}
+.cert-id b {
+    display: block;
+    margin-top: 5px;
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.6;
+    text-transform: none;
+    color: var(--grey-600);
+    word-break: break-all;
+}
+
+.flip-btn {
+    align-self: flex-start;
+    margin-top: 14px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--grey-600);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 999px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.3s var(--ease);
+}
+.flip-btn:hover { background: rgba(255, 42, 42, 0.1); border-color: rgba(255, 42, 42, 0.24); color: var(--red); }
+.flip-btn b { transition: transform 0.45s var(--ease); }
+.flip-btn:hover b { transform: rotate(180deg); }
+
+.flip-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+.flip-foot .flip-btn { margin-top: 0; }
 
 /* ============================================================
    Contact
@@ -1333,6 +1498,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 /* ============================================================
    Responsive
    ============================================================ */
+@media (max-width: 1199px) {
+    /* below this the five industry cards no longer fit on one row */
+    .industry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 @media (max-width: 1100px) {
     .about-inner { gap: 44px; }
     .badge-column { width: 290px; }
@@ -1374,7 +1544,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .pos-2.reveal.in, .pos-4.reveal.in { transform: rotate(-1.5deg); }
     .scribble { display: none; }
 
-    .project-grid, .industry-grid, .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .industry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .page-head { padding: 130px 0 70px; }
     .page-body { padding: 70px 0 80px; }
@@ -1406,7 +1576,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .node { left: -26px; }
     .tl-card { padding: 20px; }
 
-    .project-grid, .skill-grid, .industry-grid, .cert-grid { grid-template-columns: 1fr; }
+    .skill-grid, .industry-grid { grid-template-columns: 1fr; }
+    .rail-nav { display: none; }
+    .rail::before, .rail::after { width: 26px; }
     .industry-next { padding: 24px; }
 
     .page-head { padding: 120px 0 60px; }
@@ -1431,6 +1603,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
         transition-duration: 0.01ms !important;
     }
     .reveal { opacity: 1; transform: none; }
+
+    /* transition-duration above does not clear the visibility delay */
+    .flip-inner, .flip-face { transition: none; }
+    .rail-track { scroll-behavior: auto; }
 
     .hero-cover {
         background-image: url("images/hero-cover-still.png");

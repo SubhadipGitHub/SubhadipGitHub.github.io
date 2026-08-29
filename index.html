@@ -45,10 +45,9 @@
                 <a href="#projects">Projects</a>
                 <a href="#skills">Skills</a>
                 <a href="#certifications">Certifications</a>
-                <a href="#contact">Contact</a>
             </div>
 
-            <a href="#contact" class="nav-cta">Hire Me</a>
+            <a href="#contact" class="nav-cta">Contact Me</a>
 
             <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-controls="mobile-menu" aria-expanded="false">
                 <svg viewBox="0 0 24 24" class="icon-open" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -65,8 +64,7 @@
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
             <a href="#certifications">Certifications</a>
-            <a href="#contact">Contact</a>
-            <a href="#contact" class="mobile-cta">Hire Me</a>
+            <a href="#contact" class="mobile-cta">Contact Me</a>
         </div>
     </nav>
 
@@ -320,6 +318,14 @@
                 </article>
 
                 <article class="industry reveal" data-delay="180">
+                    <div class="ind-top"><span class="ind-icon">🏭</span><span class="ind-years">2 yrs</span></div>
+                    <h3>Manufacturing</h3>
+                    <p>Work orders, production reporting and material movement &mdash; plant-floor execution wired back into Fusion, where a stalled interface stalls the line.</p>
+                    <div class="ind-bar" role="img" aria-label="2 years of experience"><span style="width:40%"></span></div>
+                    <a href="industries/manufacturing.html">Learn more <b>&rarr;</b></a>
+                </article>
+
+                <article class="industry reveal" data-delay="240">
                     <div class="ind-top"><span class="ind-icon">🏢</span><span class="ind-years">1 yr</span></div>
                     <h3>Real Estate</h3>
                     <p>Long-lived projects, heavy documentation, and money that moves in milestones rather than transactions.</p>
@@ -327,7 +333,7 @@
                     <a href="industries/real-estate.html">Learn more <b>&rarr;</b></a>
                 </article>
 
-                <article class="industry reveal" data-delay="240">
+                <article class="industry reveal" data-delay="300">
                     <div class="ind-top"><span class="ind-icon">🏦</span><span class="ind-years">6 mos</span></div>
                     <h3>Banking</h3>
                     <p>Short but sharp. Controls, audit trails and reconciliation first &mdash; every integration has to be able to explain itself.</p>
@@ -336,14 +342,14 @@
                 </article>
             </div>
 
-            <div class="industry-next reveal" data-delay="300">
+            <div class="industry-next reveal" data-delay="360">
                 <div class="next-head">
                     <h3>Industries I&rsquo;m yet to work in</h3>
                     <p>Sectors I have no delivery record in yet, and would take on next.</p>
                 </div>
                 <div class="pills">
                     <span>Healthcare &amp; Life Sciences</span><span>Insurance</span><span>Telecom</span>
-                    <span>Retail &amp; E-commerce</span><span>Manufacturing</span><span>Energy &amp; Utilities</span>
+                    <span>Retail &amp; E-commerce</span><span>Energy &amp; Utilities</span>
                     <span>Public Sector</span><span>Logistics &amp; Supply Chain</span>
                 </div>
             </div>
@@ -359,102 +365,316 @@
                 <p>Bots, apps and tools &mdash; shipped on weekends, in production with real users.</p>
             </div>
 
-            <div class="project-grid">
-                <article class="project reveal" data-delay="40">
-                    <div class="project-top"><span class="p-icon">✈️</span><span class="p-state live">Live</span></div>
-                    <h3>Queen Beth Bot &middot; Telegram</h3>
-                    <p>A chess-playing bot deployed on OCI, serving moves and games straight inside Telegram.</p>
-                    <div class="tags"><span>Python</span><span>OCI</span></div>
-                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/queen-beth-is-now-on-telegram" target="_blank" rel="noopener noreferrer">Learn more <b>&rarr;</b></a>
-                </article>
+            <div class="rail reveal" data-rail>
+                <button class="rail-nav prev" type="button" aria-label="Scroll projects left" disabled>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                </button>
 
-                <article class="project reveal" data-delay="80">
-                    <div class="project-top"><span class="p-icon">🎮</span><span class="p-state live">Live</span></div>
-                    <h3>Queen Beth Bot &middot; Discord</h3>
-                    <p>The same engine reworked for Discord servers, running as a always-on OCI service.</p>
-                    <div class="tags"><span>Python</span><span>OCI</span></div>
-                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/my-first-discord-bot-queen-beth" target="_blank" rel="noopener noreferrer">Learn more <b>&rarr;</b></a>
-                </article>
+                <div class="rail-track project-grid" tabindex="0" role="group" aria-label="Projects, scroll horizontally to see them all">
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">✈️</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>Queen Beth Bot &middot; Telegram</h3>
+                                    <p>A chess-playing bot deployed on OCI, serving moves and games straight inside Telegram.</p>
+                                    <div class="tags"><span>Python</span><span>OCI</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="project reveal" data-delay="120">
-                    <div class="project-top"><span class="p-icon">🔐</span><span class="p-state live">Play Store</span></div>
-                    <h3>Notesafe Buddy</h3>
-                    <p>An all-in-one Android app for securely managing notes, passwords and tasks.</p>
-                    <div class="tags"><span>FlutterFlow</span><span>Android</span></div>
-                    <a href="https://play.google.com/store/apps/details?id=com.mycompany.NoteSafeBuddy&hl=en_IN" target="_blank" rel="noopener noreferrer">View on Play Store <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Queen Beth Bot &middot; Telegram</h4>
+                                    <p>Queen Beth plays a full game of chess inside a Telegram chat &mdash; you send a move, the engine replies with its own and a freshly rendered board. It runs as an always-on Python service on Oracle Cloud Infrastructure, holding game state per chat so several games can run side by side without tripping over each other.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/queen-beth-is-now-on-telegram" target="_blank" rel="noopener noreferrer">Learn more <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="project reveal" data-delay="160">
-                    <div class="project-top"><span class="p-icon">🌍</span><span class="p-state live">Live</span></div>
-                    <h3>Around the World</h3>
-                    <p>A static site where travellers can log and visualise everywhere they&rsquo;ve been.</p>
-                    <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
-                    <a href="https://subhadipgithub.github.io/Around-The-World/" target="_blank" rel="noopener noreferrer">Visit website <b>&rarr;</b></a>
-                </article>
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">🎮</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>Queen Beth Bot &middot; Discord</h3>
+                                    <p>The same engine reworked for Discord servers, running as a always-on OCI service.</p>
+                                    <div class="tags"><span>Python</span><span>OCI</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="project reveal" data-delay="200">
-                    <div class="project-top"><span class="p-icon">💬</span><span class="p-state live">Demo</span></div>
-                    <h3>Chattify</h3>
-                    <p>A real-time chat application built with React, FastAPI and WebSockets.</p>
-                    <div class="tags"><span>React</span><span>FastAPI</span><span>Python</span></div>
-                    <a href="https://www.youtube.com/watch?v=AvA4Zkgl1X8" target="_blank" rel="noopener noreferrer">Watch demo <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Queen Beth Bot &middot; Discord</h4>
+                                    <p>The Telegram engine repackaged for Discord, where a game belongs to a channel rather than a private chat. Slash commands drive the moves, and the same OCI-hosted Python service backs both bots &mdash; so a fix to the engine lands in each of them at once.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://subhadipdutta18.wixsite.com/aigamedevelopers/post/my-first-discord-bot-queen-beth" target="_blank" rel="noopener noreferrer">Learn more <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="project reveal" data-delay="240">
-                    <div class="project-top"><span class="p-icon">📅</span><span class="p-state wip">In progress</span></div>
-                    <h3>Event Assistant</h3>
-                    <p>Event management with invites, RSVPs and budget tracking, wired to WhatsApp.</p>
-                    <div class="tags"><span>Python</span><span>WhatsApp</span><span>MongoDB</span></div>
-                    <a href="https://github.com/SubhadipGitHub/EventAssistant_Web" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
-                </article>
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">🔐</span><span class="p-state live">Play Store</span></div>
+                                <div class="flip-body">
+                                    <h3>Notesafe Buddy</h3>
+                                    <p>An all-in-one Android app for securely managing notes, passwords and tasks.</p>
+                                    <div class="tags"><span>FlutterFlow</span><span>Android</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="project reveal" data-delay="280">
-                    <div class="project-top"><span class="p-icon">⚙️</span><span class="p-state wip">In progress</span></div>
-                    <h3>Smart Operation App</h3>
-                    <p>Team availability, leave requests and skill tracking for delivery teams.</p>
-                    <div class="tags"><span>Oracle APEX</span><span>OCI</span></div>
-                    <a href="https://g917c620f25a59c-apexdev1.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/track_management/project-management-assistant/home" target="_blank" rel="noopener noreferrer">Visit app <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Notesafe Buddy</h4>
+                                    <p>One Android app for the three things that usually end up scattered across three: notes, credentials and tasks. Built in FlutterFlow with the credential store kept encrypted on device, and shipped on the Play Store rather than left as a side project.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://play.google.com/store/apps/details?id=com.mycompany.NoteSafeBuddy&amp;hl=en_IN" target="_blank" rel="noopener noreferrer">View on Play Store <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="project reveal" data-delay="320">
-                    <div class="project-top"><span class="p-icon">🎂</span><span class="p-state live">Live</span></div>
-                    <h3>Birthday Website</h3>
-                    <p>Generate a private event page that unlocks on a future date.</p>
-                    <div class="tags"><span>Python</span><span>Flask</span><span>JS</span></div>
-                    <a href="https://github.com/SubhadipGitHub/BirthdayFlaskApp" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
-                </article>
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">🌍</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>Around the World</h3>
+                                    <p>A static site where travellers can log and visualise everywhere they&rsquo;ve been.</p>
+                                    <div class="tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="project reveal" data-delay="360">
-                    <div class="project-top"><span class="p-icon">🍽️</span><span class="p-state wip">In progress</span></div>
-                    <h3>Restaurant Table Booking</h3>
-                    <p>Automated table booking and ordering, from reservation through to the kitchen.</p>
-                    <div class="tags"><span>React</span><span>Python</span><span>MongoDB</span></div>
-                    <a href="https://github.com/SubhadipGitHub/RestaurantApp" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Around the World</h4>
+                                    <p>A travel log that turns a flat list of places into something you can actually look back over. Pure HTML, CSS and JavaScript with no backend at all &mdash; it loads instantly and hosts anywhere static, which was the whole point.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://subhadipgithub.github.io/Around-The-World/" target="_blank" rel="noopener noreferrer">Visit website <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="project reveal" data-delay="400">
-                    <div class="project-top"><span class="p-icon">📊</span><span class="p-state live">Live</span></div>
-                    <h3>WhatsApp Chat Analyzer</h3>
-                    <p>Turns a WhatsApp export into user stats, activity heatmaps and word clouds.</p>
-                    <div class="tags"><span>Streamlit</span><span>Python</span></div>
-                    <a href="https://github.com/SubhadipGitHub/Whatsapp-Chat-Analyzer" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
-                </article>
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">💬</span><span class="p-state live">Demo</span></div>
+                                <div class="flip-body">
+                                    <h3>Chattify</h3>
+                                    <p>A real-time chat application built with React, FastAPI and WebSockets.</p>
+                                    <div class="tags"><span>React</span><span>FastAPI</span><span>Python</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="project reveal" data-delay="440">
-                    <div class="project-top"><span class="p-icon">💰</span><span class="p-state live">Live</span></div>
-                    <h3>Finance Tracker</h3>
-                    <p>A household finance planner that projects cash flow forward, keeps budgets honest, and turns a year of transactions into tax-ready insight.</p>
-                    <div class="tags"><span>Next.js</span><span>React</span><span>Tailwind</span><span>Auth.js</span></div>
-                    <a href="https://my-finance-tracker-app-xi.vercel.app/" target="_blank" rel="noopener noreferrer">Visit app <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Chattify</h4>
+                                    <p>Real-time chat with rooms, presence and message history. A React front end talks to a FastAPI backend over WebSockets, so messages arrive without polling and a dropped connection reconnects into the conversation rather than restarting it.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.youtube.com/watch?v=AvA4Zkgl1X8" target="_blank" rel="noopener noreferrer">Watch demo <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="project reveal" data-delay="480">
-                    <div class="project-top"><span class="p-icon">💈</span><span class="p-state wip">In progress</span></div>
-                    <h3>Copperline &middot; Barber Shop</h3>
-                    <p>A booking and management platform with three portals &mdash; customers book and pay, barbers run their day, owners run the business.</p>
-                    <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Prisma</span><span>Tailwind</span></div>
-                    <a href="https://github.com/SubhadipGitHub/barber-shop" target="_blank" rel="noopener noreferrer">View on GitHub <b>&rarr;</b></a>
-                </article>
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">📅</span><span class="p-state wip">In progress</span></div>
+                                <div class="flip-body">
+                                    <h3>Event Assistant</h3>
+                                    <p>Event management with invites, RSVPs and budget tracking, wired to WhatsApp.</p>
+                                    <div class="tags"><span>Python</span><span>WhatsApp</span><span>MongoDB</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Event Assistant</h4>
+                                    <p>Plans an event end to end &mdash; guest list, invitations, RSVP tracking and a running budget &mdash; using WhatsApp as the interface guests already have open. A Python service on MongoDB sends the invites and reminders, and replies feed straight back into the headcount.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://github.com/SubhadipGitHub/EventAssistant_Web" target="_blank" rel="noopener noreferrer">View on GitHub <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">⚙️</span><span class="p-state wip">In progress</span></div>
+                                <div class="flip-body">
+                                    <h3>Smart Operation App</h3>
+                                    <p>Team availability, leave requests and skill tracking for delivery teams.</p>
+                                    <div class="tags"><span>Oracle APEX</span><span>OCI</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Smart Operation App</h4>
+                                    <p>A delivery-team operations board: who is available, who is on leave, and which skills a project can actually be staffed with. Built low-code in Oracle APEX on an Autonomous Database and running on OCI, so approvals and reporting sit in the same place as the data.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://g917c620f25a59c-apexdev1.adb.ap-mumbai-1.oraclecloudapps.com/ords/r/track_management/project-management-assistant/home" target="_blank" rel="noopener noreferrer">Visit app <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">🎂</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>Birthday Website</h3>
+                                    <p>Generate a private event page that unlocks on a future date.</p>
+                                    <div class="tags"><span>Python</span><span>Flask</span><span>JS</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Birthday Website</h4>
+                                    <p>Creates a private, shareable page for an occasion that stays locked until the date arrives, then opens with the message and photos already loaded behind it. Flask on the server, a countdown in the browser, and a link that is the only thing the recipient needs.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://github.com/SubhadipGitHub/BirthdayFlaskApp" target="_blank" rel="noopener noreferrer">View on GitHub <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">🍽️</span><span class="p-state wip">In progress</span></div>
+                                <div class="flip-body">
+                                    <h3>Restaurant Table Booking</h3>
+                                    <p>Automated table booking and ordering, from reservation through to the kitchen.</p>
+                                    <div class="tags"><span>React</span><span>Python</span><span>MongoDB</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Restaurant Table Booking</h4>
+                                    <p>Reservations carried all the way through to the kitchen: guests book a table and pre-order, staff watch the floor plan fill up across the evening, and the kitchen gets a ticket rather than a phone call. React front end, Python API, MongoDB behind it.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://github.com/SubhadipGitHub/RestaurantApp" target="_blank" rel="noopener noreferrer">View on GitHub <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">📊</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>WhatsApp Chat Analyzer</h3>
+                                    <p>Turns a WhatsApp export into user stats, activity heatmaps and word clouds.</p>
+                                    <div class="tags"><span>Streamlit</span><span>Python</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>WhatsApp Chat Analyzer</h4>
+                                    <p>Point it at a WhatsApp chat export and it comes back with who talks most, when the group is actually awake, which words keep resurfacing, and how activity shifted over months &mdash; as an interactive Streamlit app you can filter, not a static report.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://github.com/SubhadipGitHub/Whatsapp-Chat-Analyzer" target="_blank" rel="noopener noreferrer">View on GitHub <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">💰</span><span class="p-state live">Live</span></div>
+                                <div class="flip-body">
+                                    <h3>Finance Tracker</h3>
+                                    <p>A household finance planner that projects cash flow forward and keeps budgets honest.</p>
+                                    <div class="tags"><span>Next.js</span><span>React</span><span>Tailwind</span><span>Auth.js</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Finance Tracker</h4>
+                                    <p>A household planner that projects cash flow forward rather than only recording what already happened &mdash; budgets, recurring commitments, and a year of transactions rolled up into tax-ready totals. Next.js and React with Tailwind, authenticated through Auth.js.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://my-finance-tracker-app-xi.vercel.app/" target="_blank" rel="noopener noreferrer">Visit app <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="project-top"><span class="p-icon">💈</span><span class="p-state wip">In progress</span></div>
+                                <div class="flip-body">
+                                    <h3>Copperline &middot; Barber Shop</h3>
+                                    <p>A booking and management platform with three portals &mdash; customers, barbers and owners.</p>
+                                    <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Prisma</span><span>Tailwind</span></div>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <h4>Copperline &middot; Barber Shop</h4>
+                                    <p>Three portals over one booking engine: customers book and pay, barbers run their day from a chair-side schedule, and owners see takings and staffing in one view. Next.js and TypeScript, with Prisma over the booking and payment data.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://github.com/SubhadipGitHub/barber-shop" target="_blank" rel="noopener noreferrer">View on GitHub <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <button class="rail-nav next" type="button" aria-label="Scroll projects right">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -530,127 +750,362 @@
                 <p>Oracle Cloud, integration and AI credentials, alongside a data science masters &mdash; each one verifiable at source.</p>
             </div>
 
-            <div class="cert-grid">
-                <article class="cert reveal" data-delay="60">
-                    <div class="cert-top"><span class="cert-mark">🤖</span><span class="cert-date">Apr 2026</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Fusion AI Agent Studio Certified Developer Professional</h3>
-                    <p>Rel 26-2 &mdash; building and deploying agents in Oracle Fusion AI Agent Studio.</p>
-                    
-                    <!-- credential ID A93B1621CC2791C25844F63DA2C92D437E362CBAFE873B9FAEB76B75BBEB86AB - swap href for the direct issuer link once verified -->
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+            <div class="rail reveal" data-rail>
+                <button class="rail-nav prev" type="button" aria-label="Scroll certifications left" disabled>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                </button>
 
-                <article class="cert reveal" data-delay="90">
-                    <div class="cert-top"><span class="cert-mark">☁️</span><span class="cert-date">Nov 2025</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Cloud Infrastructure 2025 Certified Application Integration Professional</h3>
-                    <p>Oracle Integration Cloud and DevOps across enterprise application integration.</p>
-                    <span class="cert-flag valid">Valid to Nov 2027</span>
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                <div class="rail-track cert-grid" tabindex="0" role="group" aria-label="Certifications, scroll horizontally to see them all">
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🤖</span><span class="cert-date">Apr 2026</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Fusion AI Agent Studio Certified Developer Professional</h3>
+                                    <p>Rel 26-2 &mdash; building and deploying agents in Oracle Fusion AI Agent Studio.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="120">
-                    <div class="cert-top"><span class="cert-mark">🧩</span><span class="cert-date">Aug 2025</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>APEX Cloud Certified Developer Professional</h3>
-                    <p>Low-code application development and deployment on Oracle APEX.</p>
-                    
-                    <!-- credential ID A019F51560FFDB7112D744A9E31E373427DF7B5BF15EE193BDBC19EC394429D - swap href for the direct issuer link once verified -->
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Apr 2026</span>
+                                    <h4>Fusion AI Agent Studio Certified Developer Professional</h4>
+                                    <p>The professional-level credential for Oracle Fusion AI Agent Studio, Release 26-2: designing agents and agent teams, wiring them to Fusion data and actions, and deploying them into live business processes.</p>
+                                    <span class="cert-id">Credential ID<b>A93B1621CC2791C25844F63DA2C92D437E362CBAFE873B9FAEB76B75BBEB86AB</b></span>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="cert reveal" data-delay="150">
-                    <div class="cert-top"><span class="cert-mark">🤖</span><span class="cert-date">Jun 2025</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Fusion AI Agent Studio Foundations Associate</h3>
-                    <p>Rel 1 &mdash; foundations of agent design in Oracle Fusion AI Agent Studio.</p>
-                    
-                    <!-- credential ID 1ABFBB328F6F2583C5894874632495C680C5C84C6FCF72C7A28723DEA99D137A - swap href for the direct issuer link once verified -->
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">☁️</span><span class="cert-date">Nov 2025</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Cloud Infrastructure 2025 Certified Application Integration Professional</h3>
+                                    <p>Oracle Integration Cloud and DevOps across enterprise application integration.</p>
+                                    <span class="cert-flag valid">Valid to Nov 2027</span>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="180">
-                    <div class="cert-top"><span class="cert-mark">✨</span><span class="cert-date">May 2024</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Cloud Infrastructure 2024 Generative AI Certified Professional</h3>
-                    <p>Generative AI services and model deployment on Oracle Cloud Infrastructure.</p>
-                    <span class="cert-flag lapsed">Expired May 2026</span>
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Nov 2025</span>
+                                    <h4>Cloud Infrastructure 2025 Certified Application Integration Professional</h4>
+                                    <p>Covers Oracle Integration Cloud end to end &mdash; integration patterns and adapters, orchestration, error handling and monitoring &mdash; alongside the OCI DevOps practices for deploying and operating what you build.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="cert reveal" data-delay="210">
-                    <div class="cert-top"><span class="cert-mark">💡</span><span class="cert-date">May 2024</span></div>
-                    <span class="cert-issuer">Microsoft</span>
-                    <h3>Build Your Generative AI Productivity Skills with Microsoft and LinkedIn</h3>
-                    <p>Applying generative AI to everyday productivity and design work.</p>
-                    
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🧩</span><span class="cert-date">Aug 2025</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>APEX Cloud Certified Developer Professional</h3>
+                                    <p>Low-code application development and deployment on Oracle APEX.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="240">
-                    <div class="cert-top"><span class="cert-mark">🐙</span><span class="cert-date">May 2024</span></div>
-                    <span class="cert-issuer">LinkedIn</span>
-                    <h3>Career Essentials in GitHub Professional Certificate</h3>
-                    <p>GitHub workflows and software project collaboration end to end.</p>
-                    
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Aug 2025</span>
+                                    <h4>APEX Cloud Certified Developer Professional</h4>
+                                    <p>Low-code development on Oracle APEX: page and component design, data models on Autonomous Database, authentication and authorisation schemes, and moving an application across environments.</p>
+                                    <span class="cert-id">Credential ID<b>A019F51560FFDB7112D744A9E31E373427DF7B5BF15EE193BDBC19EC394429D</b></span>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="cert reveal" data-delay="270">
-                    <div class="cert-top"><span class="cert-mark">☁️</span><span class="cert-date">Sep 2023</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Cloud Infrastructure 2023 Professional Application Integration</h3>
-                    <p>Designing and operating integrations on Oracle Integration Cloud.</p>
-                    <span class="cert-flag lapsed">Expired Sep 2025</span>
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🤖</span><span class="cert-date">Jun 2025</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Fusion AI Agent Studio Foundations Associate</h3>
+                                    <p>Rel 1 &mdash; foundations of agent design in Oracle Fusion AI Agent Studio.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="300">
-                    <div class="cert-top"><span class="cert-mark">🔐</span><span class="cert-date">Sep 2023</span></div>
-                    <span class="cert-issuer">Oracle</span>
-                    <h3>Associate Cloud Infrastructure Foundation</h3>
-                    <p>Core Oracle Cloud Infrastructure services, architecture and operations.</p>
-                    <span class="cert-flag lapsed">Expired Sep 2025</span>
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Jun 2025</span>
+                                    <h4>Fusion AI Agent Studio Foundations Associate</h4>
+                                    <p>Foundations of agent design in Oracle Fusion AI Agent Studio, Release 1 &mdash; agent templates, tools and topics, and where generative agents fit inside the Fusion application suite.</p>
+                                    <span class="cert-id">Credential ID<b>1ABFBB328F6F2583C5894874632495C680C5C84C6FCF72C7A28723DEA99D137A</b></span>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="cert reveal" data-delay="330">
-                    <div class="cert-top"><span class="cert-mark">🎓</span><span class="cert-date">Apr 2022</span></div>
-                    <span class="cert-issuer">Liverpool John Moores University</span>
-                    <h3>Masters in Data Science</h3>
-                    <p>Postgraduate degree covering statistics, machine learning and applied analytics.</p>
-                    
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">✨</span><span class="cert-date">May 2024</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Cloud Infrastructure 2024 Generative AI Certified Professional</h3>
+                                    <p>Generative AI services and model deployment on Oracle Cloud Infrastructure.</p>
+                                    <span class="cert-flag lapsed">Expired May 2026</span>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="360">
-                    <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jul 2021</span></div>
-                    <span class="cert-issuer">Rasa</span>
-                    <h3>Rasa Certification</h3>
-                    <p>Building conversational assistants on the Rasa open-source framework.</p>
-                    
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; May 2024</span>
+                                    <h4>Cloud Infrastructure 2024 Generative AI Certified Professional</h4>
+                                    <p>OCI Generative AI services: model selection and prompting, retrieval-augmented generation, fine-tuning on dedicated AI clusters, and serving models behind production endpoints.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
 
-                <article class="cert reveal" data-delay="390">
-                    <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jul 2021</span></div>
-                    <span class="cert-issuer">Rasa</span>
-                    <h3>Advanced Workshop: Custom Actions, Forms &amp; Responses</h3>
-                    <p>Certification exam covering custom actions, slot-filling forms and response handling.</p>
-                    
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">💡</span><span class="cert-date">May 2024</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Microsoft</span>
+                                    <h3>Build Your Generative AI Productivity Skills with Microsoft and LinkedIn</h3>
+                                    <p>Applying generative AI to everyday productivity and design work.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
 
-                <article class="cert reveal" data-delay="420">
-                    <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jun 2021</span></div>
-                    <span class="cert-issuer">Rasa</span>
-                    <h3>Advanced Deployment Workshop</h3>
-                    <p>Deploying and operating Rasa assistants in production environments.</p>
-                    
-                    <!-- credential ID UC-7ca924bd-d950-4f49-ab20-125bc858beaa - swap href for the direct issuer link once verified -->
-                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b>&rarr;</b></a>
-                </article>
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Microsoft &middot; May 2024</span>
+                                    <h4>Build Your Generative AI Productivity Skills with Microsoft and LinkedIn</h4>
+                                    <p>A Microsoft and LinkedIn learning path on putting generative AI to work in everyday knowledge work &mdash; prompting, drafting, summarising and design tasks, with responsible-use practice throughout.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🐙</span><span class="cert-date">May 2024</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">LinkedIn</span>
+                                    <h3>Career Essentials in GitHub Professional Certificate</h3>
+                                    <p>GitHub workflows and software project collaboration end to end.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">LinkedIn &middot; May 2024</span>
+                                    <h4>Career Essentials in GitHub Professional Certificate</h4>
+                                    <p>GitHub end to end: repositories and branching, pull requests and code review, Actions for automation, and the collaboration habits that keep a shared codebase workable as a team grows.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">☁️</span><span class="cert-date">Sep 2023</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Cloud Infrastructure 2023 Professional Application Integration</h3>
+                                    <p>Designing and operating integrations on Oracle Integration Cloud.</p>
+                                    <span class="cert-flag lapsed">Expired Sep 2025</span>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Sep 2023</span>
+                                    <h4>Cloud Infrastructure 2023 Professional Application Integration</h4>
+                                    <p>The 2023 professional track for Oracle Integration Cloud &mdash; designing integrations and adapters, process automation, and operating and monitoring flows once they are live.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🔐</span><span class="cert-date">Sep 2023</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle</span>
+                                    <h3>Associate Cloud Infrastructure Foundation</h3>
+                                    <p>Core Oracle Cloud Infrastructure services, architecture and operations.</p>
+                                    <span class="cert-flag lapsed">Expired Sep 2025</span>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Oracle &middot; Sep 2023</span>
+                                    <h4>Associate Cloud Infrastructure Foundation</h4>
+                                    <p>Core Oracle Cloud Infrastructure: compute, storage, networking and identity, plus the availability, pricing and security model that everything built on OCI sits on.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">🎓</span><span class="cert-date">Apr 2022</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Liverpool John Moores University</span>
+                                    <h3>Masters in Data Science</h3>
+                                    <p>Postgraduate degree covering statistics, machine learning and applied analytics.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Liverpool John Moores University &middot; Apr 2022</span>
+                                    <h4>Masters in Data Science</h4>
+                                    <p>A postgraduate degree spanning statistics and experimental design, machine learning, and applied analytics, completed with a research dissertation.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jul 2021</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa</span>
+                                    <h3>Rasa Certification</h3>
+                                    <p>Building conversational assistants on the Rasa open-source framework.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa &middot; Jul 2021</span>
+                                    <h4>Rasa Certification</h4>
+                                    <p>The core Rasa certification: intents and entities, dialogue management through stories and rules, and training and evaluating an assistant end to end.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jul 2021</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa</span>
+                                    <h3>Advanced Workshop: Custom Actions, Forms &amp; Responses</h3>
+                                    <p>Certification exam covering custom actions, slot-filling forms and response handling.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa &middot; Jul 2021</span>
+                                    <h4>Advanced Workshop: Custom Actions, Forms &amp; Responses</h4>
+                                    <p>A certification exam on the parts of Rasa that do the real work &mdash; custom action servers, slot-filling forms with validation, and response variation across channels.</p>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cert flip-card">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="cert-top"><span class="cert-mark">💬</span><span class="cert-date">Jun 2021</span></div>
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa</span>
+                                    <h3>Advanced Deployment Workshop</h3>
+                                    <p>Deploying and operating Rasa assistants in production environments.</p>
+                                </div>
+                                <button class="flip-btn" type="button" aria-expanded="false">Details <b aria-hidden="true">&#8635;</b></button>
+                            </div>
+
+                            <div class="flip-face flip-back">
+                                <div class="flip-body">
+                                    <span class="cert-issuer">Rasa &middot; Jun 2021</span>
+                                    <h4>Advanced Deployment Workshop</h4>
+                                    <p>Deploying Rasa assistants beyond a laptop: containerised deployment, running the action server and tracker store in production, and the retraining lifecycle around a live model.</p>
+                                    <span class="cert-id">Credential ID<b>UC-7ca924bd-d950-4f49-ab20-125bc858beaa</b></span>
+                                </div>
+                                <div class="flip-foot">
+                                    <a href="https://www.linkedin.com/in/sub-dutta/details/certifications/" target="_blank" rel="noopener noreferrer">View credential <b aria-hidden="true">&rarr;</b></a>
+                                    <button class="flip-btn is-back" type="button">Back <b aria-hidden="true">&#8634;</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <button class="rail-nav next" type="button" aria-label="Scroll certifications right">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
             </div>
         </div>
     </section>

@@ -177,6 +177,130 @@
         });
     }
 
+    /* ---------- card rails: horizontal scrollers for projects + certs ---------- */
+    var rails = $$('[data-rail]');
+
+    function railStep(rtrack) {
+        var card = rtrack.querySelector('.flip-card');
+        if (!card) { return rtrack.clientWidth; }
+        var gap = parseFloat(getComputedStyle(rtrack).columnGap) || 0;
+        return card.offsetWidth + gap;
+    }
+
+    function syncRail(rail) {
+        var rtrack = rail.querySelector('.rail-track');
+        var prev = rail.querySelector('.rail-nav.prev');
+        var next = rail.querySelector('.rail-nav.next');
+        // sub-pixel scroll widths mean the ends never land exactly on 0 / max
+        var max = rtrack.scrollWidth - rtrack.clientWidth;
+        var atStart = rtrack.scrollLeft <= 1;
+        var atEnd = rtrack.scrollLeft >= max - 1;
+
+        rail.classList.toggle('at-start', atStart);
+        rail.classList.toggle('at-end', atEnd || max <= 1);
+        if (prev) { prev.disabled = atStart; }
+        if (next) { next.disabled = atEnd || max <= 1; }
+    }
+
+    rails.forEach(function (rail) {
+        var rtrack = rail.querySelector('.rail-track');
+        if (!rtrack) { return; }
+
+        rail.querySelectorAll('.rail-nav').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var dir = btn.classList.contains('prev') ? -1 : 1;
+                rtrack.scrollBy({ left: dir * railStep(rtrack), behavior: reduceMotion ? 'auto' : 'smooth' });
+            });
+        });
+
+        rtrack.addEventListener('scroll', function () { syncRail(rail); }, { passive: true });
+
+        /* drag to scroll. Pointer-downs that land on a button or link are left
+           alone, and a drag that actually moved swallows the click it ends on
+           so dragging across a card never flips it. */
+        var dragging = false;
+        var moved = false;
+        var startX = 0;
+        var startScroll = 0;
+
+        rtrack.addEventListener('pointerdown', function (e) {
+            if (e.button !== 0 || e.target.closest('button, a')) { return; }
+            dragging = true;
+            moved = false;
+            startX = e.clientX;
+            startScroll = rtrack.scrollLeft;
+        });
+
+        rtrack.addEventListener('pointermove', function (e) {
+            if (!dragging) { return; }
+            var dx = e.clientX - startX;
+            if (!moved && Math.abs(dx) > 4) {
+                moved = true;
+                rtrack.classList.add('dragging');
+                rtrack.setPointerCapture(e.pointerId);
+            }
+            if (moved) {
+                e.preventDefault();
+                rtrack.scrollLeft = startScroll - dx;
+            }
+        });
+
+        var endDrag = function (e) {
+            if (!dragging) { return; }
+            dragging = false;
+            rtrack.classList.remove('dragging');
+            if (moved && e && rtrack.hasPointerCapture && rtrack.hasPointerCapture(e.pointerId)) {
+                rtrack.releasePointerCapture(e.pointerId);
+            }
+        };
+
+        rtrack.addEventListener('pointerup', endDrag);
+        rtrack.addEventListener('pointercancel', endDrag);
+        rtrack.addEventListener('click', function (e) {
+            if (!moved) { return; }
+            e.preventDefault();
+            e.stopPropagation();
+            moved = false;
+        }, true);
+
+        syncRail(rail);
+    });
+
+    function syncRails() { rails.forEach(syncRail); }
+
+    /* ---------- flip cards ---------- */
+    function setFlipped(card, flipped) {
+        card.classList.toggle('flipped', flipped);
+        var trigger = card.querySelector('.flip-front .flip-btn');
+        if (trigger) { trigger.setAttribute('aria-expanded', flipped ? 'true' : 'false'); }
+    }
+
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('.flip-btn') : null;
+        if (!btn) { return; }
+        var card = btn.closest('.flip-card');
+        if (!card) { return; }
+        setFlipped(card, !card.classList.contains('flipped'));
+        if (card.classList.contains('flipped')) {
+            var back = card.querySelector('.flip-back .flip-btn');
+            if (back) { back.focus(); }
+        } else {
+            var front = card.querySelector('.flip-front .flip-btn');
+            if (front) { front.focus(); }
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') { return; }
+        var card = document.activeElement && document.activeElement.closest
+            ? document.activeElement.closest('.flip-card.flipped')
+            : null;
+        if (!card) { return; }
+        setFlipped(card, false);
+        var front = card.querySelector('.flip-front .flip-btn');
+        if (front) { front.focus(); }
+    });
+
     /* ---------- contact: parallax on the oversized word ---------- */
     var bigText = $('#contact-bigtext');
     var contactSection = $('.contact');
@@ -314,6 +438,7 @@
 
     window.addEventListener('resize', function () {
         measurePaths();
+        syncRails();
         onScroll();
     });
 
