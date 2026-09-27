@@ -69,48 +69,28 @@
     </nav>
 
     <!-- hero -->
-    <section class="hero" id="home">
-        <div class="hero-backdrop" aria-hidden="true">
-            <span class="orb orb-1"></span>
-            <span class="orb orb-2"></span>
-            <span class="orb orb-3"></span>
-            <span class="hero-grid"></span>
-        </div>
-        <span class="hero-cover" aria-hidden="true"></span>
-        <video id="hero-video" class="hero-video" autoplay loop muted playsinline>
-            <source src="images/herovideo.mp4" type="video/mp4">
-        </video>
-        <div class="hero-scrim" aria-hidden="true"></div>
+    <section class="hero hero-v2" id="home">
+        <div class="hero-bg" aria-hidden="true"></div>
 
-        <div class="hero-inner">
-            <div class="hero-copy">
-                <span class="eyebrow reveal" data-delay="0">Hello, my name is Subhadip Dutta</span>
-                <h1 class="reveal" data-delay="80">
-                    I&rsquo;m a <br>
-                    <span class="typing" id="typing"></span><span class="caret" aria-hidden="true"></span>
-                </h1>
-                <p class="reveal" data-delay="200">
-                    I design, integrate and optimize enterprise systems across cloud ecosystems &mdash;
-                    turning complex landscapes into scalable, automated, and genuinely simple solutions.
-                </p>
-                <div class="hero-actions reveal" data-delay="320">
-                    <a href="#projects" class="btn btn-solid">View My Work</a>
-                    <a href="#contact" class="btn btn-ghost">Contact Me</a>
-                </div>
-                <div class="hero-stats reveal" data-delay="440">
-                    <div><strong>10+</strong><span>Years in tech</span></div>
-                    <div><strong>4</strong><span>Global firms</span></div>
-                    <div><strong>10+</strong><span>Shipped projects</span></div>
+        <div class="hero-inner hero-inner-v2">
+            <div class="hero-note reveal" data-delay="0">
+                <p class="hero-note-name">I&rsquo;m Subhadip Dutta</p>
+                <p class="hero-note-role">Oracle Cloud Solution Architect</p>
+                <div class="hero-hint" id="hero-hint">
+                    <span class="hero-hint-icon" id="hero-hint-icon" aria-hidden="true">
+                        <svg class="icon-cursor" viewBox="0 0 24 24"><path d="M5.5 3.2l14.6 8.4c.6.35.5 1.24-.16 1.46l-6.1 2-2.1 6.1c-.23.66-1.15.73-1.47.11L5.5 3.2z"/></svg>
+                        <svg class="icon-tap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><circle class="tap-ring" cx="12" cy="12" r="9"/></svg>
+                    </span>
+                    <span class="hero-hint-text" id="hero-hint-text">Move cursor to call me!</span>
                 </div>
             </div>
+        </div>
 
-            <button class="reel-toggle" id="reel-toggle" type="button" aria-label="Unmute showreel" hidden>
-                <span class="reel-circle">
-                    <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6L4.5 9H1.5v6h3l4.5 3.75V5.25z"/></svg>
-                    <svg class="icon-unmuted" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28-.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
-                </span>
-                <span class="reel-label" id="reel-label">Unmute Reel</span>
-            </button>
+        <div class="hero-stage" id="hero-stage">
+            <div class="hero-character" id="hero-character" aria-hidden="true">
+                <img class="hero-frame is-visible" id="hero-frame-a" src="images/hero-frames/frame_0000.webp" alt="" width="840" height="756">
+                <img class="hero-frame" id="hero-frame-b" src="images/hero-frames/frame_0000.webp" alt="" width="840" height="756">
+            </div>
         </div>
 
         <a href="#about" class="scroll-cue" aria-label="Scroll to about section">

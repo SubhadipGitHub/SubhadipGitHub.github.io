@@ -314,45 +314,239 @@
         bigText.style.transform = 'translateY(' + (progress * 40 - 12) + '%)';
     }
 
-    /* ---------- hero video: only surface it if it actually loads ---------- */
-    var video = $('#hero-video');
-    var reelToggle = $('#reel-toggle');
-    var reelLabel = $('#reel-label');
-
+    /* ---------- hero character: zone-driven animated sequence ---------- */
     var heroSection = $('#home');
+    var frameA = $('#hero-frame-a');
+    var frameB = $('#hero-frame-b');
+    var characterEl = $('#hero-character');
+    var hintTextEl = $('#hero-hint-text');
 
-    function hideVideo() {
-        if (video) { video.classList.add('hidden'); }
-        if (reelToggle) { reelToggle.hidden = true; }
-        if (heroSection) { heroSection.classList.remove('has-video'); }
-    }
+    if (heroSection && frameA && frameB && characterEl && hintTextEl) {
+        var FRAME_DIR = 'images/hero-frames/';
+        var FRAME_COUNT = 133;
+        var FPS = 12;
+        var FRAME_MS = 1000 / FPS;
+        var DEFAULT_HINT = 'Move cursor to call me!';
 
-    if (video) {
-        var source = video.querySelector('source');
-        if (source) { source.addEventListener('error', hideVideo); }
-        video.addEventListener('error', hideVideo);
+        // Reduced-frame index ranges within the exported sequence (see
+        // images/hero-frames): idle typing loop, noticing the visitor,
+        // settling, headset off, headset-to-neck + smile, wave, point.
+        var CLIPS = {
+            idle: [0, 14],
+            look: [14, 49],
+            settle: [49, 58],
+            headsetOff: [58, 71],
+            neck: [71, 94],
+            wave: [94, 116],
+            point: [116, 132]
+        };
 
-        video.addEventListener('loadeddata', function () {
-            video.classList.remove('hidden');
-            // a real showreel supersedes the animated cover plate
-            if (heroSection) { heroSection.classList.add('has-video'); }
-            if (reelToggle) { reelToggle.hidden = false; }
-            var playing = video.play();
-            if (playing && playing.catch) { playing.catch(function () { /* autoplay blocked */ }); }
-        });
+        var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (!supportsHover) { heroSection.classList.add('is-touch'); }
 
-        // No source file present yet — fall back to the animated backdrop.
-        if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { hideVideo(); }
-    }
+        function frameUrl(i) {
+            var n = ('000' + i).slice(-4);
+            return FRAME_DIR + 'frame_' + n + '.webp';
+        }
 
-    if (reelToggle && video) {
-        reelToggle.addEventListener('click', function () {
-            video.muted = !video.muted;
-            reelToggle.classList.toggle('playing', !video.muted);
-            reelToggle.setAttribute('aria-label', video.muted ? 'Unmute showreel' : 'Mute showreel');
-            if (reelLabel) { reelLabel.textContent = video.muted ? 'Unmute Reel' : 'Mute Sound'; }
-            if (video.paused) { video.play().catch(function () {}); }
-        });
+        // preload the sequence so playback never stalls waiting on the network
+        if (!reduceMotion) {
+            for (var p = 0; p < FRAME_COUNT; p++) {
+                var pre = new Image();
+                pre.src = frameUrl(p);
+            }
+        }
+
+        var active = frameA;
+        var incoming = frameB;
+
+        function showFrame(i) {
+            active.src = frameUrl(i);
+        }
+
+        function crossfadeTo(i) {
+            return new Promise(function (resolve) {
+                incoming.src = frameUrl(i);
+                incoming.classList.add('is-visible');
+                active.classList.remove('is-visible');
+                var swap = active; active = incoming; incoming = swap;
+                setTimeout(resolve, 400);
+            });
+        }
+
+        function delay(ms) {
+            return new Promise(function (resolve) { setTimeout(resolve, ms); });
+        }
+
+        function playRange(from, to, token) {
+            return new Promise(function (resolve) {
+                var dir = to >= from ? 1 : -1;
+                var f = from;
+                var last = null;
+                var acc = 0;
+                showFrame(f);
+                function step(now) {
+                    if (token.cancelled) { resolve(); return; }
+                    if (last === null) { last = now; }
+                    acc += now - last;
+                    last = now;
+                    var moved = false;
+                    while (acc >= FRAME_MS && f !== to) {
+                        acc -= FRAME_MS;
+                        f += dir;
+                        moved = true;
+                    }
+                    if (moved) { showFrame(f); }
+                    if (f === to) { resolve(); return; }
+                    token.raf = requestAnimationFrame(step);
+                }
+                token.raf = requestAnimationFrame(step);
+            });
+        }
+
+        var currentMessage = '';
+        function setMessage(text) {
+            if (text === currentMessage) { return; }
+            currentMessage = text;
+            hintTextEl.classList.add('is-fading');
+            setTimeout(function () {
+                hintTextEl.textContent = text;
+                hintTextEl.classList.remove('is-fading');
+            }, 180);
+        }
+
+        function setMirror(on) {
+            characterEl.classList.toggle('is-mirrored', on);
+        }
+
+        function newToken() {
+            return { cancelled: false, raf: null };
+        }
+
+        var idleToken = null;
+        function stopIdle() {
+            if (idleToken) {
+                idleToken.cancelled = true;
+                if (idleToken.raf) { cancelAnimationFrame(idleToken.raf); }
+                idleToken = null;
+            }
+        }
+        function startIdle() {
+            stopIdle();
+            var token = newToken();
+            idleToken = token;
+            (function loop() {
+                if (token.cancelled) { return; }
+                playRange(CLIPS.idle[0], CLIPS.idle[1], token).then(function () {
+                    if (token.cancelled) { return; }
+                    playRange(CLIPS.idle[1], CLIPS.idle[0], token).then(function () {
+                        if (token.cancelled) { return; }
+                        loop();
+                    });
+                });
+            })();
+        }
+
+        var mainToken = null;
+
+        function runSideReaction(zone, token) {
+            setMirror(zone === 'left');
+            setMessage(zone === 'left' ? 'Anyone here on the left?' : 'Anyone here on the right?');
+            return crossfadeTo(CLIPS.look[0]).then(function () {
+                if (token.cancelled) { return; }
+                return playRange(CLIPS.look[0], CLIPS.look[1], token);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                return delay(2400);
+            });
+        }
+
+        function runGreeting(token) {
+            setMirror(false);
+            setMessage('Hey, it’s you!');
+            return crossfadeTo(CLIPS.look[0]).then(function () {
+                if (token.cancelled) { return; }
+                return playRange(CLIPS.look[0], CLIPS.settle[1], token);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                setMessage('Hiiii!');
+                return playRange(CLIPS.settle[1], CLIPS.wave[1], token);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                return delay(250);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                setMessage('Check out the portfolio');
+                return playRange(CLIPS.wave[1], CLIPS.point[1], token);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                return delay(2200);
+            });
+        }
+
+        function runZone(zone) {
+            stopIdle();
+            if (mainToken) { mainToken.cancelled = true; if (mainToken.raf) { cancelAnimationFrame(mainToken.raf); } }
+            var token = newToken();
+            mainToken = token;
+
+            var seq = (zone === 'left' || zone === 'right') ? runSideReaction(zone, token) : runGreeting(token);
+
+            seq.then(function () {
+                if (token.cancelled) { return; }
+                return crossfadeTo(CLIPS.idle[0]);
+            }).then(function () {
+                if (token.cancelled) { return; }
+                setMirror(false);
+                setMessage(DEFAULT_HINT);
+                startIdle();
+            });
+        }
+
+        if (reduceMotion) {
+            showFrame(0);
+            frameA.classList.add('is-visible');
+        } else {
+            startIdle();
+
+            if (supportsHover) {
+                var lastZone = null;
+                var pendingZone = null;
+                var zoneTimer = null;
+
+                function zoneFromClientX(clientX) {
+                    var rect = heroSection.getBoundingClientRect();
+                    var rel = (clientX - rect.left) / rect.width;
+                    if (rel < 0.33) { return 'left'; }
+                    if (rel > 0.67) { return 'right'; }
+                    return 'center';
+                }
+
+                function handleMove(e) {
+                    var zone = zoneFromClientX(e.clientX);
+                    if (zone === lastZone || zone === pendingZone) { return; }
+                    pendingZone = zone;
+                    clearTimeout(zoneTimer);
+                    zoneTimer = setTimeout(function () {
+                        lastZone = zone;
+                        pendingZone = null;
+                        runZone(zone);
+                    }, 90);
+                }
+
+                heroSection.addEventListener('mouseenter', handleMove);
+                heroSection.addEventListener('mousemove', handleMove);
+                heroSection.addEventListener('mouseleave', function () {
+                    lastZone = null;
+                    pendingZone = null;
+                    clearTimeout(zoneTimer);
+                });
+            } else {
+                heroSection.addEventListener('pointerup', function () {
+                    runZone('center');
+                });
+            }
+        }
     }
 
     /* ---------- contact form ---------- */
