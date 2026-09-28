@@ -92,8 +92,9 @@
 
         <div class="hero-stage" id="hero-stage">
             <div class="hero-actor" id="hero-actor" aria-hidden="true">
-                <video class="hero-video is-visible" id="hero-video-a" src="videos/hero-character.mp4" poster="images/hero-poster.jpg" muted playsinline preload="auto"></video>
-                <video class="hero-video" id="hero-video-b" src="videos/hero-character.mp4" muted playsinline preload="auto"></video>
+                <video class="hero-video is-visible" id="hero-video-a" src="videos/hero-actions.mp4" poster="images/hero-poster.jpg" muted playsinline preload="auto"></video>
+                <video class="hero-video" id="hero-video-b" src="videos/hero-actions.mp4" muted playsinline preload="auto"></video>
+                <video class="hero-video" id="hero-gaze" src="videos/hero-gaze.mp4" muted playsinline preload="auto"></video>
             </div>
             <button class="hero-hit" id="hero-hit" type="button" aria-label="Say hi to the character"></button>
             <div class="hero-bubble" id="hero-bubble" aria-hidden="true"><span class="hero-bubble-text" id="hero-bubble-text"></span></div>
@@ -115,9 +116,11 @@
             "attentive":   { "type": "say",   "lines": ["Welcome to my portfolio!", "I build Oracle Cloud integrations.", "Projects are just below 👇", "Ask me about OIC, APEX or GenAI."] },
             "musing":      { "type": "think", "lines": ["I hope they like the projects…", "Should I show them the certifications?"] },
             "wave":        { "type": "say",   "lines": ["Hiiii! 👋", "Hello there!", "Nice to meet you!"], "pop": "👋" },
-            "click":       { "type": "say",   "lines": ["Hey, that tickles! 😄", "You found the secret button.", "Okay, okay, I’m listening!"], "pop": "💥" },
-            "work":        { "type": "say",   "lines": ["Yes, that one! My best work 👉"], "pop": "💡" },
-            "contact":     { "type": "say",   "lines": ["Say hi. I reply fast ✉️"], "pop": "💬" },
+            "shy":         { "type": "say",   "lines": ["Oh… you’re looking right at me 😳", "Stop it, I’m blushing!"], "pop": "💗" },
+            "flinch":      { "type": "say",   "lines": ["Hey! That was my nose! 😲", "Whoa, easy there!"], "pop": "💥" },
+            "laugh":       { "type": "say",   "lines": ["Hahaha, that tickles! 😂", "Okay okay, you got me!"], "pop": "😂" },
+            "work":        { "type": "say",   "lines": ["Ooh, one moment: that’s my best work!"], "pop": "💡" },
+            "contact":     { "type": "say",   "lines": ["Say hi! I reply fast ✉️"], "pop": "💬" },
             "leave":       { "type": "say",   "lines": ["Aw, leaving already?", "Come back soon!"] },
             "return":      { "type": "say",   "lines": ["Welcome back! 👋"] },
             "idle":        { "type": "think", "lines": ["Guess they’re reading…", "Quiet one, huh?"] },

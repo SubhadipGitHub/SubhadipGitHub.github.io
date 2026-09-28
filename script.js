@@ -314,19 +314,20 @@
         bigText.style.transform = 'translateY(' + (progress * 40 - 12) + '%)';
     }
 
-    /* ---------- hero character: cursor-reactive video with thought & speech bubbles ---------- */
+    /* ---------- hero character: eyes follow the cursor, reacts, thinks and talks ---------- */
     var heroSection = $('#home');
     var stage = $('#hero-stage');
     var actor = $('#hero-actor');
     var hit = $('#hero-hit');
     var videoA = $('#hero-video-a');
     var videoB = $('#hero-video-b');
+    var gazeVideo = $('#hero-gaze');
     var bubble = $('#hero-bubble');
     var bubbleText = $('#hero-bubble-text');
     var hintText = $('#hero-hint-text');
     var linesEl = $('#hero-lines');
 
-    if (heroSection && stage && actor && hit && videoA && videoB && bubble && bubbleText) {
+    if (heroSection && stage && actor && hit && videoA && videoB && gazeVideo && bubble && bubbleText) {
         var isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
         /* --- lines: edited in the #hero-lines JSON block in index.html --- */
@@ -440,24 +441,41 @@
             }
         }
 
-        /* --- clips: time ranges (seconds) of videos/hero-character.mp4 --- */
+        /* --- footage ---
+           videos/hero-actions.mp4 holds every clip back to back (ranges in seconds);
+           videos/hero-gaze.mp4 holds one head-and-eyes sweep per state, far screen-left
+           to far screen-right, scrubbed frame by frame to follow the pointer.
+           Both are built from videos/raw by the hero build script. */
         var CLIPS = {
-            typing: [0.05, 1.25],     // headphones on, typing
-            lookLeft: [1.3, 2.1],     // head turns to the screen's left
-            lookRight: [2.45, 3.1],   // head forward, eyes to the screen's right
-            lookUp: [3.9, 4.55],      // curious, facing the visitor
-            headsetOff: [4.6, 7.2],   // headphones down to the neck
-            smile: [7.2, 7.9],        // attentive, smiling
-            wave: [7.95, 9.55],
-            idea: [9.6, 10.1],        // finger up
-            point: [10.1, 11.0]       // points at the visitor
+            typing: [0.0, 2.4583],     // headphones on, typing (seamless loop)
+            notice: [2.4583, 5.7917],  // looks around, then at the visitor
+            hpOff: [5.7917, 9.0417],   // headphones down to the neck
+            hpOn: [9.0417, 12.2917],   // and back on
+            idle: [12.2917, 17.3333],  // headphones off: calm smile, a blink
+            talk: [17.3333, 22.3333],  // mouth moving, hands down (loops)
+            greet: [22.3333, 27.375],  // talks, then waves
+            wave: [27.375, 31.0],
+            laugh: [31.0, 36.0417],
+            idea: [36.0417, 41.0833],  // raised "one moment" finger
+            flinch: [41.0833, 46.125],
+            shy: [46.125, 51.1667]
         };
+        // `center` is the frame index at which he faces forward
+        var GAZE = {
+            on: { start: 0, frames: 42, center: 16.5 },
+            off: { start: 1.75, frames: 44, center: 18.5 }
+        };
+        var FRAME = 1 / 24;
         var FADE_MS = 320;
 
         var active = videoA;
         var standby = videoB;
-        var seg = null;      // { to, from, loop, resolve, jumping }
+        var seg = null;          // clip being monitored: { from, to, loop, resolve, jumping }
         var inView = true;
+        var gazeOn = false;      // the gaze layer is what's showing
+        var gazeState = 'on';
+        var gazeToken = 0;
+        var gaze = { x: 0, tx: 0, frame: -1 };
 
         function safePlay(v) {
             var p = v.play();
@@ -470,6 +488,7 @@
         // on a paused, hidden video and report a stale one, which showed the wrong moment.
         var pendingJump = null;
         function jumpTo(from) {
+            gazeToken++;
             if (pendingJump) {
                 pendingJump.from = from;
                 pendingJump.next.currentTime = from;
@@ -491,6 +510,10 @@
                     if (inView) { safePlay(next); }
                     next.classList.add('is-visible');
                     active.classList.remove('is-visible');
+                    if (gazeOn) {
+                        gazeVideo.classList.remove('is-visible');
+                        gazeOn = false;
+                    }
                     var prev = active;
                     active = next;
                     standby = prev;
@@ -502,30 +525,86 @@
             return job.promise;
         }
 
-        // Plays a clip; resolves when a one-shot clip reaches its end (and holds that frame).
+        // Plays a clip; resolves when a one-shot clip reaches its end (holding that frame).
         function playClip(name, loop) {
             var c = CLIPS[name];
+            var from = c[0] + 0.01;
             return new Promise(function (resolve) {
-                seg = { from: c[0], to: c[1], loop: !!loop, resolve: resolve, jumping: false };
+                seg = { from: from, to: c[1] - 0.05, loop: !!loop, resolve: resolve, jumping: false };
                 var mine = seg;
-                if (!pendingJump && Math.abs(active.currentTime - c[0]) < 0.12) {
+                if (!gazeOn && !pendingJump && Math.abs(active.currentTime - from) < 0.12) {
                     if (inView) { safePlay(active); }
                 } else {
                     mine.jumping = true;
-                    jumpTo(c[0]).then(function () { mine.jumping = false; });
+                    jumpTo(from).then(function () { mine.jumping = false; });
                 }
                 if (loop) { resolve(); }
             });
         }
 
-        /* --- pointer-driven tilt --- */
-        var tilt = { x: 0, tx: 0 };
+        /* --- gaze: scrub the sweep so his head and eyes follow gaze.x (-1 left .. 1 right) --- */
+        function gazeIndex(x, g) {
+            var idx = x < 0 ? g.center * (1 + x) : g.center + x * (g.frames - 1 - g.center);
+            return Math.max(0, Math.min(g.frames - 1, Math.round(idx)));
+        }
 
+        function setGazeFrame(force) {
+            var g = GAZE[gazeState];
+            var idx = gazeIndex(gaze.x, g);
+            if (!force && (idx === gaze.frame || gazeVideo.seeking)) { return; }
+            gaze.frame = idx;
+            gazeVideo.currentTime = g.start + (idx + 0.5) * FRAME;
+        }
+
+        function showGaze(state) {
+            seg = null;
+            if (gazeOn && gazeState === state) { return Promise.resolve(); }
+            gazeState = state;
+            var token = ++gazeToken;
+            var before = pendingJump ? pendingJump.promise : Promise.resolve();
+            return before.then(function () {
+                return new Promise(function (resolve) {
+                    if (token !== gazeToken) { resolve(); return; }
+                    gaze.x = gaze.tx;
+                    setGazeFrame(true);
+                    var startedAt = Date.now();
+                    (function wait() {
+                        if (token !== gazeToken) { resolve(); return; }
+                        var ready = !gazeVideo.seeking && gazeVideo.readyState >= 2;
+                        if (!ready && Date.now() - startedAt < 800) { setTimeout(wait, 30); return; }
+                        gazeVideo.classList.add('is-visible');
+                        active.classList.remove('is-visible');
+                        gazeOn = true;
+                        var shown = active;
+                        setTimeout(function () { if (gazeOn) { shown.pause(); } }, FADE_MS);
+                        resolve();
+                    })();
+                });
+            });
+        }
+
+        // turn back to face forward before a clip starts, so the cut is a small one
+        var holdCenter = false;
+        function recenter() {
+            if (!gazeOn) { return Promise.resolve(); }
+            holdCenter = true;
+            return new Promise(function (resolve) {
+                var startedAt = Date.now();
+                (function wait() {
+                    if (Math.abs(gaze.x) < 0.1 || Date.now() - startedAt > 450) { holdCenter = false; resolve(); return; }
+                    setTimeout(wait, 30);
+                })();
+            });
+        }
+
+        /* --- per-frame loop: clip ends, gaze easing, tilt, phone eye-wander --- */
+        var tilt = 0;
+        var wander = { next: 0, holdUntil: 0 };
         var raf = null;
         function tick(now) {
             raf = null;
             if (!inView) { return; }
-            if (seg && !seg.jumping) {
+            if (seg && !seg.jumping && !gazeOn) {
                 var lead = seg.loop ? FADE_MS / 1000 : 0.03;
                 if (active.currentTime >= seg.to - lead) {
                     if (seg.loop) {
@@ -540,213 +619,267 @@
                     }
                 }
             }
-            if (isTouch && !reduceMotion) {
-                // gentle sway so the character never looks frozen on phones
-                tilt.tx = Math.sin(now / 1700) * 0.35;
+            // phones have no pointer: let his eyes wander, with the odd quick glance
+            if (isTouch && now > wander.holdUntil && now > wander.next) {
+                gaze.tx = Math.random() * 1.6 - 0.8;
+                wander.next = now + 1200 + Math.random() * 2200;
             }
-            tilt.x += (tilt.tx - tilt.x) * 0.08;
-            actor.style.setProperty('--ry', (tilt.x * 4).toFixed(3) + 'deg');
-            actor.style.setProperty('--tx', (tilt.x * 10).toFixed(2) + 'px');
+            var target = holdCenter ? 0 : gaze.tx;
+            gaze.x += (target - gaze.x) * (holdCenter ? 0.3 : isTouch ? 0.07 : 0.16);
+            if (gazeOn) { setGazeFrame(false); }
+            tilt += (target - tilt) * 0.06;
+            actor.style.setProperty('--ry', (tilt * 2).toFixed(3) + 'deg');
+            actor.style.setProperty('--tx', (tilt * 6).toFixed(2) + 'px');
             raf = requestAnimationFrame(tick);
         }
         function startTick() { if (!raf) { raf = requestAnimationFrame(tick); } }
 
-        /* --- behaviour --- */
-        // mode: work (headphones on, typing) > curious (glancing at the cursor) >
-        //       greeting > attentive (headphones off, chatting) / react (wave, point)
+        /* --- behaviour ---
+           work (headphones on, typing, thinking) -> watch (eyes follow the cursor)
+           -> greeting (headphones off, talks and waves) -> attentive (eyes follow the
+           cursor, chats, blinks) with reactions (shy, wave, flinch, laugh, idea) on top */
         var mode = 'work';
-        var gen = 0;          // bumps whenever a new behaviour takes over
-        var chatterTimer = null;
-        var greetTimer = null;
-        var leaveTimer = null;
-        var idleTimer = null;
-        var lookSide = null;
-        var lastLook = 0;
+        var sub = 'gaze';        // attentive only: gaze | talk | idle
+        var gen = 0;             // bumps whenever a new behaviour takes over
+        var timers = {};
+
+        function clearTimers() {
+            Object.keys(timers).forEach(function (k) { clearTimeout(timers[k]); });
+            timers = {};
+        }
 
         function takeOver(nextMode) {
             gen++;
             mode = nextMode;
-            clearTimeout(chatterTimer);
-            clearTimeout(greetTimer);
-            clearTimeout(leaveTimer);
+            clearTimers();
             return gen;
         }
 
-        function chatter(my, keys, delay, every, hold) {
-            var k = 0;
-            (function loop(wait) {
-                chatterTimer = setTimeout(function () {
-                    if (my !== gen) { return; }
-                    show(line(keys[k % keys.length]), hold);
-                    k++;
-                    loop(every);
-                }, wait);
-            })(delay);
-        }
-
-        function toWork(intro) {
+        function toWork(keepBubble) {
             var my = takeOver('work');
-            lookSide = null;
             playClip('typing', true);
-            if (intro) { show(intro, 2600); } else { hideBubble(); }
-            chatter(my, ['working'], intro ? 4200 : 1400, 6000, 3600);
+            if (!keepBubble) { hideBubble(); }
+            (function think(wait) {
+                timers.chatter = setTimeout(function () {
+                    if (my !== gen) { return; }
+                    show(line('working'), 3600);
+                    think(6200);
+                }, wait);
+            })(keepBubble ? 4200 : 1500);
         }
 
-        function toAttentive() {
-            var my = takeOver('attentive');
-            playClip('smile', true);
-            chatter(my, ['attentive', 'attentive', 'musing'], 3000, 6500, 4200);
-            armIdle();
+        function toWatch() {
+            var my = takeOver('watch');
+            show(line(gaze.tx < 0 ? 'noticeLeft' : 'noticeRight'), 0);
+            showGaze('on');
+            // a visitor who sticks around gets a proper hello
+            timers.greet = setTimeout(function () { if (my === gen) { greet(false); } }, 2800);
         }
 
         function greet(viaTouch) {
             var my = takeOver('greeting');
-            playClip('lookUp').then(function () {
+            var chain = viaTouch ? playClip('notice') : recenter();
+            chain.then(function () {
                 if (my !== gen) { return; }
-                show(line(viaTouch ? 'touchGreet' : 'greet'), 0);
-                return playClip('headsetOff');
+                return playClip('hpOff');
             }).then(function () {
                 if (my !== gen) { return; }
-                toAttentive();
+                show(line(viaTouch ? 'touchGreet' : 'greet'), 3600);
+                return playClip('greet');
+            }).then(function () {
+                if (my === gen) { toAttentive(); }
             });
         }
 
-        function lookToward(side) {
-            if (mode !== 'work' && mode !== 'curious') { return; }
-            var now = Date.now();
-            if (side === lookSide || now - lastLook < 650) { return; }
-            lastLook = now;
-            lookSide = side;
-            if (mode === 'work') {
-                var my = takeOver('curious');
-                // a visitor who sticks around gets a proper hello
-                greetTimer = setTimeout(function () { if (my === gen) { greet(false); } }, 3200);
+        function speak(my, l) {
+            if (!l) { return; }
+            show(l, 3600);
+            if (l.think) {
+                // thinking: settle into the calm idle clip (it has a natural blink)
+                sub = 'idle';
+                playClip('idle').then(function () {
+                    if (my === gen && sub === 'idle') { sub = 'gaze'; showGaze('off'); }
+                });
+                return;
             }
-            show(line(side === 'left' ? 'noticeLeft' : 'noticeRight'), 0);
-            playClip(side === 'left' ? 'lookLeft' : 'lookRight');
+            sub = 'talk';
+            playClip('talk', true);
+            timers.talk = setTimeout(function () {
+                if (my === gen && sub === 'talk') { sub = 'gaze'; showGaze('off'); }
+            }, Array.from(l.text).length * 30 + 900);
+        }
+
+        function toAttentive() {
+            var my = takeOver('attentive');
+            sub = 'gaze';
+            showGaze('off');
+            var keys = ['attentive', 'musing', 'attentive'];
+            var k = 0;
+            (function chat(wait) {
+                timers.chatter = setTimeout(function () {
+                    if (my !== gen) { return; }
+                    speak(my, line(keys[k++ % keys.length]));
+                    chat(7000);
+                }, wait);
+            })(2600);
+            armIdle();
         }
 
         var lastReact = 0;
-        function react(clips, key) {
+        function react(clip, key) {
             var now = Date.now();
-            if (mode === 'react' && now - lastReact < 1500) { return; }
+            if (now - lastReact < 1200) { return; }
             lastReact = now;
-            var headsetOn = mode === 'work' || mode === 'curious';
+            var headsetOn = mode === 'work' || mode === 'watch';
             var my = takeOver('react');
-            var chain = headsetOn ? playClip('headsetOff') : Promise.resolve();
-            chain = chain.then(function () {
+            var chain = recenter();
+            if (headsetOn) {
+                chain = chain.then(function () { return my === gen ? playClip('hpOff') : null; });
+            }
+            chain.then(function () {
                 if (my !== gen) { return; }
                 show(line(key), 3600);
-            });
-            clips.forEach(function (name) {
-                chain = chain.then(function () {
-                    if (my !== gen) { return; }
-                    return playClip(name);
-                });
-            });
-            chain.then(function () {
-                // let a point land before relaxing
-                return new Promise(function (r) { setTimeout(r, clips[clips.length - 1] === 'point' ? 1100 : 0); });
+                return playClip(clip);
             }).then(function () {
-                if (my !== gen) { return; }
-                toAttentive();
+                if (my === gen) { toAttentive(); }
             });
         }
 
-        // no pointer activity for a while: drift back to work
+        function backToWork(intro) {
+            var my = takeOver('leaving');
+            if (intro) { show(intro, 3000); }
+            recenter().then(function () {
+                return my === gen ? playClip('hpOn') : null;
+            }).then(function () {
+                if (my === gen) { toWork(!!intro); }
+            });
+        }
+
+        // nobody around for a while: drift back to work
+        var idleTimer = null;
         function armIdle() {
             clearTimeout(idleTimer);
             idleTimer = setTimeout(function () {
                 if (mode !== 'attentive') { return; }
                 show(line('idle'), 2800);
-                leaveTimer = setTimeout(function () {
-                    if (mode === 'attentive') { toWork(line('backToWork')); }
+                timers.leave = setTimeout(function () {
+                    if (mode === 'attentive') { backToWork(line('backToWork')); }
                 }, 3200);
-            }, isTouch ? 22000 : 14000);
+            }, isTouch ? 25000 : 15000);
+        }
+
+        function stageFraction(clientX, clientY) {
+            var r = hit.getBoundingClientRect();
+            return { x: (clientX - r.left) / r.width, y: (clientY - r.top) / r.height };
+        }
+
+        // upper part of the character is his face
+        function zoneAt(clientX, clientY) {
+            return stageFraction(clientX, clientY).y < 0.42 ? 'face' : 'body';
         }
 
         function headCenter() {
             var r = stage.getBoundingClientRect();
-            return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.32 };
+            return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.3 };
         }
 
-        var clickCount = 0;
-        function poke() {
-            if (mode === 'work' || mode === 'curious') { greet(isTouch); return; }
-            clickCount++;
-            react(clickCount % 2 ? ['wave'] : ['idea', 'point'], clickCount % 2 ? 'click' : 'wave');
+        function pointAt(clientX) {
+            var dx = clientX - headCenter().x;
+            gaze.tx = Math.max(-1, Math.min(1, dx / (heroSection.clientWidth * 0.42)));
+        }
+
+        var tapCount = 0;
+        function poke(zone) {
+            if (mode === 'work' || mode === 'watch') { greet(isTouch); return; }
+            tapCount++;
+            if (zone === 'face') { react(tapCount % 2 ? 'flinch' : 'shy', tapCount % 2 ? 'flinch' : 'shy'); }
+            else { react(tapCount % 2 ? 'laugh' : 'wave', tapCount % 2 ? 'laugh' : 'wave'); }
             armIdle();
         }
 
         if (reduceMotion) {
             // a still, friendly frame instead of motion
-            var still = function () { videoA.currentTime = 7.6; };
+            var still = function () { videoA.currentTime = CLIPS.idle[0] + 0.5; };
             if (videoA.readyState >= 1) { still(); } else { videoA.addEventListener('loadedmetadata', still, { once: true }); }
             show(line('greet'), 0);
             hit.addEventListener('click', function () { show(line('attentive'), 0); });
         } else {
-            toWork(null);
+            toWork(false);
             startTick();
 
-            hit.addEventListener('click', poke);
-
             if (!isTouch) {
-                var lastX = 0;
-                var moveQueued = false;
+                var lastZone = null;
+                var zoneCooldown = { face: 0, body: 0 };
+
                 heroSection.addEventListener('mousemove', function (e) {
-                    lastX = e.clientX;
+                    pointAt(e.clientX);
                     armIdle();
-                    clearTimeout(leaveTimer);
-                    if (moveQueued) { return; }
-                    moveQueued = true;
-                    requestAnimationFrame(function () {
-                        moveQueued = false;
-                        var dx = lastX - headCenter().x;
-                        var w = heroSection.clientWidth;
-                        tilt.tx = Math.max(-1, Math.min(1, dx / (w * 0.45)));
-                        if (Math.abs(dx) > w * 0.1) { lookToward(dx < 0 ? 'left' : 'right'); }
-                    });
+                    clearTimeout(timers.leave);
+                    if (mode === 'work') { toWatch(); }
+                    else if (mode === 'attentive' && sub === 'idle') { sub = 'gaze'; showGaze('off'); }
                 });
 
-                hit.addEventListener('mouseenter', function () {
-                    if (mode === 'work' || mode === 'curious') { greet(false); }
-                    else if (mode === 'attentive') { react(['wave'], 'wave'); }
+                hit.addEventListener('mousemove', function (e) {
+                    var zone = zoneAt(e.clientX, e.clientY);
+                    if (zone === lastZone) { return; }
+                    lastZone = zone;
+                    var now = Date.now();
+                    if (mode === 'work' || mode === 'watch') { greet(false); return; }
+                    if (mode !== 'attentive' || now < zoneCooldown[zone]) { return; }
+                    zoneCooldown[zone] = now + (zone === 'face' ? 7000 : 9000);
+                    if (zone === 'face') { react('shy', 'shy'); } else { react('wave', 'wave'); }
+                });
+                hit.addEventListener('mouseleave', function () { lastZone = null; });
+
+                hit.addEventListener('click', function (e) {
+                    // keyboard activation has no pointer position: treat it as a body poke
+                    poke(e.detail === 0 ? 'body' : zoneAt(e.clientX, e.clientY));
                 });
 
+                // kept apart from `timers`: a reaction finishing must not cancel the goodbye
+                var leaveTimer = null;
                 heroSection.addEventListener('mouseleave', function () {
-                    tilt.tx = 0;
+                    gaze.tx = 0;
                     if (mode === 'work') { return; }
-                    if (mode === 'curious') { toWork(null); return; }
+                    if (mode === 'watch') { toWork(false); return; }
                     show(line('leave'), 2600);
                     clearTimeout(leaveTimer);
-                    leaveTimer = setTimeout(function () { toWork(line('backToWork')); }, 3200);
+                    leaveTimer = setTimeout(function () {
+                        leaveTimer = null;
+                        if (mode !== 'work' && mode !== 'leaving') { backToWork(line('backToWork')); }
+                    }, 3200);
                 });
 
                 heroSection.addEventListener('mouseenter', function () {
-                    if (leaveTimer && mode !== 'work') {
-                        clearTimeout(leaveTimer);
-                        leaveTimer = null;
-                        show(line('return'), 2600);
-                    }
+                    if (!leaveTimer) { return; }
+                    clearTimeout(leaveTimer);
+                    leaveTimer = null;
+                    if (mode !== 'work' && mode !== 'leaving') { show(line('return'), 2600); }
                 });
 
                 $$('[data-hero-react]').forEach(function (el) {
                     el.addEventListener('mouseenter', function () {
-                        react(['idea', 'point'], el.getAttribute('data-hero-react'));
+                        var key = el.getAttribute('data-hero-react');
+                        react(key === 'contact' ? 'greet' : 'idea', key);
                     });
                 });
             } else {
                 // phones: say hello by himself once the hero has been on screen a moment
                 setTimeout(function () {
-                    if (mode !== 'work') { return; }
-                    lookToward('right');
-                    setTimeout(function () { if (mode === 'curious') { greet(true); } }, 1100);
+                    if (mode === 'work') { greet(true); }
                 }, 3200);
 
+                hit.addEventListener('click', function (e) {
+                    poke(zoneAt(e.clientX, e.clientY));
+                });
+
+                // a tap anywhere else: he looks over at it
                 heroSection.addEventListener('pointerdown', function (e) {
-                    var h = headCenter();
-                    tilt.tx = Math.max(-1, Math.min(1, (e.clientX - h.x) / (heroSection.clientWidth * 0.5)));
+                    if (e.target === hit || e.target.closest('a, button')) { return; }
+                    pointAt(e.clientX);
+                    wander.holdUntil = performance.now() + 2500;
                     armIdle();
+                    if (mode === 'work') { greet(true); }
                 });
             }
 
@@ -755,7 +888,7 @@
             function resume() {
                 if (!heroVisible || document.hidden) { return; }
                 inView = true;
-                if (seg) { safePlay(active); }
+                if (seg && !gazeOn) { safePlay(active); }
                 startTick();
             }
             function suspend() {

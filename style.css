@@ -313,9 +313,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    Hero — character video on a matched backdrop
    ============================================================ */
 .hero {
-    /* edge colour of videos/hero-character.mp4; script.js re-samples it from the
+    /* backdrop colour baked into videos/hero-*.mp4; script.js re-samples it from the
        decoded frame since browsers differ slightly in how they render video colour */
-    --hero-bg: #92151e;
+    --hero-bg: #a0211e;
     position: relative;
     width: 100%;
     min-height: 100vh;
