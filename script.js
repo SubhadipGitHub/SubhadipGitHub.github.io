@@ -11,13 +11,19 @@
     var $$ = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
 
     /* ---------- preloader ---------- */
+    // plays once per browser; the inline script in <head> hides it for returning visitors
     var preloader = $('#preloader');
     if (preloader) {
-        var dismiss = function () {
-            preloader.classList.add('done');
-            setTimeout(function () { preloader.remove(); }, 1200);
-        };
-        setTimeout(dismiss, reduceMotion ? 200 : 2100);
+        if (document.documentElement.classList.contains('is-returning')) {
+            preloader.remove();
+        } else {
+            var dismiss = function () {
+                preloader.classList.add('done');
+                setTimeout(function () { preloader.remove(); }, 1200);
+            };
+            setTimeout(dismiss, reduceMotion ? 200 : 2100);
+            try { localStorage.setItem('sd-visited', '1'); } catch (err) { /* private mode: it just plays again */ }
+        }
     }
 
     /* ---------- navbar ---------- */
@@ -955,16 +961,55 @@
                 return;
             }
 
-            var body = 'Name: ' + values['contact-name']
-                + '\nEmail: ' + email
-                + '\n\n' + values['contact-message'];
+            var subject = 'Portfolio contact: ' + values['contact-subject'];
 
-            var mailto = 'mailto:subhadip.dutta.18@gmail.com'
-                + '?subject=' + encodeURIComponent('Portfolio contact: ' + values['contact-subject'])
-                + '&body=' + encodeURIComponent(body);
+            function openMailApp(note) {
+                var body = 'Name: ' + values['contact-name']
+                    + '\nEmail: ' + email
+                    + '\n\n' + values['contact-message'];
+                showToast(note, 'success');
+                window.location.href = 'mailto:subhadip.dutta.18@gmail.com'
+                    + '?subject=' + encodeURIComponent(subject)
+                    + '&body=' + encodeURIComponent(body);
+            }
 
-            showToast('Opening your email client to send the message.', 'success');
-            window.location.href = mailto;
+            // the spam trap is invisible to people: if it's ticked, a bot filled the form
+            if (form.querySelector('[name="botcheck"]').checked) {
+                form.reset();
+                showToast('Thanks! Your message is on its way. I’ll reply soon.', 'success');
+                return;
+            }
+
+            // posts into the Google Form; if the network fails, fall back to the visitor's email app
+            var endpoint = form.getAttribute('data-google-form');
+            if (!endpoint || !window.fetch) {
+                openMailApp('Opening your email client to send the message.');
+                return;
+            }
+
+            var button = form.querySelector('.send-btn');
+            button.disabled = true;
+            showToast('Sending…', 'success');
+
+            var data = new URLSearchParams();
+            ['#contact-name', '#contact-email', '#contact-subject', '#contact-message'].forEach(function (sel) {
+                var el = $(sel);
+                data.append(el.name, el.value.trim());
+            });
+
+            // Google Forms doesn't allow cross-origin reads, so the response is opaque: a resolved
+            // request means it was delivered, only a network error rejects
+            fetch(endpoint, { method: 'POST', mode: 'no-cors', body: data })
+                .then(function () {
+                    form.reset();
+                    showToast('Thanks! Your message is on its way. I’ll reply soon.', 'success');
+                })
+                .catch(function () {
+                    openMailApp('Couldn’t send from here, so opening your email client instead.');
+                })
+                .then(function () {
+                    button.disabled = false;
+                });
         });
 
         form.querySelectorAll('input, textarea').forEach(function (el) {
