@@ -314,238 +314,464 @@
         bigText.style.transform = 'translateY(' + (progress * 40 - 12) + '%)';
     }
 
-    /* ---------- hero character: zone-driven animated sequence ---------- */
+    /* ---------- hero character: cursor-reactive video with thought & speech bubbles ---------- */
     var heroSection = $('#home');
-    var frameA = $('#hero-frame-a');
-    var frameB = $('#hero-frame-b');
-    var characterEl = $('#hero-character');
-    var hintTextEl = $('#hero-hint-text');
+    var stage = $('#hero-stage');
+    var actor = $('#hero-actor');
+    var hit = $('#hero-hit');
+    var videoA = $('#hero-video-a');
+    var videoB = $('#hero-video-b');
+    var bubble = $('#hero-bubble');
+    var bubbleText = $('#hero-bubble-text');
+    var hintText = $('#hero-hint-text');
+    var linesEl = $('#hero-lines');
 
-    if (heroSection && frameA && frameB && characterEl && hintTextEl) {
-        var FRAME_DIR = 'images/hero-frames/';
-        var FRAME_COUNT = 133;
-        var FPS = 12;
-        var FRAME_MS = 1000 / FPS;
-        var DEFAULT_HINT = 'Move cursor to call me!';
+    if (heroSection && stage && actor && hit && videoA && videoB && bubble && bubbleText) {
+        var isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-        // Reduced-frame index ranges within the exported sequence (see
-        // images/hero-frames): idle typing loop, noticing the visitor,
-        // settling, headset off, headset-to-neck + smile, wave, point.
-        var CLIPS = {
-            idle: [0, 14],
-            look: [14, 49],
-            settle: [49, 58],
-            headsetOff: [58, 71],
-            neck: [71, 94],
-            wave: [94, 116],
-            point: [116, 132]
-        };
+        /* --- lines: edited in the #hero-lines JSON block in index.html --- */
+        var LINES = {};
+        try { LINES = JSON.parse(linesEl ? linesEl.textContent : '{}'); } catch (err) { LINES = {}; }
 
-        var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-        if (!supportsHover) { heroSection.classList.add('is-touch'); }
-
-        function frameUrl(i) {
-            var n = ('000' + i).slice(-4);
-            return FRAME_DIR + 'frame_' + n + '.webp';
+        var nextIndex = {};
+        function line(key) {
+            var entry = LINES[key];
+            if (!entry) { return null; }
+            if (Array.isArray(entry)) { entry = { type: 'say', lines: entry }; }
+            if (!entry.lines || !entry.lines.length) { return null; }
+            var i = nextIndex[key] || 0;
+            nextIndex[key] = (i + 1) % entry.lines.length;
+            return { think: entry.type === 'think', text: String(entry.lines[i]), pop: entry.pop };
         }
 
-        // preload the sequence so playback never stalls waiting on the network
-        if (!reduceMotion) {
-            for (var p = 0; p < FRAME_COUNT; p++) {
-                var pre = new Image();
-                pre.src = frameUrl(p);
+        if (hintText && LINES.hint) {
+            var hint = isTouch ? LINES.hint.touch : LINES.hint.pointer;
+            if (hint) { hintText.textContent = hint; }
+        }
+
+        /* --- backdrop: match the page to the video's red as this browser renders it --- */
+        function matchBackdrop() {
+            try {
+                var canvas = document.createElement('canvas');
+                canvas.width = 16; canvas.height = 12;
+                var ctx = canvas.getContext('2d', { willReadFrequently: true });
+                ctx.drawImage(videoA, 0, 0, 16, 12);
+                // top-right corner is always plain backdrop
+                var data = ctx.getImageData(12, 0, 4, 3).data;
+                var r = 0, g = 0, b = 0, n = data.length / 4;
+                for (var i = 0; i < data.length; i += 4) { r += data[i]; g += data[i + 1]; b += data[i + 2]; }
+                heroSection.style.setProperty('--hero-bg', 'rgb(' + Math.round(r / n) + ',' + Math.round(g / n) + ',' + Math.round(b / n) + ')');
+            } catch (err) {
+                // canvas is tainted when the page is opened from file://; the CSS fallback stands
             }
         }
+        if (videoA.readyState >= 2) { matchBackdrop(); } else { videoA.addEventListener('loadeddata', matchBackdrop, { once: true }); }
 
-        var active = frameA;
-        var incoming = frameB;
+        /* --- bubble: thought clouds fade in after "..." dots, speech is typed out --- */
+        var bubbleTimer = null;
+        var typeTimer = null;
 
-        function showFrame(i) {
-            active.src = frameUrl(i);
+        function escapeHtml(str) {
+            return str.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
         }
 
-        function crossfadeTo(i) {
-            return new Promise(function (resolve) {
-                incoming.src = frameUrl(i);
-                incoming.classList.add('is-visible');
-                active.classList.remove('is-visible');
-                var swap = active; active = incoming; incoming = swap;
-                setTimeout(resolve, 400);
-            });
+        function hideBubble() {
+            clearTimeout(bubbleTimer);
+            clearInterval(typeTimer);
+            bubble.classList.remove('is-shown');
         }
 
-        function delay(ms) {
-            return new Promise(function (resolve) { setTimeout(resolve, ms); });
-        }
+        function show(l, holdMs) {
+            if (!l) { return; }
+            var wasShown = bubble.classList.contains('is-shown');
+            hideBubble();
+            bubbleTimer = setTimeout(function () {
+                bubble.classList.toggle('is-think', l.think);
+                bubble.classList.toggle('is-say', !l.think);
+                if (l.pop) { pop(l.pop); }
 
-        function playRange(from, to, token) {
-            return new Promise(function (resolve) {
-                var dir = to >= from ? 1 : -1;
-                var f = from;
-                var last = null;
-                var acc = 0;
-                showFrame(f);
-                function step(now) {
-                    if (token.cancelled) { resolve(); return; }
-                    if (last === null) { last = now; }
-                    acc += now - last;
-                    last = now;
-                    var moved = false;
-                    while (acc >= FRAME_MS && f !== to) {
-                        acc -= FRAME_MS;
-                        f += dir;
-                        moved = true;
-                    }
-                    if (moved) { showFrame(f); }
-                    if (f === to) { resolve(); return; }
-                    token.raf = requestAnimationFrame(step);
+                function done() {
+                    if (holdMs) { bubbleTimer = setTimeout(hideBubble, holdMs); }
                 }
-                token.raf = requestAnimationFrame(step);
-            });
+
+                if (reduceMotion) {
+                    bubbleText.textContent = l.text;
+                    bubble.classList.add('is-shown');
+                    done();
+                } else if (l.think) {
+                    bubbleText.innerHTML = '<span class="hero-dots"><i></i><i></i><i></i></span>';
+                    bubble.classList.add('is-shown');
+                    bubbleTimer = setTimeout(function () {
+                        bubbleText.textContent = l.text;
+                        done();
+                    }, 750);
+                } else {
+                    var chars = Array.from(l.text);
+                    var typed = 0;
+                    var render = function () {
+                        bubbleText.innerHTML = escapeHtml(chars.slice(0, typed).join('')) +
+                            '<span class="hero-bubble-rest">' + escapeHtml(chars.slice(typed).join('')) + '</span>';
+                    };
+                    render();
+                    bubble.classList.add('is-shown');
+                    typeTimer = setInterval(function () {
+                        typed++;
+                        render();
+                        if (typed >= chars.length) { clearInterval(typeTimer); done(); }
+                    }, 30);
+                }
+            }, wasShown ? 200 : 0);
         }
 
-        var currentMessage = '';
-        function setMessage(text) {
-            if (text === currentMessage) { return; }
-            currentMessage = text;
-            hintTextEl.classList.add('is-fading');
-            setTimeout(function () {
-                hintTextEl.textContent = text;
-                hintTextEl.classList.remove('is-fading');
-            }, 180);
-        }
-
-        function setMirror(on) {
-            characterEl.classList.toggle('is-mirrored', on);
-        }
-
-        function newToken() {
-            return { cancelled: false, raf: null };
-        }
-
-        var idleToken = null;
-        function stopIdle() {
-            if (idleToken) {
-                idleToken.cancelled = true;
-                if (idleToken.raf) { cancelAnimationFrame(idleToken.raf); }
-                idleToken = null;
+        function pop(emoji) {
+            if (reduceMotion) { return; }
+            for (var i = 0; i < 3; i++) {
+                var el = document.createElement('span');
+                el.className = 'hero-pop';
+                el.textContent = emoji;
+                el.style.left = (40 + Math.random() * 18) + '%';
+                el.style.top = (18 + Math.random() * 12) + '%';
+                el.style.setProperty('--dx', Math.round(Math.random() * 60 - 30) + 'px');
+                el.style.setProperty('--rot', Math.round(Math.random() * 50 - 25) + 'deg');
+                el.style.animationDelay = (i * 0.14) + 's';
+                el.setAttribute('aria-hidden', 'true');
+                stage.appendChild(el);
+                setTimeout(function (node) { node.remove(); }, 1900, el);
             }
         }
-        function startIdle() {
-            stopIdle();
-            var token = newToken();
-            idleToken = token;
-            (function loop() {
-                if (token.cancelled) { return; }
-                playRange(CLIPS.idle[0], CLIPS.idle[1], token).then(function () {
-                    if (token.cancelled) { return; }
-                    playRange(CLIPS.idle[1], CLIPS.idle[0], token).then(function () {
-                        if (token.cancelled) { return; }
-                        loop();
-                    });
+
+        /* --- clips: time ranges (seconds) of videos/hero-character.mp4 --- */
+        var CLIPS = {
+            typing: [0.05, 1.25],     // headphones on, typing
+            lookLeft: [1.3, 2.1],     // head turns to the screen's left
+            lookRight: [2.45, 3.1],   // head forward, eyes to the screen's right
+            lookUp: [3.9, 4.55],      // curious, facing the visitor
+            headsetOff: [4.6, 7.2],   // headphones down to the neck
+            smile: [7.2, 7.9],        // attentive, smiling
+            wave: [7.95, 9.55],
+            idea: [9.6, 10.1],        // finger up
+            point: [10.1, 11.0]       // points at the visitor
+        };
+        var FADE_MS = 320;
+
+        var active = videoA;
+        var standby = videoB;
+        var seg = null;      // { to, from, loop, resolve, jumping }
+        var inView = true;
+
+        function safePlay(v) {
+            var p = v.play();
+            if (p && p.catch) { p.catch(function () {}); }
+        }
+
+        // Cue `from` on the hidden copy and dissolve over to it. A jump requested while
+        // another is still seeking retargets that one, so the two copies never swap twice.
+        // The copy is polled rather than trusted to fire 'seeked': Chrome can drop a seek
+        // on a paused, hidden video and report a stale one, which showed the wrong moment.
+        var pendingJump = null;
+        function jumpTo(from) {
+            if (pendingJump) {
+                pendingJump.from = from;
+                pendingJump.next.currentTime = from;
+                return pendingJump.promise;
+            }
+            var job = { from: from, next: standby };
+            job.promise = new Promise(function (resolve) {
+                var next = job.next;
+                var startedAt = Date.now();
+                next.currentTime = from;
+                (function wait() {
+                    var arrived = !next.seeking && next.readyState >= 2 && Math.abs(next.currentTime - job.from) < 0.15;
+                    if (!arrived && Date.now() - startedAt < 1200) {
+                        if (!next.seeking && Math.abs(next.currentTime - job.from) >= 0.15) { next.currentTime = job.from; }
+                        setTimeout(wait, 30);
+                        return;
+                    }
+                    pendingJump = null;
+                    if (inView) { safePlay(next); }
+                    next.classList.add('is-visible');
+                    active.classList.remove('is-visible');
+                    var prev = active;
+                    active = next;
+                    standby = prev;
+                    setTimeout(function () { if (prev !== active) { prev.pause(); } }, FADE_MS);
+                    resolve();
+                })();
+            });
+            pendingJump = job;
+            return job.promise;
+        }
+
+        // Plays a clip; resolves when a one-shot clip reaches its end (and holds that frame).
+        function playClip(name, loop) {
+            var c = CLIPS[name];
+            return new Promise(function (resolve) {
+                seg = { from: c[0], to: c[1], loop: !!loop, resolve: resolve, jumping: false };
+                var mine = seg;
+                if (!pendingJump && Math.abs(active.currentTime - c[0]) < 0.12) {
+                    if (inView) { safePlay(active); }
+                } else {
+                    mine.jumping = true;
+                    jumpTo(c[0]).then(function () { mine.jumping = false; });
+                }
+                if (loop) { resolve(); }
+            });
+        }
+
+        /* --- pointer-driven tilt --- */
+        var tilt = { x: 0, tx: 0 };
+
+        var raf = null;
+        function tick(now) {
+            raf = null;
+            if (!inView) { return; }
+            if (seg && !seg.jumping) {
+                var lead = seg.loop ? FADE_MS / 1000 : 0.03;
+                if (active.currentTime >= seg.to - lead) {
+                    if (seg.loop) {
+                        var looping = seg;
+                        looping.jumping = true;
+                        jumpTo(looping.from).then(function () { looping.jumping = false; });
+                    } else {
+                        var ended = seg;
+                        seg = null;
+                        active.pause();
+                        ended.resolve();
+                    }
+                }
+            }
+            if (isTouch && !reduceMotion) {
+                // gentle sway so the character never looks frozen on phones
+                tilt.tx = Math.sin(now / 1700) * 0.35;
+            }
+            tilt.x += (tilt.tx - tilt.x) * 0.08;
+            actor.style.setProperty('--ry', (tilt.x * 4).toFixed(3) + 'deg');
+            actor.style.setProperty('--tx', (tilt.x * 10).toFixed(2) + 'px');
+            raf = requestAnimationFrame(tick);
+        }
+        function startTick() { if (!raf) { raf = requestAnimationFrame(tick); } }
+
+        /* --- behaviour --- */
+        // mode: work (headphones on, typing) > curious (glancing at the cursor) >
+        //       greeting > attentive (headphones off, chatting) / react (wave, point)
+        var mode = 'work';
+        var gen = 0;          // bumps whenever a new behaviour takes over
+        var chatterTimer = null;
+        var greetTimer = null;
+        var leaveTimer = null;
+        var idleTimer = null;
+        var lookSide = null;
+        var lastLook = 0;
+
+        function takeOver(nextMode) {
+            gen++;
+            mode = nextMode;
+            clearTimeout(chatterTimer);
+            clearTimeout(greetTimer);
+            clearTimeout(leaveTimer);
+            return gen;
+        }
+
+        function chatter(my, keys, delay, every, hold) {
+            var k = 0;
+            (function loop(wait) {
+                chatterTimer = setTimeout(function () {
+                    if (my !== gen) { return; }
+                    show(line(keys[k % keys.length]), hold);
+                    k++;
+                    loop(every);
+                }, wait);
+            })(delay);
+        }
+
+        function toWork(intro) {
+            var my = takeOver('work');
+            lookSide = null;
+            playClip('typing', true);
+            if (intro) { show(intro, 2600); } else { hideBubble(); }
+            chatter(my, ['working'], intro ? 4200 : 1400, 6000, 3600);
+        }
+
+        function toAttentive() {
+            var my = takeOver('attentive');
+            playClip('smile', true);
+            chatter(my, ['attentive', 'attentive', 'musing'], 3000, 6500, 4200);
+            armIdle();
+        }
+
+        function greet(viaTouch) {
+            var my = takeOver('greeting');
+            playClip('lookUp').then(function () {
+                if (my !== gen) { return; }
+                show(line(viaTouch ? 'touchGreet' : 'greet'), 0);
+                return playClip('headsetOff');
+            }).then(function () {
+                if (my !== gen) { return; }
+                toAttentive();
+            });
+        }
+
+        function lookToward(side) {
+            if (mode !== 'work' && mode !== 'curious') { return; }
+            var now = Date.now();
+            if (side === lookSide || now - lastLook < 650) { return; }
+            lastLook = now;
+            lookSide = side;
+            if (mode === 'work') {
+                var my = takeOver('curious');
+                // a visitor who sticks around gets a proper hello
+                greetTimer = setTimeout(function () { if (my === gen) { greet(false); } }, 3200);
+            }
+            show(line(side === 'left' ? 'noticeLeft' : 'noticeRight'), 0);
+            playClip(side === 'left' ? 'lookLeft' : 'lookRight');
+        }
+
+        var lastReact = 0;
+        function react(clips, key) {
+            var now = Date.now();
+            if (mode === 'react' && now - lastReact < 1500) { return; }
+            lastReact = now;
+            var headsetOn = mode === 'work' || mode === 'curious';
+            var my = takeOver('react');
+            var chain = headsetOn ? playClip('headsetOff') : Promise.resolve();
+            chain = chain.then(function () {
+                if (my !== gen) { return; }
+                show(line(key), 3600);
+            });
+            clips.forEach(function (name) {
+                chain = chain.then(function () {
+                    if (my !== gen) { return; }
+                    return playClip(name);
                 });
-            })();
-        }
-
-        var mainToken = null;
-
-        function runSideReaction(zone, token) {
-            setMirror(zone === 'left');
-            setMessage(zone === 'left' ? 'Anyone here on the left?' : 'Anyone here on the right?');
-            return crossfadeTo(CLIPS.look[0]).then(function () {
-                if (token.cancelled) { return; }
-                return playRange(CLIPS.look[0], CLIPS.look[1], token);
+            });
+            chain.then(function () {
+                // let a point land before relaxing
+                return new Promise(function (r) { setTimeout(r, clips[clips.length - 1] === 'point' ? 1100 : 0); });
             }).then(function () {
-                if (token.cancelled) { return; }
-                return delay(2400);
+                if (my !== gen) { return; }
+                toAttentive();
             });
         }
 
-        function runGreeting(token) {
-            setMirror(false);
-            setMessage('Hey, it’s you!');
-            return crossfadeTo(CLIPS.look[0]).then(function () {
-                if (token.cancelled) { return; }
-                return playRange(CLIPS.look[0], CLIPS.settle[1], token);
-            }).then(function () {
-                if (token.cancelled) { return; }
-                setMessage('Hiiii!');
-                return playRange(CLIPS.settle[1], CLIPS.wave[1], token);
-            }).then(function () {
-                if (token.cancelled) { return; }
-                return delay(250);
-            }).then(function () {
-                if (token.cancelled) { return; }
-                setMessage('Check out the portfolio');
-                return playRange(CLIPS.wave[1], CLIPS.point[1], token);
-            }).then(function () {
-                if (token.cancelled) { return; }
-                return delay(2200);
-            });
+        // no pointer activity for a while: drift back to work
+        function armIdle() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(function () {
+                if (mode !== 'attentive') { return; }
+                show(line('idle'), 2800);
+                leaveTimer = setTimeout(function () {
+                    if (mode === 'attentive') { toWork(line('backToWork')); }
+                }, 3200);
+            }, isTouch ? 22000 : 14000);
         }
 
-        function runZone(zone) {
-            stopIdle();
-            if (mainToken) { mainToken.cancelled = true; if (mainToken.raf) { cancelAnimationFrame(mainToken.raf); } }
-            var token = newToken();
-            mainToken = token;
+        function headCenter() {
+            var r = stage.getBoundingClientRect();
+            return { x: r.left + r.width * 0.5, y: r.top + r.height * 0.32 };
+        }
 
-            var seq = (zone === 'left' || zone === 'right') ? runSideReaction(zone, token) : runGreeting(token);
-
-            seq.then(function () {
-                if (token.cancelled) { return; }
-                return crossfadeTo(CLIPS.idle[0]);
-            }).then(function () {
-                if (token.cancelled) { return; }
-                setMirror(false);
-                setMessage(DEFAULT_HINT);
-                startIdle();
-            });
+        var clickCount = 0;
+        function poke() {
+            if (mode === 'work' || mode === 'curious') { greet(isTouch); return; }
+            clickCount++;
+            react(clickCount % 2 ? ['wave'] : ['idea', 'point'], clickCount % 2 ? 'click' : 'wave');
+            armIdle();
         }
 
         if (reduceMotion) {
-            showFrame(0);
-            frameA.classList.add('is-visible');
+            // a still, friendly frame instead of motion
+            var still = function () { videoA.currentTime = 7.6; };
+            if (videoA.readyState >= 1) { still(); } else { videoA.addEventListener('loadedmetadata', still, { once: true }); }
+            show(line('greet'), 0);
+            hit.addEventListener('click', function () { show(line('attentive'), 0); });
         } else {
-            startIdle();
+            toWork(null);
+            startTick();
 
-            if (supportsHover) {
-                var lastZone = null;
-                var pendingZone = null;
-                var zoneTimer = null;
+            hit.addEventListener('click', poke);
 
-                function zoneFromClientX(clientX) {
-                    var rect = heroSection.getBoundingClientRect();
-                    var rel = (clientX - rect.left) / rect.width;
-                    if (rel < 0.33) { return 'left'; }
-                    if (rel > 0.67) { return 'right'; }
-                    return 'center';
-                }
+            if (!isTouch) {
+                var lastX = 0;
+                var moveQueued = false;
+                heroSection.addEventListener('mousemove', function (e) {
+                    lastX = e.clientX;
+                    armIdle();
+                    clearTimeout(leaveTimer);
+                    if (moveQueued) { return; }
+                    moveQueued = true;
+                    requestAnimationFrame(function () {
+                        moveQueued = false;
+                        var dx = lastX - headCenter().x;
+                        var w = heroSection.clientWidth;
+                        tilt.tx = Math.max(-1, Math.min(1, dx / (w * 0.45)));
+                        if (Math.abs(dx) > w * 0.1) { lookToward(dx < 0 ? 'left' : 'right'); }
+                    });
+                });
 
-                function handleMove(e) {
-                    var zone = zoneFromClientX(e.clientX);
-                    if (zone === lastZone || zone === pendingZone) { return; }
-                    pendingZone = zone;
-                    clearTimeout(zoneTimer);
-                    zoneTimer = setTimeout(function () {
-                        lastZone = zone;
-                        pendingZone = null;
-                        runZone(zone);
-                    }, 90);
-                }
+                hit.addEventListener('mouseenter', function () {
+                    if (mode === 'work' || mode === 'curious') { greet(false); }
+                    else if (mode === 'attentive') { react(['wave'], 'wave'); }
+                });
 
-                heroSection.addEventListener('mouseenter', handleMove);
-                heroSection.addEventListener('mousemove', handleMove);
                 heroSection.addEventListener('mouseleave', function () {
-                    lastZone = null;
-                    pendingZone = null;
-                    clearTimeout(zoneTimer);
+                    tilt.tx = 0;
+                    if (mode === 'work') { return; }
+                    if (mode === 'curious') { toWork(null); return; }
+                    show(line('leave'), 2600);
+                    clearTimeout(leaveTimer);
+                    leaveTimer = setTimeout(function () { toWork(line('backToWork')); }, 3200);
+                });
+
+                heroSection.addEventListener('mouseenter', function () {
+                    if (leaveTimer && mode !== 'work') {
+                        clearTimeout(leaveTimer);
+                        leaveTimer = null;
+                        show(line('return'), 2600);
+                    }
+                });
+
+                $$('[data-hero-react]').forEach(function (el) {
+                    el.addEventListener('mouseenter', function () {
+                        react(['idea', 'point'], el.getAttribute('data-hero-react'));
+                    });
                 });
             } else {
-                heroSection.addEventListener('pointerup', function () {
-                    runZone('center');
+                // phones: say hello by himself once the hero has been on screen a moment
+                setTimeout(function () {
+                    if (mode !== 'work') { return; }
+                    lookToward('right');
+                    setTimeout(function () { if (mode === 'curious') { greet(true); } }, 1100);
+                }, 3200);
+
+                heroSection.addEventListener('pointerdown', function (e) {
+                    var h = headCenter();
+                    tilt.tx = Math.max(-1, Math.min(1, (e.clientX - h.x) / (heroSection.clientWidth * 0.5)));
+                    armIdle();
                 });
             }
+
+            // stop decoding while the hero is off screen or the tab is hidden
+            var heroVisible = true;
+            function resume() {
+                if (!heroVisible || document.hidden) { return; }
+                inView = true;
+                if (seg) { safePlay(active); }
+                startTick();
+            }
+            function suspend() {
+                inView = false;
+                videoA.pause();
+                videoB.pause();
+            }
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entries) {
+                    heroVisible = entries[0].isIntersecting;
+                    if (heroVisible) { resume(); } else { suspend(); }
+                }, { threshold: 0.05 }).observe(heroSection);
+            }
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) { suspend(); } else { resume(); }
+            });
         }
     }
 

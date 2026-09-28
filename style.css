@@ -310,139 +310,261 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 /* ============================================================
-   Hero — interactive character
+   Hero — character video on a matched backdrop
    ============================================================ */
 .hero {
+    /* edge colour of videos/hero-character.mp4; script.js re-samples it from the
+       decoded frame since browsers differ slightly in how they render video colour */
+    --hero-bg: #92151e;
     position: relative;
     width: 100%;
     min-height: 100vh;
     min-height: 100svh;
     overflow: hidden;
-    background: #fbeceb;
+    background: var(--hero-bg);
     display: flex;
     isolation: isolate;
-    cursor: default;
 }
 
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-        radial-gradient(46% 58% at 50% 40%, #ffffff 0%, #fdf4f2 40%, rgba(253, 244, 242, 0) 70%),
-        radial-gradient(115% 85% at 2% 0%, #f6d8d7 0%, rgba(246, 216, 215, 0) 55%),
-        radial-gradient(115% 90% at 100% 100%, #6e232c 0%, rgba(110, 35, 44, 0) 60%),
-        linear-gradient(150deg, #fdece9 0%, #f2cdcb 42%, #c67e80 70%, #7a2a30 100%);
-}
-
-.hero-inner-v2 {
+.hero-inner-v3 {
     position: relative;
     z-index: 3;
     width: 100%;
     max-width: var(--shell);
     margin: 0 auto;
-    padding: 150px 24px 60px;
+    padding: 120px 24px 80px;
     display: flex;
+    align-items: center;
     flex: 1;
-}
-
-.hero-note { max-width: 260px; }
-
-.hero-note-name {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 4px;
-}
-
-.hero-note-role {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: #7a2a30;
-    margin-bottom: 28px;
-}
-
-.hero-hint { display: flex; align-items: center; gap: 10px; min-height: 34px; }
-
-.hero-hint-icon {
-    flex: none;
-    width: 26px; height: 26px;
-    display: flex; align-items: center; justify-content: center;
-    color: #9c3d44;
-    animation: hint-drift 2.6s ease-in-out infinite;
-}
-.hero-hint-icon svg { width: 20px; height: 20px; }
-.hero-hint-icon .icon-cursor { fill: currentColor; }
-.hero-hint-icon .icon-tap { display: none; fill: none; stroke: currentColor; stroke-width: 1.4; }
-.hero-hint-icon .icon-tap circle:first-child { fill: currentColor; stroke: none; }
-.hero-hint-icon .tap-ring { transform-origin: center; animation: tap-pulse 1.8s ease-out infinite; }
-
-.hero.is-touch .hero-hint-icon { animation: none; }
-.hero.is-touch .hero-hint-icon .icon-cursor { display: none; }
-.hero.is-touch .hero-hint-icon .icon-tap { display: block; }
-
-@keyframes hint-drift {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(5px, -3px); }
-}
-@keyframes tap-pulse {
-    0% { opacity: 0.9; transform: scale(0.6); }
-    100% { opacity: 0; transform: scale(1.6); }
-}
-
-.hero-hint-text {
-    font-family: var(--hand);
-    font-size: 1.3125rem;
-    line-height: 1.2;
-    color: #7a2a30;
-    transition: opacity 0.2s ease;
-}
-.hero-hint-text.is-fading { opacity: 0; }
-
-.hero-stage {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    z-index: 1;
-    height: min(76vh, 660px);
-    width: auto;
-    aspect-ratio: 840 / 756;
-    transform: translateX(-50%);
+    /* spans the hero on top of the character; only the copy itself takes the pointer */
     pointer-events: none;
 }
 
-.hero-character {
-    position: relative;
-    width: 100%; height: 100%;
-    transition: transform 0.5s var(--ease);
-    filter: drop-shadow(0 30px 45px rgba(90, 20, 25, 0.22));
-}
-.hero-character.is-mirrored { transform: scaleX(-1); }
+.hero-copy { max-width: 540px; pointer-events: auto; }
 
-.hero-frame {
+.hero-eyebrow {
+    font-family: var(--hand);
+    font-size: 1.625rem;
+    line-height: 1.1;
+    color: #ffd7d3;
+    margin-bottom: 14px;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    color: var(--white);
+    margin-bottom: 22px;
+}
+
+.hero-lede {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 440px;
+    margin-bottom: 34px;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.hero-hint {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 26px;
+    font-family: var(--hand);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #ffd7d3;
+}
+.hero-hint-dot {
+    position: relative;
+    flex: none;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #ffd7d3;
+}
+.hero-hint-dot::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1.5px solid #ffd7d3;
+    animation: hint-ping 1.8s ease-out infinite;
+}
+@keyframes hint-ping {
+    0% { opacity: 0.9; transform: scale(0.5); }
+    100% { opacity: 0; transform: scale(1.5); }
+}
+
+.hero-stage {
+    position: absolute;
+    right: -6vw;
+    bottom: 0;
+    z-index: 1;
+    /* the vw cap keeps him clear of the headline on smaller laptops */
+    height: min(88vh, 860px, 60vw);
+    aspect-ratio: 1080 / 806;
+    pointer-events: none;
+}
+
+/* tilted toward the pointer by script.js through --ry / --tx, breathing on its own */
+.hero-actor {
+    position: absolute;
+    inset: 0 0 -2%;
+    transform-origin: 50% 100%;
+    transform: perspective(1400px) translate3d(var(--tx, 0px), 0, 0) rotateY(var(--ry, 0deg));
+    animation: actor-breathe 4.2s ease-in-out infinite;
+}
+@keyframes actor-breathe {
+    0%, 100% { scale: 1; }
+    50% { scale: 1.008; }
+}
+
+.hero-video {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: bottom center;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.32s ease;
+    /* feather the edges so any compression drift in the red never shows a seam */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%);
+    mask-composite: intersect;
 }
-.hero-frame.is-visible { opacity: 1; }
+.hero-video.is-visible { opacity: 1; }
+
+/* invisible target over the character's body: hover, click or keyboard to interact */
+.hero-hit {
+    position: absolute;
+    left: 28%; top: 10%;
+    width: 46%; bottom: 0;
+    border-radius: 45% 45% 0 0;
+    pointer-events: auto;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.hero-hit:focus-visible { outline: 2px dashed rgba(255, 255, 255, 0.7); outline-offset: 6px; }
+
+/* one bubble, two voices: .is-think (cloud with trailing puffs) and .is-say (speech with a tail) */
+.hero-bubble {
+    --bubble-bg: var(--white);
+    position: absolute;
+    left: 61%;
+    top: 7%;
+    z-index: 2;
+    width: max-content;
+    max-width: 240px;
+    padding: 12px 18px 13px;
+    border-radius: 20px 20px 20px 6px;
+    background: var(--bubble-bg);
+    color: var(--ink);
+    font-family: var(--hand);
+    font-size: 1.375rem;
+    line-height: 1.15;
+    box-shadow: 0 16px 34px rgba(40, 0, 6, 0.3);
+    transform-origin: 0% 100%;
+    opacity: 0;
+    transform: scale(0.6) translateY(14px);
+    transition: opacity 0.22s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.3s ease;
+    pointer-events: none;
+}
+.hero-bubble.is-shown { opacity: 1; transform: none; }
+
+.hero-bubble.is-say::after {
+    content: '';
+    position: absolute;
+    left: 14px; bottom: -11px;
+    border-style: solid;
+    border-width: 12px 14px 0 0;
+    border-color: var(--bubble-bg) transparent transparent transparent;
+}
+
+.hero-bubble.is-think {
+    --bubble-bg: #fff6f4;
+    border-radius: 30px;
+    color: #6d1c24;
+    font-style: italic;
+}
+.hero-bubble.is-think::before,
+.hero-bubble.is-think::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: var(--bubble-bg);
+    box-shadow: 0 8px 18px rgba(40, 0, 6, 0.22);
+}
+.hero-bubble.is-think::before { width: 16px; height: 16px; left: 6px; bottom: -20px; }
+.hero-bubble.is-think::after { width: 9px; height: 9px; left: -8px; bottom: -34px; }
+.hero-bubble.is-shown.is-think::before { animation: puff 2.4s ease-in-out infinite; }
+.hero-bubble.is-shown.is-think::after { animation: puff 2.4s ease-in-out 0.3s infinite; }
+@keyframes puff {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* text is typed in; the untyped rest stays hidden but keeps the bubble at its final size */
+.hero-bubble-rest { visibility: hidden; }
+
+.hero-dots { display: inline-flex; gap: 5px; padding: 6px 2px; }
+.hero-dots i {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.35;
+    animation: dot-bounce 1s ease-in-out infinite;
+}
+.hero-dots i:nth-child(2) { animation-delay: 0.15s; }
+.hero-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes dot-bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.35; }
+    40% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* emoji that float up from the character on big reactions */
+.hero-pop {
+    position: absolute;
+    z-index: 2;
+    font-size: 1.75rem;
+    pointer-events: none;
+    animation: pop-float 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes pop-float {
+    0% { opacity: 0; transform: translate(0, 10px) scale(0.4) rotate(0deg); }
+    20% { opacity: 1; transform: translate(calc(var(--dx) * 0.3), -14px) scale(1.1) rotate(calc(var(--rot) * 0.4)); }
+    100% { opacity: 0; transform: translate(var(--dx), -90px) scale(0.9) rotate(var(--rot)); }
+}
 
 .scroll-cue {
     position: absolute;
-    bottom: 30px; left: 50%;
-    transform: translateX(-50%);
+    bottom: 30px;
+    /* lines up with the copy column, clear of the character */
+    left: max(24px, calc(50% - var(--shell) / 2 + 24px));
     z-index: 4;
     animation: bounce 2s infinite;
 }
-.scroll-cue svg { width: 22px; height: 22px; fill: none; stroke: rgba(122, 42, 48, 0.6); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.scroll-cue svg { width: 22px; height: 22px; fill: none; stroke: rgba(255, 255, 255, 0.7); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(10px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
 }
+
+/* navbar sits on the dark hero until it turns sticky */
+.has-dark-hero .navbar:not(.sticky):not(.open) .logo { color: var(--white); }
+.has-dark-hero .navbar:not(.sticky):not(.open) .logo span { color: #ff8a80; }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-links a { color: rgba(255, 255, 255, 0.72); }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-links a:hover,
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-links a.active { color: var(--white); }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-links a::after { background: var(--white); }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-cta { background: var(--white); border-color: var(--white); color: var(--ink); }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-cta:hover { background: var(--ink); border-color: var(--ink); color: var(--white); box-shadow: none; }
+.has-dark-hero .navbar:not(.sticky):not(.open) .nav-toggle { color: var(--white); }
 
 /* ============================================================
    About — red section, lanyard badge
@@ -1452,10 +1574,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .mobile-menu { display: flex; }
     .navbar { padding: 14px 0; }
 
-    .hero-inner-v2 { flex-direction: column; align-items: center; text-align: center; padding: 110px 24px 30px; }
-    .hero-note { max-width: 320px; }
-    .hero-hint { justify-content: center; }
-    .hero-stage { height: min(58vh, 480px); }
+    .hero-inner-v3 { align-items: flex-start; justify-content: center; text-align: center; padding: 108px 24px 64px; }
+    .hero-copy { max-width: 560px; }
+    .hero-lede { margin-left: auto; margin-right: auto; margin-bottom: 26px; }
+    .hero-actions, .hero-hint { justify-content: center; }
+    .hero { flex-direction: column; }
+    .hero-inner-v3 { flex: none; }
+    /* in flow on small screens so the copy and the character never overlap */
+    .hero-stage { position: relative; right: auto; align-self: center; margin-top: auto; flex: none; height: min(50vh, 560px); }
+    .hero-bubble { left: 60%; top: 2%; font-size: 1.1875rem; max-width: 200px; padding: 10px 15px 11px; }
+    .scroll-cue { display: none; }
 
     .about { padding: 90px 24px 150px; }
     .about-inner { flex-direction: column; align-items: center; }
@@ -1492,10 +1620,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 @media (max-width: 620px) {
-    .hero-inner-v2 { padding: 100px 20px 20px; }
-    .hero-stage { height: min(50vh, 400px); }
-    .hero-note-name { font-size: 1.25rem; }
-    .hero-hint-text { font-size: 1.125rem; }
+    .hero-inner-v3 { padding: 96px 20px 64px; }
+    .hero-eyebrow { font-size: 1.375rem; margin-bottom: 8px; }
+    .hero-title { margin-bottom: 14px; }
+    .hero-lede { font-size: 0.9375rem; }
+    .hero-stage { height: min(42vh, 360px); }
+    .hero-hint { font-size: 1.125rem; margin-top: 20px; }
+    /* narrow screens: the bubble floats above the head, clear of the viewport edge */
+    .hero-bubble { left: 50%; top: -14%; font-size: 1.0625rem; max-width: 190px; padding: 9px 14px 10px; margin-left: -10px; }
+    .hero-pop { font-size: 1.375rem; }
     .btn { padding: 12px 24px; }
 
     .about { padding: 70px 20px 130px; }
@@ -1540,8 +1673,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .flip-inner, .flip-face { transition: none; }
     .rail-track { scroll-behavior: auto; }
 
-    .hero-hint-icon { animation: none; }
-    .hero-frame { transition: none; }
-    .hero-character { transition: none; }
+    .hero-video, .hero-bubble { transition: none; }
+    .hero-actor { animation: none; transform: none; }
     }
 }
