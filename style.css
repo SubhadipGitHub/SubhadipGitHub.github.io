@@ -368,6 +368,23 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     margin-bottom: 34px;
 }
 
+.hero-stack {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.66);
+    max-width: 440px;
+    margin: -16px 0 30px;
+}
+.hero-stack span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: #ffd7d3;
+    margin-bottom: 4px;
+}
+
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
 .hero-hint {
@@ -828,6 +845,244 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 /* ============================================================
+   Case studies — dark band, one card per architecture story
+   ============================================================ */
+.cases { background: var(--ink); padding: 100px 0 110px; }
+.cases .pill { background: transparent; border-color: rgba(255, 255, 255, 0.18); color: var(--grey-400); }
+.cases .section-head h2 { color: var(--white); }
+.cases .section-head p { color: var(--grey-400); }
+
+.case {
+    background: var(--grey-900);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 40px;
+    margin-bottom: 28px;
+}
+.case:last-child { margin-bottom: 0; }
+
+.case-head { display: flex; gap: 26px; align-items: flex-start; margin-bottom: 30px; }
+.case-num {
+    flex: none;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--red);
+    border: 1px solid rgba(255, 42, 42, 0.4);
+    border-radius: 999px;
+    padding: 6px 12px;
+    margin-top: 4px;
+}
+.case-meta { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.case-meta li {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    padding: 5px 11px;
+}
+.case-head h3 {
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+.case-problem { font-size: 1.0625rem; line-height: 1.65; font-weight: 500; color: rgba(255, 255, 255, 0.72); max-width: 720px; }
+
+.case-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 34px;
+}
+.case-stats li {
+    background: rgba(255, 42, 42, 0.08);
+    border: 1px solid rgba(255, 42, 42, 0.22);
+    border-radius: 18px;
+    padding: 18px 20px;
+}
+.case-stats b {
+    display: block;
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 6px;
+    white-space: nowrap;
+}
+.case-stats span { font-size: 0.8125rem; font-weight: 600; color: var(--grey-400); }
+
+.case-body { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+
+.case-text h4 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    margin-bottom: 12px;
+}
+.case-list, .case-decisions { list-style: none; margin-bottom: 26px; }
+.case-list li, .case-decisions li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 9px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.78);
+}
+.case-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px; top: 0.62em;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--grey-600);
+}
+/* the architect signal: decisions get the accent */
+.case-decisions li::before {
+    content: '→';
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--red);
+    font-weight: 800;
+}
+.case-decisions b { color: var(--white); font-weight: 800; }
+
+.case-role {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--white);
+}
+.case-role span {
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--white);
+    border-radius: 999px;
+    padding: 4px 10px;
+}
+
+/* architecture flow: boxes joined by arrows, stacked vertically */
+.case-flow {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.14);
+    border-radius: 22px;
+    padding: 24px;
+}
+.case-flow figcaption {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    margin-bottom: 16px;
+}
+.flow { list-style: none; display: flex; flex-direction: column; align-items: stretch; }
+.flow li {
+    position: relative;
+    background: var(--ink);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    padding: 11px 14px;
+    text-align: center;
+}
+.flow li + li { margin-top: 26px; }
+.flow li + li::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: -22px;
+    width: 2px; height: 16px;
+    margin-left: -1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+.flow li + li::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: -9px;
+    margin-left: -5px;
+    border-style: solid;
+    border-width: 6px 5px 0 5px;
+    border-color: rgba(255, 255, 255, 0.45) transparent transparent transparent;
+}
+.flow b { display: block; font-size: 0.9375rem; font-weight: 800; color: var(--white); }
+.flow small { display: block; margin-top: 2px; font-size: 0.75rem; font-weight: 500; color: var(--grey-400); }
+.flow li.is-core { border-color: var(--red); background: rgba(255, 42, 42, 0.14); }
+.flow li.is-human { border-color: #ffd7d3; border-style: dashed; }
+
+/* side lanes (lookups, audit) under the main flow */
+.flow-side { margin-top: 18px; padding-top: 16px; border-top: 1px dashed rgba(255, 255, 255, 0.14); display: grid; gap: 10px; }
+.flow-side p { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.flow-side b {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 7px 11px;
+}
+.flow-side i { font-style: normal; color: var(--red); font-weight: 800; }
+
+/* a repeating cycle reads left to right, wrapping when narrow */
+.flow-cycle { flex-direction: row; flex-wrap: wrap; gap: 8px; margin-top: 18px; padding-top: 16px; border-top: 1px dashed rgba(255, 255, 255, 0.14); }
+.flow-cycle li { flex: 1 1 40%; padding: 9px 10px; }
+.flow-cycle li + li { margin-top: 0; }
+.flow-cycle li + li::before, .flow-cycle li + li::after { display: none; }
+.flow-cycle b { font-size: 0.8125rem; }
+
+/* ============================================================
+   Recommendations
+   ============================================================ */
+.quotes { background: var(--grey-100); padding: 100px 0 110px; }
+.quotes .section-head a { color: var(--red-deep); font-weight: 700; }
+.quote-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.quote {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: 24px;
+    padding: 40px 32px 30px;
+}
+.quote::before {
+    content: '\201C';
+    position: absolute;
+    top: 6px; left: 26px;
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--red);
+}
+.quote blockquote p { font-size: 1.0625rem; line-height: 1.7; font-weight: 500; color: var(--ink); margin-bottom: 24px; }
+.quote figcaption { display: flex; align-items: center; gap: 14px; }
+.quote-avatar {
+    flex: none;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--white);
+    font-size: 0.8125rem;
+    font-weight: 800;
+}
+.quote figcaption strong { display: block; font-size: 0.9375rem; color: var(--ink); }
+.quote figcaption span:last-child { font-size: 0.8125rem; line-height: 1.5; font-weight: 500; color: var(--grey-600); }
+
+/* ============================================================
    Experience — timeline
    ============================================================ */
 .experience { background: var(--white); padding: 100px 0 110px; }
@@ -889,6 +1144,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .tl-card h3 { font-size: 1.375rem; font-weight: 900; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 10px; }
 .tl-card h3 em { font-style: normal; font-size: 0.875rem; font-weight: 600; color: var(--grey-600); letter-spacing: 0; }
 .tl-card p { font-size: 0.9375rem; line-height: 1.7; font-weight: 500; color: var(--grey-600); }
+.tl-points { list-style: none; margin-top: 12px; }
+.tl-points li { position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 0.9375rem; line-height: 1.6; font-weight: 500; color: var(--grey-600); }
+.tl-points li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
 
 /* ============================================================
    Industries
@@ -1054,6 +1312,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    Certifications
    ============================================================ */
 .certs { background: var(--white); padding: 100px 0 110px; }
+.cert-next { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 14px; font-weight: 700; color: var(--ink); }
+.cert-next span {
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border-radius: 999px;
+    padding: 4px 10px;
+}
 
 /* the grid is now a horizontal rail - see "Card rails" below for the shell */
 .cert { height: 420px; }
@@ -1554,6 +1823,13 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 @media (max-width: 1199px) {
     /* below this the five industry cards no longer fit on one row */
     .industry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    /* nine nav links: tighten them so none wrap before the menu collapses at 950px */
+    .nav-inner { gap: 14px; }
+    .nav-links { gap: 13px; }
+    .nav-links a { font-size: 0.8125rem; }
+    .nav-links a, .nav-cta, .logo { white-space: nowrap; }
+    .nav-cta { padding: 10px 18px; }
 }
 
 @media (max-width: 1100px) {
@@ -1578,6 +1854,11 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .hero-copy { max-width: 560px; }
     .hero-lede { margin-left: auto; margin-right: auto; margin-bottom: 26px; }
     .hero-actions, .hero-hint { justify-content: center; }
+    .hero-stack { margin-left: auto; margin-right: auto; }
+
+    .cases { padding: 80px 0 90px; }
+    .case-body { grid-template-columns: 1fr; gap: 30px; }
+    .quotes { padding: 80px 0 90px; }
     .hero { flex-direction: column; }
     .hero-inner-v3 { flex: none; }
     /* in flow on small screens so the copy and the character never overlap */
@@ -1624,6 +1905,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .hero-eyebrow { font-size: 1.375rem; margin-bottom: 8px; }
     .hero-title { margin-bottom: 14px; }
     .hero-lede { font-size: 0.9375rem; }
+    .hero-stack { font-size: 0.8125rem; margin-bottom: 24px; }
+
+    .case { padding: 26px 20px; border-radius: 22px; }
+    .case-head { flex-direction: column; gap: 14px; }
+    .case-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .case-stats li { padding: 14px 14px; }
+    .case-stats b { white-space: normal; }
+    .case-flow { padding: 18px 14px; }
+    .quote-grid { grid-template-columns: 1fr; }
+    .quote { padding: 36px 22px 24px; }
     .hero-stage { height: min(42vh, 360px); }
     .hero-hint { font-size: 1.125rem; margin-top: 20px; }
     /* narrow screens: the bubble floats above the head, clear of the viewport edge */
