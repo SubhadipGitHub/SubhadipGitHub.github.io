@@ -418,6 +418,65 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     0% { opacity: 0.9; transform: scale(0.5); }
     100% { opacity: 0; transform: scale(1.5); }
 }
+/* he has noticed you: the nudge has done its job, and its ping stops looping */
+.hero.hero-met .hero-hint {
+    opacity: 0;
+    translate: 0 -6px;
+    pointer-events: none;
+    transition: opacity 0.5s ease, translate 0.5s var(--ease);
+}
+.hero.hero-met .hero-hint-dot::after { animation: none; }
+
+/* drifts gently against his lean, so the two halves read as one scene rather than a
+   character parked beside a block of text. --tx is set on .hero, so both sides inherit it. */
+.hero-copy { translate: calc(var(--tx, 0px) * -0.18) 0; }
+
+/* the focus-music control */
+.hero-sound { margin-top: 18px; }
+.sound-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 13px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffd7d3;
+    font-family: var(--hand);
+    font-size: 1.125rem;
+    line-height: 1;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.sound-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--white);
+}
+.sound-toggle[aria-pressed="true"] { background: var(--white); border-color: var(--white); color: var(--ink); }
+.sound-toggle:focus-visible { outline: 2px dashed rgba(255, 255, 255, 0.7); outline-offset: 4px; }
+
+/* four bars: flat while paused, dancing while the track plays */
+.sound-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+/* uneven at rest so it reads as an equaliser rather than an ellipsis */
+.sound-bars i {
+    width: 3px;
+    height: 5px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: height 0.2s ease;
+}
+.sound-bars i:nth-child(1) { height: 7px; }
+.sound-bars i:nth-child(2) { height: 12px; }
+.sound-bars i:nth-child(3) { height: 6px; }
+.sound-bars i:nth-child(4) { height: 10px; }
+.sound-toggle[aria-pressed="true"] .sound-bars i { animation: sound-bar 0.9s ease-in-out infinite; }
+.sound-bars i:nth-child(2) { animation-delay: 0.15s; }
+.sound-bars i:nth-child(3) { animation-delay: 0.3s; }
+.sound-bars i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes sound-bar {
+    0%, 100% { height: 4px; }
+    50% { height: 14px; }
+}
 
 .hero-stage {
     position: absolute;
@@ -435,8 +494,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     position: absolute;
     inset: 0 0 -2%;
     transform-origin: 50% 100%;
-    transform: perspective(1400px) translate3d(var(--tx, 0px), 0, 0) rotateY(var(--ry, 0deg));
+    transform: perspective(1400px) translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     animation: actor-breathe 4.2s ease-in-out infinite;
+}
+/* Entrance rides on `translate`, a third independent channel: `transform` is the tilt,
+   `scale` is the breathe. Scoped to .hero-intro, which script.js adds as it takes over,
+   so without JS he is simply visible. */
+.hero-stage.hero-intro .hero-actor { opacity: 0; translate: 0 24px; }
+.hero-stage.hero-ready .hero-actor {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 0.6s ease, translate 0.8s var(--ease);
 }
 @keyframes actor-breathe {
     0%, 100% { scale: 1; }
@@ -451,6 +519,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     object-position: bottom center;
     opacity: 0;
     transition: opacity 0.32s ease;
+    /* the three copies cross-fade constantly; keep them on their own layers so a clip
+       change composites instead of repainting the masked video */
+    will-change: opacity;
     /* feather the edges so any compression drift in the red never shows a seam */
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%);
     -webkit-mask-composite: source-in;
@@ -468,6 +539,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     pointer-events: auto;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    /* a double tap is a gesture here (laugh / shy), so it must not zoom the page */
+    touch-action: manipulation;
 }
 .hero-hit:focus-visible { outline: 2px dashed rgba(255, 255, 255, 0.7); outline-offset: 6px; }
 
@@ -491,10 +564,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     transform-origin: 0% 100%;
     opacity: 0;
     transform: scale(0.6) translateY(14px);
-    transition: opacity 0.22s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.3s ease;
+    /* leans with the character; `translate` stays clear of the spring on `transform` */
+    translate: calc(var(--tx, 0px) * 0.5) 0;
+    /* exit: quick and flat. The spring lives on .is-shown so it never plays backwards. */
+    transition: opacity 0.15s ease-in, transform 0.2s cubic-bezier(0.55, 0, 1, 0.45), border-radius 0.3s ease;
     pointer-events: none;
 }
-.hero-bubble.is-shown { opacity: 1; transform: none; }
+.hero-bubble.is-shown {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.18s ease-out, transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.3s ease;
+}
 
 .hero-bubble.is-say::after {
     content: '';
@@ -521,15 +601,52 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .hero-bubble.is-think::before { width: 16px; height: 16px; left: 6px; bottom: -20px; }
 .hero-bubble.is-think::after { width: 9px; height: 9px; left: -8px; bottom: -34px; }
-.hero-bubble.is-shown.is-think::before { animation: puff 2.4s ease-in-out infinite; }
-.hero-bubble.is-shown.is-think::after { animation: puff 2.4s ease-in-out 0.3s infinite; }
+/* puffs scale in nearest-and-smallest first, so the read is puff -> puff -> cloud.
+   `scale` is independent of the `transform` that `puff` animates, so they do not collide. */
+.hero-bubble.is-shown.is-think::before {
+    animation: puff-in 0.26s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s backwards,
+               puff 2.4s ease-in-out 0.38s infinite;
+}
+.hero-bubble.is-shown.is-think::after {
+    animation: puff-in 0.26s cubic-bezier(0.34, 1.56, 0.64, 1) 0.04s backwards,
+               puff 2.4s ease-in-out 0.3s infinite;
+}
 @keyframes puff {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
 }
+@keyframes puff-in {
+    from { scale: 0; }
+    to { scale: 1; }
+}
 
 /* text is typed in; the untyped rest stays hidden but keeps the bubble at its final size */
 .hero-bubble-rest { visibility: hidden; }
+
+/* the caret that trails the typewriter */
+.hero-caret {
+    display: inline-block;
+    width: 2px;
+    height: 0.95em;
+    margin-left: 1px;
+    background: currentColor;
+    vertical-align: -0.1em;
+    animation: caret-blink 0.9s steps(1) infinite;
+}
+@keyframes caret-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* Think bubbles stack the dots on top of the finished text in one grid cell, so the box is
+   already at its final size while the dots play and nothing resizes when they cross-fade. */
+.hero-bubble.is-think .hero-bubble-text { display: grid; }
+.hero-bubble.is-think .hero-bubble-text > * { grid-area: 1 / 1; }
+.hero-bubble.is-think .hero-dots {
+    justify-self: start;
+    align-self: start;
+    transition: opacity 0.18s ease;
+}
+.hero-think-text { opacity: 0; transition: opacity 0.22s ease; }
+.hero-bubble.is-settled .hero-dots { opacity: 0; }
+.hero-bubble.is-settled .hero-think-text { opacity: 1; }
 
 .hero-dots { display: inline-flex; gap: 5px; padding: 6px 2px; }
 .hero-dots i {
@@ -1970,7 +2087,19 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .flip-inner, .flip-face { transition: none; }
     .rail-track { scroll-behavior: auto; }
 
-    .hero-video, .hero-bubble { transition: none; }
-    .hero-actor { animation: none; transform: none; }
+    /* a plain opacity fade is not vestibular-triggering, and beats a hard pop */
+    .hero-bubble {
+        transition: opacity 0.15s ease !important;
+        transition-duration: 0.15s !important;
+        transform: none !important;
+        translate: none !important;
     }
+    .hero-video {
+        transition: opacity 0.2s ease !important;
+        transition-duration: 0.2s !important;
+    }
+    /* matches .hero-stage.hero-intro .hero-actor, so the entrance offset cannot win here */
+    .hero-stage.hero-intro .hero-actor,
+    .hero-actor { animation: none; transform: none; translate: none; opacity: 1; }
+    .hero-copy { translate: none !important; }
 }

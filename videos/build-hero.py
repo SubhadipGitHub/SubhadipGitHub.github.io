@@ -44,9 +44,23 @@ def normalize(frame):
     dist = np.sqrt(((f - bg) ** 2).sum(axis=2))
     # Backdrop = backdrop-coloured regions connected to the frame edge. Red-toned skin
     # shadows (eyelids, blush, laughing cheeks) are enclosed by skin, so they stay put.
-    labels, _ = ndimage.label(dist < 55)
+    labels, n = ndimage.label(dist < 55)
     edge = np.concatenate([labels[0], labels[-1], labels[:, 0], labels[:, -1]])
-    core = np.isin(labels, np.unique(edge[edge > 0]))
+    keep = np.unique(edge[edge > 0])
+    # A limb can wall a pocket of real backdrop off from every edge: both hands going up to
+    # the headphones, or a mug raised to his mouth. The rule above would leave those at the
+    # raw drifting red, and on the page -- where the backdrop is meant to vanish into the
+    # section colour -- they read as a dark shape stuck to him. Measured across all 15 raw
+    # clips, enclosed skin shadow sits 32-47 from the backdrop colour while walled-off
+    # backdrop sits at 9-11, so the two separate cleanly.
+    if n:
+        idx = np.arange(1, n + 1)
+        flat_labels = labels.ravel()
+        sizes = np.bincount(flat_labels, minlength=n + 1)[1:]
+        sums = np.bincount(flat_labels, weights=dist.ravel(), minlength=n + 1)[1:]
+        means = sums / np.maximum(sizes, 1)
+        keep = np.union1d(keep, idx[(means < 20) & (sizes >= 200)])
+    core = np.isin(labels, keep)
     band = ndimage.binary_dilation(core, iterations=4)
     # soft colour shift along the outline so anti-aliased edges carry no old-red halo
     shift = (band * np.clip(1.0 - (dist - 55.0) / 60.0, 0.0, 1.0))[..., None]
@@ -91,30 +105,55 @@ class Writer:
 
 print('actions')
 w = Writer(ROOT + 'videos/hero-actions.mp4', gop=12, crf=25)
-typing = read('A1-typing.mp4')             # already a seamless ping-pong
+# The page opens in non-focus mode (headphones off), and frame 0 is what both video
+# elements show before the first seek lands -- so it has to be a headphones-off frame.
+idle = read('B1-idle.mp4')
 from PIL import Image
-Image.fromarray(typing[0]).save(ROOT + 'images/hero-poster.jpg', quality=84, optimize=True, progressive=True)
-w.add('typing', typing); del typing
+Image.fromarray(idle[0]).save(ROOT + 'images/hero-poster.jpg', quality=84, optimize=True, progressive=True)
+w.add('idle', idle); del idle
+w.add('typing', read('A1-typing.mp4'))     # already a seamless ping-pong
 w.add('notice', read('A4-notice.mp4'))
 w.add('hpOff', read('A5-headphones-off.mp4'))
 w.add('hpOn', read('A6-headphones-on.mp4'))
-w.add('idle', read('B1-idle.mp4'))
-b8 = read('B8-laugh.mp4')
+b8 = read('B8-talk.mp4')
 w.add('talk', pingpong(b8[0:61]))          # mouth moving, hands down
 w.add('greet', b8); del b8                 # talks, then waves
 w.add('wave', read('B5-wave.mp4'))
-w.add('laugh', read('B4-talk.mp4'))        # this file holds the big laugh
+w.add('laugh', read('B4-laugh.mp4'))
 w.add('idea', read('B6-point.mp4'))        # raised "one moment" finger
 w.add('flinch', read('B9-flinch.mp4'))
 w.add('shy', read('B10-shy.mp4'))
+w.add('coffee', read('A7-coffee.mp4'))          # a sip mid-work, headphones on
+# One nod cycle runs ~12 frames. 42 and 73 are both extremes of the head's rise and fall,
+# so ping-ponging between them loops with no velocity jump -- the same trick as `talk`.
+w.add('nod', pingpong(read('A8-nod.mp4')[42:74]))
 actions = w.close()
 
 print('gaze')
-# one monotonic sweep per state: far screen-left -> centre -> far screen-right
+# one monotonic sweep per state: far screen-left -> centre -> far screen-right.
+# The join between the two halves is the frame where he faces forward, which is what
+# script.js calls `center`, so record it rather than hand-tuning it downstream.
 g = Writer(ROOT + 'videos/hero-gaze.mp4', gop=2, crf=22)
-a2 = read('A2-look.mp4'); g.add('on', a2[28:45][::-1] + a2[56:81]); del a2
-b2 = read('B2-look.mp4'); g.add('off', b2[18:37][::-1] + b2[56:81]); del b2
+centre = {}
+a2 = read('A2-look.mp4')
+left, right = a2[28:45][::-1], a2[56:81]
+centre['on'] = len(left) - 0.5
+g.add('on', left + right); del a2, left, right
+b2 = read('B2-look.mp4')
+left, right = b2[18:37][::-1], b2[56:81]
+centre['off'] = len(left) - 0.5
+g.add('off', left + right); del b2, left, right
 gaze = g.close()
 
-out = {'actions': actions, 'gaze': gaze}
+# script.js fetches this, so the tables cannot drift from the encode
+out = {
+    'actions': actions,
+    'gaze': {k: {'start': v[0],
+                 'frames': int(round((v[1] - v[0]) * 24)),
+                 'center': centre[k]} for k, v in gaze.items()}
+}
+with open(ROOT + 'videos/hero-clips.json', 'w') as fh:
+    json.dump(out, fh, indent=2)
+    fh.write('\n')
+print('wrote videos/hero-clips.json')
 print(json.dumps(out))
